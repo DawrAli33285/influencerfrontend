@@ -20,3 +20,6 @@ body {
 #root{
   overflow-x: hidden;
 }
+.custom-inset-shadow {
+  box-shadow: inset 8px 0px 0px 0px #c0a3fc
+}

@@ -26,7 +26,7 @@ const BondAnalyticsChart = () => {
           <XAxis dataKey="month" />
           <YAxis domain={[0, 1500]} ticks={[0, 500, 1000, 1500]} />
           <Tooltip />
-          <Line type="monotone" dataKey="bonds" stroke="#7638F9" strokeWidth={3} />
+          <Line type="monotone" dataKey="bonds" stroke="#22c55e" strokeWidth={3} />
         </LineChart>
       </ResponsiveContainer>
     </div>
