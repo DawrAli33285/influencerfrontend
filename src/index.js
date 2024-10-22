@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import SignUp from './pages/signup';
+import AdminHeader from './components/adminheader';
+import Dashboard from './pages/dashboard';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/dashboard",
+    element: <AdminHeader><Dashboard /></AdminHeader>,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
