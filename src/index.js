@@ -10,6 +10,8 @@ import reportWebVitals from './reportWebVitals';
 import SignUp from './pages/signup';
 import AdminHeader from './components/adminheader';
 import Dashboard from './pages/dashboard';
+import SponsorBond from './pages/sponsorbond';
+import Mission from './pages/mission';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <AdminHeader><Dashboard /></AdminHeader>,
+  },
+  {
+    path: "/sponsorbond",
+    element: <AdminHeader><SponsorBond /></AdminHeader>,
+  },
+  {
+    path: "/mission",
+    element: <AdminHeader><Mission /></AdminHeader>,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));

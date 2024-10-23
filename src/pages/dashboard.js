@@ -8,11 +8,11 @@ export default function Dashboard() {
     return (
         <div className="w-full  flex  flex-col">
             <div className="w-full  flex xl:flex-row gap-[20px] flex-col-reverse">
-                <div className="w-full xl:w-[70%] flex flex-col gap-[20px] xl:justify-between">
+                <div className="w-full xl:w-[75%] flex flex-col gap-[20px] xl:justify-between">
                     <NotificationCards />
                     <BondAnalyticsChart />
                 </div>
-                <div className="w-full xl:w-[30%] px-[20px] py-[40px] bg-white rounded-[20px]">
+                <div className="w-full xl:w-[25%] px-[20px] py-[40px] bg-white rounded-[20px]">
                     <UserInfo />
                 </div>
             </div>

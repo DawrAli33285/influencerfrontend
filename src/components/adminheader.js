@@ -1,10 +1,32 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import avatar from "../avatar.webp"
+import { useDropzone } from 'react-dropzone';
 export default function AdminHeader({ children }) {
     const location = useLocation();
+    const [bondpopup, setBondPopup] = useState(false)
+    const [missionpopup, setMissionPopup] = useState(false)
+    const [uploadedImages, setUploadedImages] = useState([]);
+    const [links, setLinks] = useState(['']);
+    const handleAddLink = () => {
+        setLinks([...links, '']);
+    };
+    const handleLinkChange = (index, value) => {
+        const newLinks = [...links];
+        newLinks[index] = value;
+        setLinks(newLinks);
+    };
+    const onDrop = (acceptedFiles) => {
+        setUploadedImages((prevImages) => [...prevImages, ...acceptedFiles]);
+    };
 
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'image/*',
+        multiple: true,
+        onDrop,
+    });
     return (
-        <div className="w-full bg-[#E1E1E1] flex">
+        <div className="w-full bg-[#E1E1E1] relative  flex">
             <div className="xl:w-[20%] hidden xl:flex flex-col px-[20px] rounded-tr-[20px] rounded-br-[20px] py-[40px] justify-between bg-[#6B33E3]">
                 <div className="flex flex-col gap-[10px]">
                     <h1 className="text-white text-[24px] font-semibold mb-[20px]">LOGOIPSUM</h1>
@@ -74,12 +96,185 @@ export default function AdminHeader({ children }) {
                             .charAt(0).toUpperCase() +
                             location.pathname.slice(2)}
                     </h1>
-                    <div className="rounded-[100%] w-[40px] h-[40px] mr-[40px]">
-                        <img src={avatar} alt="img" className="w-full h-full object-cover rounded-[100%]" />
+                    <div className="flex items-center gap-[10px]">
+                        <div className="flex items-center">
+                            {
+                                location.pathname == "/sponsorbond" ? <div className="flex bg-[#E9EFFD] text-[#2563EB] px-[20px] gap-[20px] items-center font-semibold hover:cursor-pointer py-[10px] rounded-[20px]" onClick={() => setBondPopup(!bondpopup)}>
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 6H6M6 6H1M6 6V1M6 6V11" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div className="lg:block hidden"> Create New Bond </div>
+                                </div> : location.pathname == "/mission" ? <div className="flex bg-[#E9EFFD] text-[#2563EB] gap-[20px] items-center font-semibold hover:cursor-pointer px-[20px] py-[10px] rounded-[20px]" onClick={() => setMissionPopup(!missionpopup)}>
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 6H6M6 6H1M6 6V1M6 6V11" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                   <div className="lg:block hidden"> Setup New Mission</div>
+                                </div> : ''
+                            }
+                        </div>
+                        <div className="rounded-[100%] w-[40px] h-[40px] mr-[40px]">
+
+                            <img src={avatar} alt="img" className="w-full h-full object-cover rounded-[100%]" />
+                        </div>
                     </div>
                 </div>
                 {children}
             </div>
+            {
+                bondpopup && (
+                    <div className="absolute w-full h-full flex justify-center items-center px-[20px] bg-[#00000085]">
+                        <div className="bg-white flex flex-col gap-[10px] rounded-[20px] p-[20px] max-w-[800px] w-full">
+                            <h1 className="text-[24px] font-semibold">
+                                Create New Bond
+                            </h1>
+                            <h1 className="text-[18px]">Upload Image</h1>
+                            <div
+                                {...getRootProps()}
+                                className="border-2 border-dashed border-gray-300 p-[20px] text-center rounded-[10px] cursor-pointer"
+                            >
+                                <div className="flex justify-center w-full">
+                                    <svg width="80" height="66" viewBox="0 0 80 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M41.1612 28.0748C41.0947 27.9859 41.0096 27.9141 40.9125 27.8647C40.8154 27.8152 40.7089 27.7896 40.6009 27.7896C40.4929 27.7896 40.3863 27.8152 40.2892 27.8647C40.1921 27.9141 40.1071 27.9859 40.0405 28.0748L30.0787 41.2433C29.9966 41.3529 29.9456 41.4844 29.9316 41.6228C29.9177 41.7612 29.9413 41.9009 29.9997 42.026C30.0582 42.1511 30.1491 42.2564 30.2622 42.33C30.3752 42.4036 30.5058 42.4425 30.639 42.4422H37.2121V64.969C37.2121 65.3779 37.5323 65.7124 37.9236 65.7124H43.2603C43.6517 65.7124 43.9719 65.3779 43.9719 64.969V42.4514H50.5627C51.1586 42.4514 51.4877 41.7359 51.1231 41.2526L41.1612 28.0748Z" fill="#667085" />
+                                        <path d="M66.497 19.497C62.4233 8.27074 52.0434 0.287842 39.8847 0.287842C27.7259 0.287842 17.346 8.26144 13.2723 19.4877C5.64975 21.5787 0.0195312 28.8367 0.0195312 37.4608C0.0195312 47.7298 7.9801 56.0473 17.7996 56.0473H21.3663C21.7577 56.0473 22.0779 55.7127 22.0779 55.3038V49.7279C22.0779 49.319 21.7577 48.9844 21.3663 48.9844H17.7996C14.8022 48.9844 11.9826 47.7391 9.88353 45.4809C7.79332 43.2319 6.68151 40.2023 6.77935 37.0612C6.8594 34.6078 7.6599 32.3031 9.10971 30.3608C10.5951 28.3813 12.6764 26.9409 14.989 26.2996L18.36 25.3796L19.5963 21.9783C20.3612 19.8594 21.4286 17.8799 22.7717 16.0864C24.0976 14.3086 25.6682 12.7459 27.4324 11.449C31.088 8.76328 35.3929 7.34141 39.8847 7.34141C44.3764 7.34141 48.6813 8.76328 52.337 11.449C54.107 12.7501 55.6724 14.3113 56.9977 16.0864C58.3407 17.8799 59.4081 19.8687 60.173 21.9783L61.4004 25.3703L64.7626 26.2996C69.5834 27.6564 72.9544 32.238 72.9544 37.4608C72.9544 40.5369 71.807 43.4364 69.7257 45.611C68.705 46.6837 67.4908 47.5342 66.1534 48.1132C64.8159 48.6923 63.3818 48.9884 61.9341 48.9844H58.3674C57.9761 48.9844 57.6559 49.319 57.6559 49.7279V55.3038C57.6559 55.7127 57.9761 56.0473 58.3674 56.0473H61.9341C71.7536 56.0473 79.7142 47.7298 79.7142 37.4608C79.7142 28.846 74.1018 21.5972 66.497 19.497Z" fill="#667085" />
+                                    </svg>
+                                </div>
+                                <input {...getInputProps()} />
+                                <p className="text-[16px] text-[#667085] my-[10px]">Drag and Drop Here</p>
+                                <p className="text-[16px] text-[#667085] my-[10px]">or</p>
+                                <div className="bg-[#F1EBFE] text-[#7638F9] text-[16px] font-semibold px-[20px] py-[10px] w-fit rounded-[20px] mx-auto">Browse Images</div>
+                            </div>
+                            <div className="flex flex-wrap gap-[10px] my-[10px]">
+                                {uploadedImages.length > 0 &&
+                                    uploadedImages.map((file, index) => (
+                                        <div key={index} className="w-[100px] h-[100px] bg-gray-200 p-[5px] rounded-[10px]">
+                                            <img
+                                                src={URL.createObjectURL(file)}
+                                                alt="uploaded"
+                                                className="w-full h-full object-cover rounded-[10px]"
+                                            />
+                                        </div>
+                                    ))}
+                            </div>
+                            <div>
+                                <label htmlFor="socialLink" className="block text-xl  font-semibold text-[#272226]">Social Media Link</label>
+                                {links.map((link, index) => (
+                                    <div key={index} className="mt-4">
+                                        <input
+                                            type="text"
+                                            name={`socialLink-${index}`}
+                                            value={link}
+                                            onChange={(e) => handleLinkChange(index, e.target.value)}
+                                            className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                            placeholder={`Link ${index + 1}`}
+                                        />
+                                    </div>
+                                ))}
+                                <button
+                                    type="button"
+                                    onClick={handleAddLink}
+                                    className="mt-4 px-6 py-2 bg-[#7638F9] text-white font-semibold rounded-[20px] hover:bg-blue-600"
+                                >
+                                    Add More Links
+                                </button>
+
+                            </div>
+                            <div className="mt-[10px]">
+                                <label htmlFor="quantity" className="block text-xl  font-semibold text-[#272226]">Quantity</label>
+                                <input
+                                    type="text"
+                                    name="quantity"
+                                    placeholder="Enter Quantity"
+                                    className="mt-4 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+
+                                />
+
+                            </div>
+                            <div className="mt-[10px]">
+                                <label htmlFor="price" className="block text-xl  font-semibold text-[#272226]">Bond Price</label>
+                                <input
+                                    type="text"
+                                    name="price"
+                                    className="mt-4 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    placeholder="Enter Bond Price"
+                                />
+
+                            </div>
+                            <div className="hover:cursor-pointer flex flex-col justify-between mt-4 gap-[10px] xl:flex-row">
+                                <div onClick={() => setBondPopup(!bondpopup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#7638F9] px-[20px] py-[10px] text-[#7638F9] font-semibold">
+                                    Cancel
+                                </div>
+                                <div className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#7638F9] px-[20px] py-[10px] text-white font-semibold">
+                                    Create Bond
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                missionpopup && (
+                    <div className="absolute w-full h-full flex justify-center items-center px-[20px] bg-[#00000085]">
+                        <div className="bg-white flex flex-col gap-[10px] rounded-[20px] p-[20px] max-w-[800px] w-full">
+                            <h1 className="text-[24px] font-semibold">
+                                Mission Setup
+                            </h1>
+                            <div>
+                                <label htmlFor="validitynumber" className="block text-xl  font-semibold text-[#272226]">Validity Number</label>
+                                <div className="mt-4">
+                                    <select
+                                        name="validitynumber"
+                                        className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    >
+                                        <option value="">Select validity</option>
+                                        {Array.from({ length: 15 }, (_, index) => {
+                                            const months = (index + 1) * 2; 
+                                            return (
+                                                <option key={months} value={months}>
+                                                    {months} months
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="mt-[10px]">
+                                <label htmlFor="quantity" className="block text-xl  font-semibold text-[#272226]">Quantity</label>
+                                <input
+                                    type="text"
+                                    name="quantity"
+                                    placeholder="Enter Quantity"
+                                    className="mt-4 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+
+                                />
+
+                            </div>
+                            <div className="mt-[10px]">
+                                <label htmlFor="date" className="block text-xl  font-semibold text-[#272226]">Deadline</label>
+                                <input
+                                    type="date"
+                                    name="date"
+                                    className="mt-4 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    placeholder="Edd/mm/yy"
+                                />
+
+                            </div>
+                            <div className="mt-[10px]">
+                                <label htmlFor="description" className="block text-xl  font-semibold text-[#272226]">Description</label>
+                                <textarea rows="5" placeholder="Description" className="mt-4 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"></textarea>
+
+                            </div>
+                            <div className="hover:cursor-pointer flex flex-col justify-between mt-4 gap-[10px] xl:flex-row">
+                                <div onClick={() => setMissionPopup(!missionpopup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#7638F9] px-[20px] py-[10px] text-[#7638F9] font-semibold">
+                                    Cancel
+                                </div>
+                                <div className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#7638F9] px-[20px] py-[10px] text-white font-semibold">
+                                    Create Mission
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 }
