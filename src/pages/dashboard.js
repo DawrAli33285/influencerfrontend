@@ -30,17 +30,19 @@ setState(response.data)
 setLoading(false)
         }catch(e){
 if(e?.response?.data?.error){
-    toast.error(e?.response?.data?.error)
+    toast.dismiss()
+    toast.error(e?.response?.data?.error,{containerId:"containerE"})
     
 }else{
-    toast.error("Client error please try again")
+    toast.dismiss()
+    toast.error("Client error please try again",{containerId:"containerE"})
 }
 return;
         }
     }
     return (
        <>
-       <ToastContainer/>
+       <ToastContainer containerId="containerE"  limit={1}/>
         <div className="w-full  flex  flex-col">
             <div className="w-full  flex xl:flex-row gap-[20px] flex-col-reverse">
                 <div className="w-full xl:w-[75%] flex flex-col gap-[20px] xl:justify-between">

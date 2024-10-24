@@ -26,17 +26,17 @@ const [loading,setLoading]=useState(true)
             }        
 let response=await axios.get(`${BASE_URL}/get-missionList`,headers)
 setMissionData(response.data.missionList)
-setOriginalMissionData(response.data. missionList)
+setOriginalMissionData(response.data.missionList)
 setLoading(false)
 console.log(response.data)
         }catch(e){
 if(e?.response?.data?.error){
     toast.dismiss()
-    toast.error(e?.response?.data?.error)
+    toast.error(e?.response?.data?.error,{containerId:"containerD"})
     return;
 }else{
     toast.dismiss()
-    toast.error("Client error please try again")
+    toast.error("Client error please try again",{containerId:"containerD"})
     return;
 }
         }
@@ -56,6 +56,9 @@ if(e?.response?.data?.error){
           });
         });
       };
+useEffect(()=>{
+setOriginalMissionData(missionData)
+},[missionData])
 
 
     const getStatusClass = (status) => {
@@ -79,7 +82,7 @@ if(e?.response?.data?.error){
 
     return (
         <>
-        <ToastContainer/>
+        <ToastContainer containerId="containerD"  limit={1}/>
         <div className="bg-white p-[20px] rounded-[20px] shadow-md">
             <div className="flex justify-between items-center mb-[20px]">
                 <h1 className="text-[#2563EB] text-[24px] font-semibold">Mission Listing</h1>

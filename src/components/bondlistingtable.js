@@ -34,11 +34,11 @@ setLoading(false)
         }catch(e){
     if(e?.response?.data?.error){
         toast.dismiss()
-        toast.error(e?.response?.data?.error)
+        toast.error(e?.response?.data?.error,{containerId:"containerB"})
         return;
     }else{
         toast.dismiss()
-toast.error("Client error please try again")
+toast.error("Client error please try again",{containerId:"containerB"})
 return;
     }
         }
@@ -73,7 +73,7 @@ return;
 
     return (
        <>
-       <ToastContainer/>
+       <ToastContainer containerId="containerB"  limit={1}/>
         <div className="bg-white">
             <div className="flex justify-between items-center mb-[20px]">
                 <h1 className="text-[#2563EB] text-[24px] font-semibold">BondListing</h1>

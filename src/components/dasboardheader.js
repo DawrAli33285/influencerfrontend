@@ -50,31 +50,55 @@ export default function DashboardHeader({ children }) {
     });
 
     const createBond=async()=>{
-        if(uploadedImages?.length===0){
-            toast.dismiss()
-            toast.error("Please select images for verification")
-        return;
-        }else if(links?.length===0){
-            toast.dismiss()
-            toast.error("Please enter social media links")
-        return;
-        }else if(bondstate.validity_number.length===0){
-            toast.dismiss()
-          toast.error("Please select validty number")
-          return;
-        }else if(bondstate.title.length===0){
-            toast.dismiss()
-            toast.error("Please enter title of bond")
-        return;
-        }else if(bondstate.quantity===0 || bondstate.quantity.length===0){
-            toast.dismiss()
-            toast.error("Please enter valid quantity")
-       return;
-        }else if(bondstate.bond_price===0 || bondstate.bond_price.length===0){
-            toast.dismiss()
-            toast.error("Please enter valid price")
-        return;
-        }
+        if (uploadedImages?.length === 0) {
+            toast.dismiss();
+            toast.error("Please select images for verification",{containerId:'containerC'});
+            return;  // Exit the function early if validation fails
+          }
+        
+          // Check if links are empty
+          if (links?.length === 0) {
+            toast.dismiss();
+            toast.error("Please enter social media link",{containerId:"containerC"});
+            return;  // Exit the function early if validation fails
+          }
+        
+          // Validate individual links
+          if (links?.length > 0) {
+            for (let i = 0; i < links.length; i++) {
+              if (!links[i] || links[i].length === 0) {
+                toast.dismiss();
+                toast.error("Please enter a valid social media link",{containerId:"containerC"});
+                return;  // Exit the function early if validation fails
+              }
+            }
+          }
+        
+          // Validate bondstate fields
+          if (bondstate.validity_number.length === 0) {
+            toast.dismiss();
+            toast.error("Please select validity number",{containerId:"containerC"});
+            return;  // Exit the function early if validation fails
+          }
+        
+          if (bondstate.title.length === 0) {
+            toast.dismiss();
+            toast.error("Please enter title of bond",{containerId:"containerC"});
+            return;  // Exit the function early if validation fails
+          }
+        
+          if (bondstate.quantity === 0 || bondstate.quantity.length === 0) {
+            toast.dismiss();
+            toast.error("Please enter valid quantity",{containerId:"containerC"});
+            return;  // Exit the function early if validation fails
+          }
+        
+          if (bondstate.bond_price === 0 || bondstate.bond_price.length === 0) {
+            toast.dismiss();
+            toast.error("Please enter valid price",{containerId:"containerC"});
+            return;  // Exit the function early if validation fails
+          }
+        
         try{
      
       
@@ -95,7 +119,7 @@ export default function DashboardHeader({ children }) {
             }
             formData.append('social_media_links',links)
 let response=await axios.post(`${BASE_URL}/createBond`,formData,headers)
-toast.success(response?.data?.message)
+toast.success(response?.data?.message,{containerId:"containerC"})
 setBondPopup(!bondpopup)
 setState((prev)=>{
     let old;
@@ -135,7 +159,7 @@ setLinks([])
 
         }catch(e){
 if(e?.response?.data?.error){
-    toast.error(e?.response?.data?.error)
+    toast.error(e?.response?.data?.error,{containerId:"containerC"})
   
     return;
 }
@@ -169,21 +193,21 @@ const createMission=async()=>{
 try{
     if(missionState.bond_id.length===0){
         toast.dismiss()
-        toast.error("Please select bond")
+        toast.error("Please select bond",{containerId:"containerC"})
         return;
     }else if(missionState.task_type.length===0){
         toast.dismiss()
-        toast.error("Please select mission")
+        toast.error("Please select mission",{containerId:"containerC"})
         return;
     }else if(missionState.description.length===0){
         toast.dismiss()
-        toast.error("Please enter mission description")
+        toast.error("Please enter mission description",{containerId:"containerC"})
         return;
     }
 let response=await axios.post(`${BASE_URL}/create-mission`,missionState)
 console.log(response.data)
 toast.dismiss();
-toast.success("Mission created sucessfully")
+toast.success("Mission created sucessfully",{containerId:"containerC"})
 setBondData((prev)=>{
  let old;
  if(prev?.length===0){
@@ -211,16 +235,16 @@ setMissionPopup(!missionpopup)
 }catch(e){
 if(e?.response?.data?.error){
     toast.dismiss()
-    toast.error(e?.response?.data?.error)
+    toast.error(e?.response?.data?.error,{containerId:"containerC"})
 }else{
     toast.dismiss()
-    toast.error("Client error please try again")
+    toast.error("Client error please try again",{containerId:"containerC"})
 }
 }
 }
     return (
 <>
-<ToastContainer/>
+<ToastContainer containerId="containerC"  limit={1}/>
 <div className="w-full bg-[#E1E1E1] relative  flex">
             <div className="xl:w-[20%] hidden xl:flex flex-col px-[20px] rounded-tr-[20px] rounded-br-[20px] py-[40px] justify-between bg-[#6B33E3]">
                 <div className="flex flex-col gap-[10px]">

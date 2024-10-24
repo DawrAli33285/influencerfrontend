@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function HomeHeader() {
-    const [showmenu,setShoMenu] = useState(false);
-    const menutoggle = ()=>{
-        setShoMenu(!showmenu);
-    }
+    // const [showmenu,setShoMenu] = useState(false);
+    // const menutoggle = ()=>{
+    //     setShoMenu(!showmenu);
+    // }
   
     return (
         <div className="w-full z-50 relative lg:px-[40px] px-[20px] py-[40px] items-center flex justify-between">

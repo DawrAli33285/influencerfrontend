@@ -52,8 +52,8 @@ export default function SignUp() {
         if (Object.keys(formErrors).length === 0) {
             try{
 let response=await axios.post(`${BASE_URL}/register`,formData)
-
-toast.success(response.data.message)
+toast.dismiss()
+toast.success(response.data.message,{containerId:"containerF"})
 localStorage.setItem('token',response.data.token)
 navigate('/dashboard')
 
@@ -61,10 +61,10 @@ navigate('/dashboard')
                 console.log(e)
               if(e?.response?.data?.error){
                 toast.dismiss()
-                toast.error(e?.response?.data?.error)
+                toast.error(e?.response?.data?.error,{containerId:"containerF"})
               }else{
                 toast.dismiss()
-                toast.error("Client error please try again")
+                toast.error("Client error please try again",{containerId:"containerF"})
               }
               return;
             }
@@ -103,7 +103,7 @@ navigate('/dashboard')
 
     return (
         <>
-        <ToastContainer/>
+        <ToastContainer containerId="containerF"  limit={1}/>
        
         <div className="max-w-[1440px] m-auto lg:px-[40px] px-[20px] mt-[80px]">
             <div className="grid lg:grid-cols-2 grid-cols-1">

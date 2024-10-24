@@ -34,7 +34,9 @@ const sections = [
 function App() {
   const [openIndex, setOpenIndex] = useState(null);
   const handleToggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
+    if(index && openIndex){
+      setOpenIndex(openIndex === index ? null : index);
+    }
   };
   const faqs = [
     {
