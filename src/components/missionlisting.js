@@ -57,7 +57,9 @@ if(e?.response?.data?.error){
         });
       };
 useEffect(()=>{
-setOriginalMissionData(missionData)
+if(originalMissionData?.length<=missionData?.length){
+    setOriginalMissionData(missionData)
+}
 },[missionData])
 
 
