@@ -30,7 +30,7 @@ export default function DashboardHeader({ children }) {
     
         title:''
     })
-    const [links, setLinks] = useState(['']);
+    const [links, setLinks] = useState([]);
     const handleAddLink = () => {
         setLinks([...links, '']);
     };
@@ -168,17 +168,21 @@ setBondData(response.data.bondsList)
 const createMission=async()=>{
 try{
     if(missionState.bond_id.length===0){
+        toast.dismiss()
         toast.error("Please select bond")
         return;
     }else if(missionState.task_type.length===0){
+        toast.dismiss()
         toast.error("Please select mission")
         return;
     }else if(missionState.description.length===0){
+        toast.dismiss()
         toast.error("Please enter mission description")
         return;
     }
 let response=await axios.post(`${BASE_URL}/create-mission`,missionState)
 console.log(response.data)
+toast.dismiss();
 toast.success("Mission created sucessfully")
 setBondData((prev)=>{
  let old;
