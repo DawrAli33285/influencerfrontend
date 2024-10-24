@@ -70,6 +70,11 @@ return;
                 return '';
         }
     };
+    useEffect(()=>{
+        if(originalBondData?.length<=bondData?.length){
+            setOriginalBondData(bondData)
+        }
+        },[bondData])
 
     return (
        <>
