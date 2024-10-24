@@ -1,7 +1,22 @@
-export default function NotificationCards() {
+
+import { MoonLoader } from 'react-spinners';
+export default function NotificationCards({state,loading}) {
+const filterBondCount=(filterName)=>{
+   return state?.bondList?.filter(bond=>bond?.status===filterName)?.length
+
+}
+const filterMissionCount=(filterName)=>{
+    return state?.missionList?.filter(mission=>mission?.status===filterName)?.length
+ 
+ }
+
     return (
-        <div className="w-full grid xl:grid-cols-4 md:grid-cols-3 h-fit grid-cols-2 gap-[10px]">
-            <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
+<div className="w-full grid xl:grid-cols-3 md:grid-cols-2 h-fit grid-cols-1 gap-[10px]">
+
+            {loading?<div className='flex justify-center items-center'>
+            <MoonLoader color="#6B33E3" size={100} />
+                </div>:<>
+                <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
                 <div className="flex justify-center items-center p-[20px] rounded-[20px] bg-[#C0A3FC]">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.16699 11.9054C2.62419 12.586 1.66699 13.5344 1.66699 14.5834C1.66699 16.6545 5.39795 18.3334 10.0003 18.3334C14.6027 18.3334 18.3337 16.6545 18.3337 14.5834C18.3337 13.5344 17.3765 12.586 15.8337 11.9054M15.0003 6.66675C15.0003 10.0532 11.2503 11.6667 10.0003 14.1667C8.75033 11.6667 5.00033 10.0532 5.00033 6.66675C5.00033 3.90532 7.2389 1.66675 10.0003 1.66675C12.7617 1.66675 15.0003 3.90532 15.0003 6.66675ZM10.8337 6.66675C10.8337 7.12699 10.4606 7.50008 10.0003 7.50008C9.54009 7.50008 9.16699 7.12699 9.16699 6.66675C9.16699 6.20651 9.54009 5.83341 10.0003 5.83341C10.4606 5.83341 10.8337 6.20651 10.8337 6.66675Z" stroke="#6B33E3" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
@@ -9,7 +24,7 @@ export default function NotificationCards() {
                 </div>
                 <div className="flex flex-col">
                     <h1 className="text-[16px] text-[#344054]">Pending</h1>
-                    <h2 className="text-[18px] font-semibold">118</h2>
+                    <h2 className="text-[18px] font-semibold">{filterBondCount("PENDING")}</h2>
                 </div>
             </div>
             <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
@@ -20,8 +35,8 @@ export default function NotificationCards() {
 
                 </div>
                 <div className="flex flex-col">
-                    <h1 className="text-[16px] text-[#344054]">Live</h1>
-                    <h2 className="text-[18px] font-semibold">209.1K</h2>
+                    <h1 className="text-[16px] text-[#344054]">Approved</h1>
+                    <h2 className="text-[18px] font-semibold">{filterBondCount("APPROVED")}</h2>
                 </div>
             </div>
             <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
@@ -39,8 +54,8 @@ export default function NotificationCards() {
 
                 </div>
                 <div className="flex flex-col">
-                    <h1 className="text-[16px] text-[#344054]">Completed</h1>
-                    <h2 className="text-[18px] font-semibold">300K</h2>
+                    <h1 className="text-[16px] text-[#344054]">Live</h1>
+                    <h2 className="text-[18px] font-semibold">{filterBondCount("PENDING")}</h2>
                 </div>
             </div>
             <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
@@ -52,7 +67,7 @@ export default function NotificationCards() {
                 </div>
                 <div className="flex flex-col">
                     <h1 className="text-[16px] text-[#344054]">Completed</h1>
-                    <h2 className="text-[18px] font-semibold">702K</h2>
+                    <h2 className="text-[18px] font-semibold">{filterBondCount("COMPLETED")}</h2>
                 </div>
             </div>
             <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
@@ -63,7 +78,7 @@ export default function NotificationCards() {
                 </div>
                 <div className="flex flex-col">
                     <h1 className="text-[16px] text-[#344054]">Pending Mission</h1>
-                    <h2 className="text-[18px] font-semibold">118</h2>
+                    <h2 className="text-[18px] font-semibold">{filterMissionCount("PENDING")}</h2>
                 </div>
             </div>
             <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
@@ -75,7 +90,7 @@ export default function NotificationCards() {
                 </div>
                 <div className="flex flex-col">
                     <h1 className="text-[16px] text-[#344054]">Approved Mission</h1>
-                    <h2 className="text-[18px] font-semibold">302.9K</h2>
+                    <h2 className="text-[18px] font-semibold">{filterMissionCount("APPROVED")}</h2>
                 </div>
             </div>
             <div className="bg-white rounded-[20px] p-[20px] flex gap-[10px] custom-inset-shadow">
@@ -94,10 +109,11 @@ export default function NotificationCards() {
                 </div>
                 <div className="flex flex-col">
                     <h1 className="text-[16px] text-[#344054]">Completed Mission</h1>
-                    <h2 className="text-[18px] font-semibold">702K</h2>
+                    <h2 className="text-[18px] font-semibold">{filterMissionCount("COMPLETED")}</h2>
                 </div>
             </div>
 
+            </>}
         </div>
     )
 }

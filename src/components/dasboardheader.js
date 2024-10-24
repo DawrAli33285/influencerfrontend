@@ -6,14 +6,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
   import 'react-toastify/dist/ReactToastify.css';
 import { BASE_URL } from "../baseURL";
-
-export default function AdminHeader({ children }) {
+import { BondListContext } from "../contextAPI/bondListing";
+import { MissionListContext } from "../contextAPI/missionListing";
+import { useContext } from "react";
+export default function DashboardHeader({ children }) {
     const location = useLocation();
     const [bondpopup, setBondPopup] = useState(false)
     const [missionpopup, setMissionPopup] = useState(false)
     const [sponsorData,setBondData]=useState([])
     const [menupopup, setMenuPopup] = useState(false)
     const [uploadedImages, setUploadedImages] = useState([]);
+    const {state,setState}=useContext(BondListContext)
+    const {missionStateContext,setMissionStateContext}=useContext(MissionListContext)
     const [missionState,setMissionState]=useState({
         bond_id:'',
         description:'',
@@ -93,9 +97,38 @@ export default function AdminHeader({ children }) {
 let response=await axios.post(`${BASE_URL}/createBond`,formData,headers)
 toast.success(response?.data?.message)
 setBondPopup(!bondpopup)
+setState((prev)=>{
+    let old;
+    if(prev?.length>0){
+old=[...prev,{
+    quantity:bondstate.quantity,
+    bond_price:bondstate.bond_price,
+    total_bonds:bondstate.quantity,
+    bond_issuerance_amount:bondstate.bond_price*bondstate.quantity,
+    title:bondstate.title,
+    createdAt:Date.now(),
+    validity_number:bondstate.validity_number,
+      status:"PENDING"
+}]
+    }else{
+old=[{
+    quantity:bondstate.quantity,
+    total_bonds:bondstate.quantity,
+    bond_issuerance_amount:bondstate.bond_price*bondstate.quantity,
+    bond_price:bondstate.bond_price,
+    createdAt:Date.now(),
+    title:bondstate.title,
+    validity_number:bondstate.validity_number,
+    status:"PENDING"
+}]
+    }
+    return old;
+})
 setBondState({
     quantity:0,
-    bond_price:0
+    bond_price:0,
+    title:'',
+    validity_number:0
 })
 setUploadedImages([])
 setLinks([])
@@ -120,8 +153,9 @@ if(e?.response?.data?.error){
         authorization:`Bearer ${token}`
     }
   }          
-let response=await axios.get(`${BASE_URL}/bond-listing`,headers)
-
+let response=await axios.get(`${BASE_URL}/bond-withoutMissions`,headers)
+console.log(response.data)
+console.log("NO MISSION BOND")
 setBondData(response.data.bondsList)
 
    
@@ -144,14 +178,31 @@ try{
         return;
     }
 let response=await axios.post(`${BASE_URL}/create-mission`,missionState)
-toast.dismiss();
-toast.success(response.data.message)
+console.log(response.data)
+toast.success("Mission created sucessfully")
+setBondData((prev)=>{
+ let old;
+ if(prev?.length===0){
+    return [];
+ }else{
+    old=prev?.filter(u=>u._id!==missionState.bond_id)
+    return old
+ }
+})
+setMissionStateContext((prev) => {
+
+    const updatedContext = prev && prev.length > 0 ? [...prev, response.data.getMission] : [response.data.getMission];
+
+    return updatedContext;
+});
 setMissionState({
     bond_id:'',
     description:'',
     task_type:''
 })
- setMissionPopup(!missionpopup)
+
+
+setMissionPopup(!missionpopup)
 
 }catch(e){
 if(e?.response?.data?.error){
@@ -266,7 +317,7 @@ if(e?.response?.data?.error){
             {
                 bondpopup && (
                     <div className="absolute w-full h-full flex justify-center items-center px-[20px] bg-[#00000085]">
-                        <div className="bg-white flex flex-col gap-[10px] rounded-[20px] p-[20px] max-w-[800px] w-full">
+                        <div className="bg-white flex h-[90%] overflow-auto flex-col gap-[10px] rounded-[20px] p-[20px] max-w-[800px] w-full">
                             <h1 className="text-[24px] font-semibold">
                                 Create New Bond
                             </h1>
@@ -427,25 +478,30 @@ if(e?.response?.data?.error){
                             <div>
                                 <label htmlFor="validitynumber" className="block text-xl  font-semibold text-[#272226]">Select bond</label>
                                 <div className="mt-4">
-                                    <select
-                                    onChange={(e)=>{
-                                       
-                                        setMissionState({
-                                            ...missionState,
-                                            bond_id:e.target.value
-
-                                        })
-                                    }} value={missionState.bond_id}
-                                        name="bond"
-                                        className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-                                    >
-                                        <option >Select Bond</option>
-                                        {sponsorData?.map((bond,i)=>{
-                                           return <option key={bond?._id} value={bond?._id}>
-                                            {bond?.title}
-                                         </option>
-                                        })}
-                                    </select>
+                                { sponsorData.length === 0 ? (
+    // Message when no bonds are available
+    <p className="text-red-500">No bond available without a mission</p>
+) : (
+    // Render select dropdown if bonds are available
+    <select
+        onChange={(e) => {
+            setMissionState({
+                ...missionState,
+                bond_id: e.target.value
+            });
+        }}
+        value={missionState.bond_id}
+        name="bond"
+        className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+    >
+        <option>Select Bond</option>
+        {sponsorData.map((bond, i) => (
+            <option key={bond?._id} value={bond?._id}>
+                {bond?.title}
+            </option>
+        ))}
+    </select>
+)}
                                 </div>
                             </div>
 

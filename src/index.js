@@ -12,7 +12,9 @@ import AdminHeader from './components/adminheader';
 import Dashboard from './pages/dashboard';
 import SponsorBond from './pages/sponsorbond';
 import Mission from './pages/mission';
-
+import { MissionListProvider } from './contextAPI/missionListing';
+import { BondListProvider } from './contextAPI/bondListing';
+import DashboardHeader from './components/dasboardheader';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,15 +26,40 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <AdminHeader><Dashboard /></AdminHeader>,
+    element: 
+      <AdminHeader>
+        <MissionListProvider>
+        <BondListProvider>
+        <Dashboard />
+        </BondListProvider>
+        </MissionListProvider>
+        </AdminHeader>
+   ,
   },
   {
     path: "/sponsorbond",
-    element: <AdminHeader><SponsorBond /></AdminHeader>,
+    element: 
+    <BondListProvider>
+      <MissionListProvider>
+
+   
+    <DashboardHeader>
+      <SponsorBond />
+      </DashboardHeader>
+      </MissionListProvider>
+      </BondListProvider>,
   },
   {
     path: "/mission",
-    element: <AdminHeader><Mission /></AdminHeader>,
+    element: <MissionListProvider>
+      <BondListProvider>
+
+     
+      <DashboardHeader>
+      <Mission />
+     </DashboardHeader> 
+     </BondListProvider>
+     </MissionListProvider>,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import img from "../signuppage.jpeg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,7 @@ export default function SignUp() {
         email: '',
         agree: false,
     });
+    const [countryCodes, setCountryCodes] = useState([]);
 
     const [errors, setErrors] = useState({});
     let navigate=useNavigate();
@@ -57,17 +58,48 @@ localStorage.setItem('token',response.data.token)
 navigate('/dashboard')
 
             }catch(e){
+                console.log(e)
               if(e?.response?.data?.error){
+                toast.dismiss()
                 toast.error(e?.response?.data?.error)
               }else{
+                toast.dismiss()
                 toast.error("Client error please try again")
               }
+              return;
             }
           
         }
     };
 
+    useEffect(() => {
+        const fetchCountryCodes = async () => {
+            try {
+                const response = await axios.get('https://restcountries.com/v3.1/all');
+                const countries = response.data;
+                const countryCodeList = countries.map((country) => ({
+                    name: country.name.common,
+                    code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : ""),
+                    flag: country.flags.svg, 
+                }));
+                setCountryCodes(countryCodeList);
+            } catch (error) {
+                console.error("Error fetching country codes: ", error);
+            }
+        };
 
+        fetchCountryCodes();
+    }, []);
+
+    const sortCountryCodes = () => {
+        return countryCodes.sort((a, b) => {
+            const nameA = a.name.toLowerCase();
+            const nameB = b.name.toLowerCase();
+            if (nameA < nameB) return -1; 
+            if (nameA > nameB) return 1;  
+            return 0;                       
+        });
+    };
 
     return (
         <>
@@ -86,6 +118,8 @@ navigate('/dashboard')
                                 <input
                                     type="text"
                                     name="username"
+                                    maxLength={10}
+                                    placeholder="Enter username"
                                     value={formData.username}
                                     onChange={handleChange}
                                     className={`mt-1 block w-full px-3 py-3 border rounded-md ${errors.userName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring focus:border-blue-500`}
@@ -98,6 +132,8 @@ navigate('/dashboard')
                                 <input
                                     type="password"
                                     name="password"
+                                    placeholder="Enter password"
+                                    maxLength={10}
                                     value={formData.password}
                                     onChange={handleChange}
                                     className={`mt-1 block w-full px-3 py-3 border rounded-md ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring focus:border-blue-500`}
@@ -107,28 +143,31 @@ navigate('/dashboard')
 
                             <div className="flex space-x-4">
 
-    <div className="w-1/4">
-        <label htmlFor="countryCode" className="block text-lg font-medium">Country Code</label>
-        <select
-            name="country_code"
-            value={formData.country_code}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-3 border rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-        >
-            <option value="">Code</option>
-            <option value="+1">+1 (USA)</option>
-            <option value="+44">+44 (UK)</option>
-            <option value="+91">+91 (India)</option>
-        </select>
-        {errors.country_code && <p className="text-red-500 text-sm">{errors.country_code}</p>}
-    </div>
-
+                            <div className="w-1/4">
+            <label htmlFor="countryCode" className="block text-lg font-medium">Code</label>
+            <select
+                name="country_code"
+                value={formData.country_code}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-3 border rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+            >
+                <option value="">Code</option>
+                {sortCountryCodes()?.map((country, index) => (
+                    <option key={index} value={country.code}>
+                        {`${country.code} (${country.name})`}
+                    </option>
+                ))}
+            </select>
+            {errors.country_code && <p className="text-red-500 text-sm">{errors.country_code}</p>}
+        </div>
 
     <div className="w-3/4">
         <label htmlFor="phoneNumber" className="block text-lg font-medium">Phone Number</label>
         <input
+        placeholder="Enter phone number without country code"
             type="text"
             name="mobile_number"
+            maxLength={11}
             value={formData.mobile_number}
             onChange={handleChange}
             className={`mt-1 block w-full px-3 py-3 border rounded-md ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring focus:border-blue-500`}
@@ -142,6 +181,7 @@ navigate('/dashboard')
                                 <input
                                     type="email"
                                     name="email"
+                                    placeholder="Enter email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     className={`mt-1 block w-full px-3 py-3 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring focus:border-blue-500`}
