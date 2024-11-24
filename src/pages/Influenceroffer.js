@@ -1,0 +1,142 @@
+import axios from "axios";
+import React, { useEffect ,useState} from "react";
+import { useLocation,useNavigate } from "react-router-dom";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from "../baseURL";
+const InfluencerOffer = () => {
+    const [bondData,setBondData]=useState()
+    const [offerData,setOfferData]=useState()
+    const navigate=useNavigate();
+    let location=useLocation();
+    useEffect(()=>{
+fetchBondInfo();
+    },[])
+const fetchBondInfo=async()=>{
+try{
+    let params=new URLSearchParams(location.search)
+    let bond_id=params.get('bond_id')
+    let token=localStorage.getItem('token')
+    let headers={
+        headers:{
+            authorization:`Bearer ${token}`
+        }
+    }
+    if(!token){
+        toast.error("Please login first",{containerId:"influenceroffer"})
+        return;
+    }
+    let response=await axios.get(`${BASE_URL}/getSingleBond/${bond_id}`)
+    console.log("RESPONSE offers")
+    console.log(response.data)
+    setBondData(response.data.bond)
+    setOfferData(response.data.offer)
+}catch(e){
+  console.log(e)
+if(e?.response?.data?.error){
+    toast.error(e?.respose?.data?.error,{containerId:"influenceroffer"})
+}else{
+    toast.error("Client error please try again",{containerId:"influenceroffer"})
+}
+}
+}
+
+const rejectOffer=async()=>{
+    try{
+      let token=localStorage.getItem('token')
+      if(!token){
+        toast.error("Please login first",{containerId:"influenceroffer"})
+        return
+      }
+      let headers={
+        headers:{
+          authorization:`Bearer ${token}`
+        }
+      }
+        let response=await axios.delete(`${BASE_URL}/rejectOffergetSingleBond/${bondData?._id}/${bondData?.issuer_id}/${offerData?._id}`,headers)
+         navigate('/dashboard')
+        toast.success(response?.data?.message,{containerId:"influenceroffer"})
+    }catch(e){
+      console.log(e)
+        if(e?.response?.data?.error){
+            toast.error(e?.response?.data?.error,{containerId:"influenceroffer"})
+        }else{
+            toast.error("Client error please try again",{containerId:"influenceroffer"})
+        }
+    }
+}
+
+const acceptOffer=async()=>{
+    try{
+      let token=localStorage.getItem('token')
+      if(!token){
+        toast.error("Please login first",{containerId:"influenceroffer"})
+        return
+      }
+      let headers={
+        headers:{
+          authorization:`Bearer ${token}`
+        }
+      }
+        let response=await axios.get(`${BASE_URL}/acceptOffer/${bondData?._id}/${bondData?.issuer_id}/${offerData?._id}`,headers)
+         navigate('/dashboard')
+        toast.success(response?.data?.message,{containerId:"influenceroffer"})
+    }catch(e){
+
+        if(e?.response?.data){
+          
+            toast.error(e?.response?.data?.error,{containerId:"influenceroffer"})
+        }else{
+            toast.error("Client error please try again",{containerId:"influenceroffer"})
+        }
+    }
+}
+
+  return (
+    <>
+    <ToastContainer containerId="influenceroffer"></ToastContainer>
+  
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Bond Offer Details</h2>
+
+        {/* Bond Title */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-600">Bond Title</h3>
+          <p className="text-xl text-gray-900 font-medium">{bondData?.title}</p>
+        </div>
+
+        {/* Offer Details */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <h4 className="text-lg font-semibold text-gray-600">Quantity Offered</h4>
+            <p className="text-gray-900 text-lg font-medium">{offerData?.number_of_bonds} Bonds</p>
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold text-gray-600">Offer Amount</h4>
+            <p className="text-gray-900 text-lg font-medium">{offerData?.price}</p>
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold text-gray-600">Total Bonds Value</h4>
+            <p className="text-gray-900 text-lg font-medium">{bondData?.
+bond_price*offerData?.number_of_bonds
+}</p>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-between mt-6">
+          <button onClick={rejectOffer} className="w-1/2 mr-2 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition duration-200">
+            Reject
+          </button>
+          <button onClick={acceptOffer} className="w-1/2 ml-2 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition duration-200">
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+    </>
+  );
+};
+
+export default InfluencerOffer;
