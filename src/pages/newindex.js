@@ -1,3 +1,4 @@
+import { useEffect , useState } from "react";
 import ActiveBids from "../components/activebidds";
 import Banner from "../components/banner";
 import ExploreBond from "../components/explorebond";
@@ -7,19 +8,57 @@ import HowDoesItWork from "../components/howdoesitwork";
 import Reviews from "../components/review";
 import TopIssuers from "../components/topissuers";
 import WhyChooseUs from "../components/whychooseus";
+import axios from 'axios'
+import {ToastContainer,toast} from 'react-toastify'
+import { BASE_URL } from "../baseURL";
+import { MoonLoader } from 'react-spinners';
 
 export default function NewIndex(){
+    const [loading,setLoading]=useState(true)
+    const [state,setState]=useState({
+        bonds:[],
+        issuers:[]
+    })
+    useEffect(()=>{
+getMainPageData();
+    },[])
+
+const getMainPageData=async()=>{
+    try{
+let response=await axios.get(`${BASE_URL}/getMainPageData`)
+setState({
+    bonds:response.data.bonds,
+    issuers:response.data.issuers,
+    market:response.data.market
+})
+setLoading(false)
+console.log("RESPONSE")
+console.log(response.data)
+    }catch(e){
+        if(e?.response?.data?.error){
+toast.error(e?.response?.data?.error,{containerId:"mainPage"})
+        }else{
+            toast.error("Client error please try again",{containerId:"mainPage"})
+        }
+    }
+}
+
+
+
     return(
+        <>
+     <ToastContainer containerId={"mainPage"}/>
         <div className="w-full">
             <HomeHeader />
             <Banner />
             <HowDoesItWork />
             <WhyChooseUs />
-            <ExploreBond />
-            <TopIssuers />
-            <ActiveBids />
+            <ExploreBond loading={loading} state={state} setState={setState}/>
+            <TopIssuers loading={loading} state={state} setState={setState} />
+            <ActiveBids loading={loading} state={state} setState={setState} />
             <Reviews />
             <HomeFooter />
         </div>
+        </>
     )
 }

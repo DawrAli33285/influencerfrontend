@@ -13,6 +13,7 @@ const SellerMissionListingTable = () => {
     const [cancelledpopup, setCancelledPopup] = useState(false)
     const [bids, setBids] = useState([])
     const [missions,setMissions]=useState([])
+    const [disableOffer,setDisableOffer]=useState(true)
     const [currentIssuerId, setCurrentIssuerId] = useState()
     const [cancellationState, setCancellationState] = useState({
         reason: '',
@@ -51,6 +52,7 @@ const SellerMissionListingTable = () => {
             setBids(response.data.bids)
             setCurrentBuyerId(response.data.buyer_id)
             setMissions(response.data.missions)
+            setDisableOffer(response.data.disableOffer)
             setLoading(false)
             console.log(response.data)
         } catch (e) {
@@ -249,8 +251,20 @@ const SellerMissionListingTable = () => {
                                         <td className="p-[10px] font-bold ">{bond?.validity_number + ' months'}</td>
                                         <td>
                                             <button className="p-[10px] text-[#1DBF73] underline  font-semibold rounded-[10px] lg:col-span-2">
-                                            {bond?.status == "APPROVED" && bond?.issuer_id !== currentIssuerId ? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className=' text-[#1DBF73] underlinecursor-pointer'>Send Offer</a> : ''}
-                                            {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className=' text-[#1DBF73] underline cursor-pointer'>Bid offer</a> : ''}
+                                            {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}
+                                            {bond?.status === "AWAITING FOR PAYMENT" &&
+                                                bond?.issuer_id !== currentIssuerId &&
+                                                (
+                                                    bond?.offers?.some(u => u?.buyer_id === currentBuyerId) ||
+                                                    bond?.buyerOffers?.some(u => u?.newbuyer_id === currentBuyerId)
+                                                )
+                                                ? <a href={`/payment?bond_id=${bond?._id}`} className='text-[#5E2DC8]'>Pay Now</a>
+                                                : ''
+                                            }
+
+
+                                            {bond?.status == "APPROVED" && bond?.issuer_id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
+                                            {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='text-[#5E2DC8] cursor-pointer'>Bid offer</a> : ''}
                                             </button>
                                         </td>
 
@@ -306,35 +320,52 @@ const SellerMissionListingTable = () => {
                         <div>
                             <label htmlFor="price" className="block text-xl font-semibold text-[#272226]">Price</label>
                             <div className="mt-4">
-                                <input value={state.price} onChange={(e) => {
-                                    setState({
-                                        ...state,
-                                        price: e.target.value
-                                    })
-                                }} type="text" name="price" className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500" placeholder="Enter Your Desired Price" />
+                            <input
+    value={state.price}
+    onChange={(e) => {
+       
+        const newValue = e.target.value;
+        if (/^\d*\.?\d*$/.test(newValue)) { 
+            setState({
+                ...state,
+                price: newValue
+            });
+        }
+    }}
+    type="text"
+    name="price"
+    className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+    placeholder="Enter Your Desired Price"
+    min="0"  
+/>
+
                             </div>
                         </div>
                         {!state?.oldbuyer_id?.length > 0 && (
                             <div>
                                 <label htmlFor="bonds" className="block text-xl font-semibold text-[#272226]">Number of Bonds</label>
                                 <div className="mt-4">
-                                    <input
-                                        value={state.number_of_bonds}
-                                        onChange={(e) => {
-                                            const inputValue = Number(e.target.value);
+                                <input
+    value={state.number_of_bonds}
+    onChange={(e) => {
+   
+        const inputValue = e.target.value.replace(/^0+/, ''); 
+        const parsedValue = Number(inputValue);
 
-                                            if (inputValue <= state.limit_bonds) {
-                                                setState({
-                                                    ...state,
-                                                    number_of_bonds: inputValue
-                                                });
-                                            }
-                                        }}
-                                        type="number"
-                                        name="bonds"
-                                        className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-                                        placeholder="Enter Your Bond Number"
-                                    />
+       
+        if (!isNaN(parsedValue) && parsedValue <= state.limit_bonds) {
+            setState({
+                ...state,
+                number_of_bonds: parsedValue
+            });
+        }
+    }}
+    type="text" 
+    name="bonds"
+    className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+    placeholder="Enter Your Bond Number"
+/>
+
                                 </div>
 
                             </div>

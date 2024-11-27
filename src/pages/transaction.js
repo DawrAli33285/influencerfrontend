@@ -220,7 +220,7 @@ toast.error("Client error please try again",{containerId:"transaction"})
                         <div>
                             <label htmlFor="price" className="block text-xl  font-semibold text-[#272226]">Purchase Price</label>
                             <div className="mt-4">
-                                <input  type="text" name="price" className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500" disabled placeholder={state?.offer?state?.bond?.bond_price*state?.offer?.number_of_bonds:state?.bond?.bond_issuerance_amount} />
+                                <input  type="text" name="price" className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500" disabled placeholder={state?.offer?.price?state?.offer?.price:state?.bond?.bond_issuerance_amount} />
                             </div>
                         </div>
                         <div>

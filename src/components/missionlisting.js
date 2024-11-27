@@ -11,6 +11,7 @@ const MissionListingTable = () => {
     const [originalMissionData, setOriginalMissionData] = useState([])
     const [missionpopup, setMissionPopup] = useState(false)
     const [sponsorData, setBondData] = useState([])
+    const [bondIds,setBondIds]=useState([])
     const { missionStateContext: missionData, setMissionStateContext: setMissionData } = useContext(MissionListContext)
 
     const [missionState, setMissionState] = useState({
@@ -21,39 +22,59 @@ const MissionListingTable = () => {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         fetchMissionData();
+        fetchBondList()
     }, [])
     const createMission = async () => {
+        
         try {
             if (missionState.bond_id.length === 0) {
                 toast.dismiss()
-                toast.error("Please select bond", { containerId: "containerA" })
+                toast.error("Please select bond", { containerId: "containerD" })
                 return;
             } else if (missionState.task_type.length === 0) {
                 toast.dismiss()
-                toast.error("Please select mission", { containerId: "containerA" })
+                toast.error("Please select mission", { containerId: "containerD" })
                 return;
             } else if (missionState.description.length === 0) {
                 toast.dismiss()
-                toast.error("Please enter mission description", { containerId: "containerA" })
+                toast.error("Please enter mission description", { containerId: "containerD" })
                 return;
             }
             let response = await axios.post(`${BASE_URL}/create-mission`, missionState)
             toast.dismiss();
-            toast.success(response.data.message, { containerId: "containerA" })
+            setBondIds((prev)=>{
+                let old;
+                if(prev.length==0){
+                    old=[missionState.bond_id]
+                }else{
+                    old=[...prev,missionState.bond_id]
+                }
+                return old
+            })
+            toast.success(response.data.message, { containerId: "containerD" })
             setMissionState({
                 bond_id: '',
                 description: '',
                 task_type: ''
+            })
+            setMissionData((prev)=>{
+                let old;
+                if(prev.length==0){
+                    old=[response.data.getMission]
+                }else{
+                    old=[...prev,response.data.getMission]
+                }
+                return old
             })
             setMissionPopup(!missionpopup)
 
         } catch (e) {
             if (e?.response?.data?.error) {
                 toast.dismiss()
-                toast.error(e?.response?.data?.error, { containerId: "containerA" })
+                toast.error(e?.response?.data?.error, { containerId: "containerD" })
             } else {
                 toast.dismiss()
-                toast.error("Client error please try again", { containerId: "containerA" })
+                toast.error("Client error please try again", { containerId: "containerD" })
             }
         }
     }
@@ -84,6 +105,8 @@ const MissionListingTable = () => {
     }
 
 
+
+
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const fetchAccordingToMonth = (e) => {
         const monthName = e.target.value;
@@ -103,6 +126,31 @@ const MissionListingTable = () => {
         }
     }, [missionData])
 
+
+
+    
+    const fetchBondList = async () => {
+        try {
+            let token = localStorage.getItem('token')
+            let headers = {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            }
+            let response = await axios.get(`${BASE_URL}/bond-listing`, headers)
+
+            setBondData(response.data.bondsList)
+
+
+
+        } catch (e) {
+            if (e?.response?.data?.error) {
+                toast.error(e?.response?.data?.error, { containerId: "containerD" })
+            } else {
+                toast.error("Client error please try again", { containerId: "containerD" })
+            }
+        }
+    }
 
     const getStatusClass = (status) => {
         switch (status) {
@@ -260,9 +308,11 @@ const MissionListingTable = () => {
                                     >
                                         <option >Select Bond</option>
                                         {sponsorData?.map((bond, i) => {
+                                           if(!bondIds.find(u=>u==bond?._id)){
                                             return <option key={bond?._id} value={bond?._id}>
-                                                {bond?.title}
-                                            </option>
+                                            {bond?.title}
+                                        </option>
+                                           }
                                         })}
                                     </select>
                                 </div>
