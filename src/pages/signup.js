@@ -82,17 +82,26 @@ export default function SignUp() {
     useEffect(() => {
         const fetchCountryCodes = async () => {
             try {
-                fetch('https://restcountries.com/v3.1/all')
-                .then((response) => response.json())
-                .then((countries) => {
-                    const countryCodeList = countries.map((country) => ({
-                        name: country.name.common,
-                        code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : ""),
-                        flag: country.flags.svg,
-                    }));
-                    setCountryCodes(countryCodeList);
-                })
-                .catch((error) => console.error("Error fetching country codes: ", error));
+                fetch(`${BASE_URL}/getCountries`)
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.success) {
+            const countryCodeList = data.countries.map((country) => ({
+                name: country.name,
+                code: country.code,
+                flag: country.flag,
+            }));
+            setCountryCodes(countryCodeList);
+        } else {
+            console.error("Error: Failed to fetch country codes");
+            toast.error("Failed to load country codes. Please try again later.",{containerId:"containerF"});
+        }
+    })
+    .catch((error) => {
+        console.error("Error fetching country codes: ", error);
+        toast.error("Error fetching country codes. Please try again later.",{containerId:"containerF"});
+    });
+
             } catch (error) {
                 console.error("Error fetching country codes: ", error);
             }
