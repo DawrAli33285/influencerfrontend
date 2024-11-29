@@ -9,9 +9,19 @@ import { useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
 import howto from "../../howtocreatebond.png"
 import { Link, useNavigate } from 'react-router-dom';
+const priceRanges = [
+    { label: "Below $50", value: "0-50" },
+    { label: "$50 - $100", value: "50-100" },
+    { label: "$100 - $500", value: "100-500" },
+    { label: "$500 - $1000", value: "500-1000" },
+    { label: "Above $1000", value: "1000+" }
+  ];
 const SellerBondListingTable = () => {
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [loading, setLoading] = useState(true)
+    const [alreadyForExchange,setAlreadyForExchange]=useState(false)
+    const [search,setSearch]=useState("")
+    const [selectedPriceRange,setSelectedPriceRange]=useState("default")
     const [bondstate, setBondState] = useState({
         quantity: 0,
         bond_price: 0,
@@ -66,6 +76,7 @@ const SellerBondListingTable = () => {
             console.log("RESPONSe")
             console.log(response.data)
             setBondData(response.data.bond)
+            setAlreadyForExchange(response.data.AlreadyForExchange)
             setOriginalBondData(response.data.bond)
             setLoading(false)
 
@@ -83,19 +94,7 @@ const SellerBondListingTable = () => {
     }
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    const fetchAccordingToMonth = (e) => {
-        const monthName = e.target.value;
-        setSelectedMonth(e.target.value)
-        const monthIndex = months.indexOf(monthName);
-        if (monthIndex === -1) return;
-        setBondData((prevBondData) => {
-            return originalBondData.filter((bond) => {
-                const bondDate = new Date(bond.createdAt);
-                return bondDate.getMonth() === monthIndex;
-            });
-        });
-    };
-
+    
     const getStatusClass = (status) => {
         switch (status) {
             case 'Pending':
@@ -114,7 +113,40 @@ const SellerBondListingTable = () => {
         }
     }, [bondData])
 
-
+    const applyFilters = () => {
+        let filteredData = originalBondData;
+ 
+        if (selectedMonth && selectedMonth !== "default") {
+            const monthIndex = months.indexOf(selectedMonth);
+            if (monthIndex !== -1) {
+                filteredData = filteredData.filter((bond) => {
+                    const bondDate = new Date(bond.createdAt);
+                    return bondDate.getMonth() === monthIndex;
+                });
+            }
+        }
+    
+       
+        if (selectedPriceRange && selectedPriceRange !== "default") {
+            const [min, max] = selectedPriceRange.split("-").map((val) => parseFloat(val));
+            filteredData = filteredData.filter((bond) => {
+                const amount = Number(bond.bond_issuerance_amount);
+                return max ? amount >= min && amount <= max : amount >= min;
+            });
+        }
+    
+        
+        if (search) {
+            const searchValue = search.toLowerCase();
+            filteredData = filteredData.filter((bond) => {
+                const titleMatch = bond.title.toLowerCase().includes(searchValue);
+                const usernameMatch = bond?.issuer_id?.user_id?.username?.toLowerCase()?.includes(searchValue);
+                return titleMatch || usernameMatch;
+            });
+        }
+    
+        setBondData(filteredData);
+    };
 
     const cancellbond = async () => {
         try {
@@ -220,6 +252,30 @@ const SellerBondListingTable = () => {
             }
         }
     }
+    const fetchAccordingToMonth = (e) => {
+        setSelectedMonth(e.target.value);
+        applyFilters(); 
+    };
+    
+   
+const filterItems = (value) => {
+    setSearch(value);
+    applyFilters(); 
+};
+
+    const handlePriceRangeChange = (e) => {
+        setSelectedPriceRange(e.target.value);
+        applyFilters(); 
+    };
+    
+   
+
+    
+
+    useEffect(() => {
+        applyFilters();
+    }, [selectedMonth, selectedPriceRange, search]);
+    
 
     return (
         <>
@@ -231,12 +287,12 @@ const SellerBondListingTable = () => {
                         <p className='text-[18px]'>Discover and invest in unique missions by talented individuals.</p>
                     </div>
                     <div className="grid lg:grid-cols-12 gap-[20px] grid-cols-1 lg:mt-0 mt-[40px]">
-                        <select
+                    <select
                             value={selectedMonth}
                             onChange={fetchAccordingToMonth}
                             className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
                         >
-                            <option value="default">Issuer</option>
+                            <option value="default">Month</option>
                             {months.map((month) => (
                                 <option key={month} value={month}>
                                     {month}
@@ -244,23 +300,25 @@ const SellerBondListingTable = () => {
                             ))}
                         </select>
                         <select
-                            value={selectedMonth}
-                            onChange={fetchAccordingToMonth}
-                            className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
-                        >
-                            <option value="default">Price Range</option>
-                            {months.map((month) => (
-                                <option key={month} value={month}>
-                                    {month}
-                                </option>
-                            ))}
-                        </select>
+  value={selectedPriceRange}
+  onChange={handlePriceRangeChange}
+  className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
+>
+  <option value="default">Price Range</option>
+  {priceRanges.map((range) => (
+    <option key={range.value} value={range.value}>
+      {range.label}
+    </option>
+  ))}
+</select>
 
 
                         <div className="flex gap-[10px] xl:flex-row flex-col w-full lg:col-span-4">
                             <div className="w-full bg-[#F6F6F6] rounded-[20px] px-[10px] py-[10px] flex items-center">
-                                <input
+                            <input
                                     type="text"
+                                    value={search}
+                                    onChange={(e)=>filterItems(e.target.value)}
                                     placeholder="Search here..."
                                     className="outline-none border-none bg-transparent w-[90%]"
                                 />
@@ -268,9 +326,7 @@ const SellerBondListingTable = () => {
                         </div>
 
 
-                        <button onClick={() => { setBondPopup(!bondpopup) }} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
-                            Create Bond
-                        </button>
+                      
 
                     </div>
                 </div>
@@ -283,9 +339,9 @@ const SellerBondListingTable = () => {
                         <table className="min-w-full xl:table hidden table-auto border-gray-300 border-collapse">
                             <thead>
                                 <tr className="bg-[#FDFBFD]">
-                                    <th className="p-[10px] text-left border-b border-gray-300">Issuer</th>
-                                    <th className="p-[10px] text-left border-b border-gray-300">Mission</th>
+                                    <th className="p-[10px] text-left border-b border-gray-300">Bond Title</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Price</th>
+                                    <th className="p-[10px] text-left border-b border-gray-300">Total Bonds</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Validity</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Status</th>
                                     <th className="p-[10px] text-left border-b border-gray-300"></th>
@@ -306,6 +362,18 @@ const SellerBondListingTable = () => {
                                         <td className={`text-[#1DBF73] underline`}>
                                             <Link to={`/buyerpromisebonddetail/${bond?._id}`}>View</Link>
                                         </td>
+                                              <td className={` border-gray-300 p-[10px] flex justify-center py-[10px] `}>
+                       {!alreadyForExchange?<p onClick={() => {
+                                                navigate(`/exchange?id=${bond?._id}`)
+                                            }} target="_blank" className='cursor-pointer border-[1px] rounded-[20px] px-[20px] py-[10px] w-fit text-[#1DBF73]'>Register for Exchange</p>:null}
+                                            <p onClick={(e) => {
+                                                setCancelledPopup(!cancelledpopup)
+                                                setCancellationState({
+                                                    ...cancellationState,
+                                                    bond_id: bond?._id
+                                                })
+                                            }} className="cursor-pointer p-[10px] border-l border-gray-300">Cancel</p>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -316,25 +384,48 @@ const SellerBondListingTable = () => {
                                 {bondData?.map((bond, index) => (
                                     <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
                                         <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Issuer</h1>
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Bond Title</h1>
                                             <p className="text-[16px] font-semibold">{bond?.title}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
                                             <p className="text-[16px] font-semibold">{'$' + bond?.bond_issuerance_amount}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Total Bonds</h1>
                                             <p className="text-[16px] font-semibold">{bond?.total_bonds}</p>
+                                        </div>
+                                        <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Validity</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.validity_number + ' months'}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Status</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}</p>
+                                        </div>
 
-                                            <p className="text-[16px] text-[#1DBF73] underline font-semibold">
-                                                <Link to={`/buyerpromisebonddetail/${bond?.title}`}>View</Link>
-                                            </p>
+
+                                        <div className="flex flex-col gap-[10px]">
+
+                                           
+                                        <td className={`text-[#1DBF73] underline`}>
+                                            <Link to={`/buyerpromisebonddetail/${bond?._id}`}>View</Link>
+                                        </td>
+                                              <td className={` border-gray-300 p-[10px] flex justify-center py-[10px] `}>
+                    {!alreadyForExchange?                        <p onClick={() => {
+                                                navigate(`/exchange?id=${bond?._id}`)
+                                            }} target="_blank" className='cursor-pointer border-[1px] rounded-[20px] px-[20px] py-[10px] w-fit text-[#1DBF73]'>Register for Exchange</p>:''}
+                                            <p onClick={(e) => {
+                                                setCancelledPopup(!cancelledpopup)
+                                                setCancellationState({
+                                                    ...cancellationState,
+                                                    bond_id: bond?._id
+                                                })
+                                            }} className="cursor-pointer p-[10px] border-l border-gray-300">Cancel</p>
+                                        </td>
                                         </div>
 
 

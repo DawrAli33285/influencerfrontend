@@ -1,7 +1,7 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-const data = [
+let data = [
   { month: "Jan", completed: 10, pending: 5, avgTime: 3, successRate: 80 },
   { month: "Feb", completed: 15, pending: 10, avgTime: 4, successRate: 85 },
   { month: "Mar", completed: 12, pending: 7, avgTime: 3.5, successRate: 88 },
@@ -18,14 +18,16 @@ const colors = {
 };
 
 const SellerMissionStatsChart = ({state}) => {
+   data = state?.monthlyBonds
   return (
-    <div className="w-full p-6">
+    <div className="w-full p-6 h-[80%]">
       {/* Chart Header */}
       <div className="flex flex-col items-center mb-6">
         <h2 className="text-black text-2xl font-semibold mb-1">Mission Stats</h2>
         <p className="text-[#1C1C1CA3]">Your mission progress and stats</p>
       </div>
 
+    {state?.monthlyBonds?.length>0?<>
       {/* Multiple Line Chart */}
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
@@ -74,6 +76,9 @@ const SellerMissionStatsChart = ({state}) => {
           <Legend verticalAlign="top" align="right" />
         </LineChart>
       </ResponsiveContainer>
+    </>:<div className="h-full flex justify-center items-center">
+    <p>No Record Found</p>
+    </div>}
 
       {/* Color Legend (Dots) */}
       <div className="flex justify-center mt-4 space-x-4">

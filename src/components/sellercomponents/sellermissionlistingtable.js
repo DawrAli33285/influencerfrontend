@@ -10,6 +10,8 @@ const SellerMissionListingTable = () => {
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [originalBondData, setOriginalBondData] = useState([])
     const [popup, setPopup] = useState(false)
+    const [search,setSearch]=useState("")
+    const [selectedPriceRange,setSelectedPriceRange]=useState("default")
     const [cancelledpopup, setCancelledPopup] = useState(false)
     const [bids, setBids] = useState([])
     const [missions,setMissions]=useState([])
@@ -178,6 +180,58 @@ const SellerMissionListingTable = () => {
         }
     }
 
+    const filterItems = (value) => {
+        setSearch(value);
+        applyFilters(); 
+    };
+    const handlePriceRangeChange = (e) => {
+        setSelectedPriceRange(e.target.value);
+        applyFilters(); 
+    };
+    
+   
+    const applyFilters = () => {
+        let filteredData = originalBondData;
+ 
+        if (selectedMonth && selectedMonth !== "default") {
+            const monthIndex = months.indexOf(selectedMonth);
+            if (monthIndex !== -1) {
+                filteredData = filteredData.filter((bond) => {
+                    const bondDate = new Date(bond.createdAt);
+                    return bondDate.getMonth() === monthIndex;
+                });
+            }
+        }
+    
+       
+        if (selectedPriceRange && selectedPriceRange !== "default") {
+            const [min, max] = selectedPriceRange.split("-").map((val) => parseFloat(val));
+            filteredData = filteredData.filter((bond) => {
+                const amount = Number(bond.bond_issuerance_amount);
+                return max ? amount >= min && amount <= max : amount >= min;
+            });
+        }
+    
+        
+        if (search) {
+            const searchValue = search.toLowerCase();
+            filteredData = filteredData.filter((bond) => {
+                console.log("BOND")
+                console.log(bond)
+                const titleMatch = bond.issuer_id.user_id.username.toLowerCase().includes(searchValue);
+                
+                return titleMatch 
+            });
+        }
+    
+        setBondData(filteredData);
+    };
+
+    
+
+    useEffect(() => {
+        applyFilters();
+    }, [selectedMonth, selectedPriceRange, search]);
 
 
 
@@ -192,12 +246,12 @@ const SellerMissionListingTable = () => {
                     </div>
                     <div className="grid lg:grid-cols-12 gap-[20px] grid-cols-1 lg:mt-0 mt-[40px]">
 
-                        <select
+                    <select
                             value={selectedMonth}
                             onChange={fetchAccordingToMonth}
                             className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
                         >
-                            <option value="default">Price</option>
+                            <option value="default">Month</option>
                             {months.map((month) => (
                                 <option key={month} value={month}>
                                     {month}
@@ -208,8 +262,10 @@ const SellerMissionListingTable = () => {
 
                         <div className="flex gap-[10px] xl:flex-row flex-col w-full lg:col-span-4">
                             <div className="w-full bg-[#F6F6F6] rounded-[20px] px-[10px] py-[10px] flex items-center">
-                                <input
+                            <input
                                     type="text"
+                                    value={search}
+                                    onChange={(e)=>filterItems(e.target.value)}
                                     placeholder="Search here..."
                                     className="outline-none border-none bg-transparent w-[90%]"
                                 />
@@ -236,6 +292,7 @@ const SellerMissionListingTable = () => {
 
                                     <th className="p-[10px] text-left  border-b border-gray-300">Issuer</th>
                                     <th className="p-[10px] text-left  border-b border-gray-300">Mission</th>
+                                    <th className="p-[10px] text-left  border-b border-gray-300">Bond Title</th>
                                     <th className="p-[10px] text-left  border-b border-gray-300">Price</th>
                                     <th className="p-[10px] text-left  border-b  border-gray-300">Validity</th>
                                     <th className="p-[10px] text-left  border-b  border-gray-300"></th>
@@ -247,6 +304,7 @@ const SellerMissionListingTable = () => {
 
                                         <td className="p-[10px] font-bold ">{bond?.issuer_id?.user_id?.username}</td>
                                         <td className="p-[10px] text-[#7E8183] "> {missions?.find(u => u?.bond_id === bond?._id)?.task_type || 'N/A'}</td>
+                                        <td className="p-[10px] text-[#7E8183] "> {bond?.title}</td>
                                         <td className="p-[10px] text-[#1DBF73]"> ${bond?.bond_issuerance_amount}</td>
                                         <td className="p-[10px] font-bold ">{bond?.validity_number + ' months'}</td>
                                         <td>
@@ -287,6 +345,10 @@ const SellerMissionListingTable = () => {
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
                                             <p className="text-[16px] font-semibold">{bond?.bond_price}</p>
                                         </div>
+                                        <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Bond Title</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.title}</p>
+                                        </div>
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
@@ -299,7 +361,20 @@ const SellerMissionListingTable = () => {
                                         </div>
 
                                         <button className="p-[10px] w-fit text-[#1DBF73] underline  font-semibold rounded-[10px] lg:col-span-2">
-                                            Buy
+                                        {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}
+                                            {bond?.status === "AWAITING FOR PAYMENT" &&
+                                                bond?.issuer_id !== currentIssuerId &&
+                                                (
+                                                    bond?.offers?.some(u => u?.buyer_id === currentBuyerId) ||
+                                                    bond?.buyerOffers?.some(u => u?.newbuyer_id === currentBuyerId)
+                                                )
+                                                ? <a href={`/payment?bond_id=${bond?._id}`} className='text-[#5E2DC8]'>Pay Now</a>
+                                                : ''
+                                            }
+
+
+                                            {bond?.status == "APPROVED" && bond?.issuer_id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
+                                            {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='text-[#5E2DC8] cursor-pointer'>Bid offer</a> : ''}
                                         </button>
 
                                     </div>
@@ -371,10 +446,10 @@ const SellerMissionListingTable = () => {
                             </div>
                         )}
                         <div className="hover:cursor-pointer flex flex-col justify-between mt-4 gap-[10px] xl:flex-row">
-                            <div onClick={() => setPopup(!popup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#7638F9] px-[20px] py-[10px] text-[#7638F9] font-semibold">
+                            <div onClick={() => setPopup(!popup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#1DBF73] px-[20px] py-[10px] text-[#1DBF73] font-semibold">
                                 Cancel
                             </div>
-                            <div onClick={sendOffer} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#7638F9] px-[20px] py-[10px] text-white font-semibold">
+                            <div onClick={sendOffer} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#1DBF73] px-[20px] py-[10px] text-white font-semibold">
                                 Send Offer
                             </div>
                         </div>

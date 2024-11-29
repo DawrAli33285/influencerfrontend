@@ -3,7 +3,7 @@ import HomeHeader from "../components/homeheader";
 import avatar from "../avatar.webp"
 import tiktok from "../tiktok.png"
 import insta from "../insta.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import {useLocation} from 'react-router-dom'
 import { ToastContainer,toast } from "react-toastify";
@@ -79,7 +79,7 @@ status:'75% sold'        },
             status:'75% sold'
         }
     ];
-
+const navigate=useNavigate();
     return (
         <>
         <ToastContainer containerId={"profileToast"}/>
@@ -89,8 +89,9 @@ status:'75% sold'        },
             <MoonLoader color="#6B33E3" size={100} />
             
             </div>:<>
-           
+            <svg onClick={()=>navigate(-1)} className="cursor-pointer mx-5" width={35} height={35} fill="#000000" viewBox="0 0 200 200" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title></title><path d="M160,89.75H56l53-53a9.67,9.67,0,0,0,0-14,9.67,9.67,0,0,0-14,0l-56,56a30.18,30.18,0,0,0-8.5,18.5c0,1-.5,1.5-.5,2.5a6.34,6.34,0,0,0,.5,3,31.47,31.47,0,0,0,8.5,18.5l56,56a9.9,9.9,0,0,0,14-14l-52.5-53.5H160a10,10,0,0,0,0-20Z"></path></g></svg>
             <div className="border-b border-b-[#1C1C1C14] flex lg:flex-row flex-col gap-[30px] justify-between w-full">
+            
                 <div className="flex flex-col gap-[10px] px-[20px] lg:px-[3rem] lg:py-[4rem]">
                     <div className="rounded-[100%] w-[80px] h-[80px]">
                         <img src={state?.issuer?.user_id?.avatar?.length>0?state?.issuer?.user_id?.avatar:avatar} alt="img" className="w-full h-full object-cover rounded-[100%]" />
@@ -167,7 +168,7 @@ status:'75% sold'        },
                         </tr>
                     </thead>
                     <tbody>
-                        {state?.bonds?.map((bond, index) => (
+                        {state?.bonds?.length>0?state?.bonds?.map((bond, index) => (
                             <tr key={index}>
                                 <td className="p-[10px] font-bold">{bond.title}</td>
                                 <td className="p-[10px] text-[#74767E]">{bond.description}</td>
@@ -179,7 +180,9 @@ status:'75% sold'        },
                                     <Link to={`/promisebonddetail/${bond._id}`}>Buy</Link>
                                 </td>
                             </tr>
-                        ))}
+                        )):<div className="flex justify-center h-[100%] items-center text-center w-full">
+                            <p className="flex justify-center items-center w-full text-center">No Bond Fond</p>
+                            </div>}
                     </tbody>
                 </table>
                 <div className='w-full xl:hidden block'>

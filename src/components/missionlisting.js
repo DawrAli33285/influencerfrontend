@@ -12,6 +12,8 @@ const MissionListingTable = () => {
     const [missionpopup, setMissionPopup] = useState(false)
     const [sponsorData, setBondData] = useState([])
     const [bondIds,setBondIds]=useState([])
+    const [search,setSearch]=useState("")
+    const [selectedPriceRange,setSelectedPriceRange]=useState("default")
     const { missionStateContext: missionData, setMissionStateContext: setMissionData } = useContext(MissionListContext)
 
     const [missionState, setMissionState] = useState({
@@ -24,6 +26,67 @@ const MissionListingTable = () => {
         fetchMissionData();
         fetchBondList()
     }, [])
+    const filterItems = (value) => {
+        setSearch(value);
+        applyFilters(); 
+    };
+
+    
+    const handlePriceRangeChange = (e) => {
+        setSelectedPriceRange(e.target.value);
+        applyFilters(); 
+    };
+    
+   
+    const applyFilters = () => {
+        let filteredData = originalMissionData;
+ 
+        if (selectedMonth && selectedMonth !== "default") {
+            const monthIndex = months.indexOf(selectedMonth);
+            if (monthIndex !== -1) {
+                filteredData = filteredData.filter((bond) => {
+                    const bondDate = new Date(bond.createdAt);
+                    return bondDate.getMonth() === monthIndex;
+                });
+            }
+        }
+    
+       
+        if (selectedPriceRange && selectedPriceRange !== "default") {
+            const [min, max] = selectedPriceRange.split("-").map((val) => parseFloat(val));
+            filteredData = filteredData.filter((bond) => {
+                const amount = Number(bond.bond_issuerance_amount);
+                return max ? amount >= min && amount <= max : amount >= min;
+            });
+        }
+    
+        
+        if (search) {
+            const searchValue = search.toLowerCase();
+            filteredData = filteredData.filter((bond) => {
+                console.log("BOND")
+                console.log(bond)
+                const titleMatch = bond.task_type.toLowerCase().includes(searchValue);
+                
+                return titleMatch 
+            });
+        }
+    
+        setMissionData(filteredData);
+    };
+
+    
+
+    useEffect(() => {
+        applyFilters();
+    }, [selectedMonth, selectedPriceRange, search]);
+    
+    const fetchAccordingToMonth = (e) => {
+        setSelectedMonth(e.target.value);
+        applyFilters(); 
+    };
+    
+   
     const createMission = async () => {
         
         try {
@@ -108,18 +171,7 @@ const MissionListingTable = () => {
 
 
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const fetchAccordingToMonth = (e) => {
-        const monthName = e.target.value;
-        setSelectedMonth(e.target.value)
-        const monthIndex = months.indexOf(monthName);
-        if (monthIndex === -1) return;
-        setMissionData((prevBondData) => {
-            return originalMissionData.filter((bond) => {
-                const bondDate = new Date(bond.createdAt);
-                return bondDate.getMonth() === monthIndex;
-            });
-        });
-    };
+    
     useEffect(() => {
         if (originalMissionData?.length <= missionData?.length) {
             setOriginalMissionData(missionData)
@@ -182,12 +234,12 @@ const MissionListingTable = () => {
                     </div>
                     <div className="grid lg:grid-cols-12 gap-[20px] grid-cols-1 lg:mt-0 mt-[40px]">
 
-                        <select
+                    <select
                             value={selectedMonth}
                             onChange={fetchAccordingToMonth}
                             className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
                         >
-                            <option value="default">Status</option>
+                            <option value="default">Month</option>
                             {months.map((month) => (
                                 <option key={month} value={month}>
                                     {month}
@@ -198,8 +250,10 @@ const MissionListingTable = () => {
 
                         <div className="flex gap-[10px] xl:flex-row flex-col w-full lg:col-span-6">
                             <div className="w-full bg-[#F6F6F6] rounded-[20px] px-[10px] py-[10px] flex items-center">
-                                <input
+                            <input
                                     type="text"
+                                    value={search}
+                                    onChange={(e)=>filterItems(e.target.value)}
                                     placeholder="Search here..."
                                     className="outline-none border-none bg-transparent w-[90%]"
                                 />
@@ -250,28 +304,28 @@ const MissionListingTable = () => {
                         <div className='w-full xl:hidden block'>
                             <div className="xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
                                 {missionData?.map((mission, index) => (
-                                    <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
+                                    <div key={mission?._id} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
-                                            <p className="text-[16px] font-semibold">{mission?.bond_id?.title}</p>
+                                            <p className="text-[16px] font-semibold">{mission?.task_type}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
-                                            <p className="text-[16px] font-semibold">{mission?.buyer_id?.user_id?.username?.length > 0 ? mission?.buyer_id?.username : 'none'}</p>
+                                            <p className="text-[16px] font-semibold">{mission?.bond_id?.bond_price}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Availability</h1>
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Validity</h1>
                                             <p className="text-[16px] font-semibold">{new Date(mission?.bond_id?.createdAt).toLocaleDateString('en-GB', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric',
-                                            })}</p>
+                                            day: '2-digit',
+                                            month: 'long',
+                                            year: 'numeric',
+                                        })}</p>
                                         </div>
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Status</h1>
-                                            <p className={`text-[16px] font-semibold ${getStatusClass(mission?.status)}`}> {mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}</p>
+                                            <p className={`text-[16px] font-semibold ${getStatusClass(mission?.status)}`}>  {mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}</p>
                                         </div>
                                     </div>
                                 ))}

@@ -26,10 +26,10 @@ export default function HomeFooter() {
                 </div>
                 <nav className="flex lg:items-center gap-[30px] w-full xl:w-[50%] xl:flex-row flex-col justify-center">
                     <Link to="/" className="text-[18px] text-[#1dbf73]">Home</Link>
-                    <Link to="/sponsorbond" className="text-[18px] hover:text-[#1dbf73]">How It Works</Link>
-                    <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Market</Link>
-                    <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Support</Link>
-                    <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">PromiseBond</Link>
+                    <Link to="/howitworks" className="text-[18px] hover:text-[#1dbf73]">How It Works</Link>
+                    <Link to="/market" className="text-[18px] hover:text-[#1dbf73]">Market</Link>
+                    <Link to="/inbox" className="text-[18px] hover:text-[#1dbf73]">Support</Link>
+                    <Link to="/sponsorbond" className="text-[18px] hover:text-[#1dbf73]">PromiseBond</Link>
                 </nav>
 
             </div>

@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 export default function Invoice() {
+    const navigate=useNavigate();
     return (
         <div className="w-full flex-col">
+            <svg onClick={(e)=>{
+                navigate(-1)
+            }} className="cursor-pointer" width={35} height={35} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#000000" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
             <div className='flex flex-col'>
                 <h1 className="text-[24px] font-semibold">Billing & Payment settings</h1>
                 <p className='text-[18px]'>Customise settings for billing and payments</p>

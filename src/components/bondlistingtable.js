@@ -18,11 +18,12 @@ const BondListingTable = () => {
 
         title: ''
     })
+    const [search, setSearch] = useState("")
     const [uploadedImages, setUploadedImages] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [loading, setLoading] = useState(true)
     const { state: bondData, setState: setBondData } = useContext(BondListContext)
-
+    const [selectedPriceRange, setSelectedPriceRange] = useState("default")
     const [bondpopup, setBondPopup] = useState(false)
     const [originalBondData, setOriginalBondData] = useState([])
 
@@ -91,8 +92,8 @@ const BondListingTable = () => {
             }
             formData.append('social_media_links', links)
             let response = await axios.post(`${BASE_URL}/createBond`, formData, headers)
-          console.log("BOND CREATED")
-          console.log(response)
+            console.log("BOND CREATED")
+            console.log(response)
             toast.success(response?.data?.message)
             setBondPopup(!bondpopup)
             setBondState({
@@ -101,28 +102,94 @@ const BondListingTable = () => {
             })
             setUploadedImages([])
             setLinks([])
-            toast.success(response.data.message,{containerId:"containerB"})
-          setBondData((prev)=>{
-            let old;
-           if(prev?.length>0){
-           old=[...prev,response.data.bond]
-           }else{
-            old=[response.data.bond];
-           }
-           return old
+            toast.success(response.data.message, { containerId: "containerB" })
+            window.location.reload(true)
+            // setBondData((prev) => {
+            //     let old;
+            //     if (prev?.length > 0) {
+            //         old = [...prev, response.data.bond]
+            //     } else {
+            //         old = [response.data.bond];
+            //     }
+            //     return old
 
-          })
+            // })
 
         } catch (e) {
             if (e?.response?.data?.error) {
-                toast.error(e?.response?.data?.error,{containerId:"containerB"})
+                toast.error(e?.response?.data?.error, { containerId: "containerB" })
 
                 return;
-            }else{
-                toast.error("Client error please try again",{containerId:"containerB"})
+            } else {
+                toast.error("Client error please try again", { containerId: "containerB" })
             }
         }
     }
+    const priceRanges = [
+        { label: "Below $50", value: "0-50" },
+        { label: "$50 - $100", value: "50-100" },
+        { label: "$100 - $500", value: "100-500" },
+        { label: "$500 - $1000", value: "500-1000" },
+        { label: "Above $1000", value: "1000+" }
+    ];
+    const applyFilters = () => {
+        let filteredData = originalBondData;
+
+        if (selectedMonth && selectedMonth !== "default") {
+            const monthIndex = months.indexOf(selectedMonth);
+            if (monthIndex !== -1) {
+                filteredData = filteredData.filter((bond) => {
+                    const bondDate = new Date(bond.createdAt);
+                    return bondDate.getMonth() === monthIndex;
+                });
+            }
+        }
+
+
+        if (selectedPriceRange && selectedPriceRange !== "default") {
+            const [min, max] = selectedPriceRange.split("-").map((val) => parseFloat(val));
+            filteredData = filteredData.filter((bond) => {
+                const amount = Number(bond.bond_issuerance_amount);
+                return max ? amount >= min && amount <= max : amount >= min;
+            });
+        }
+
+
+        if (search) {
+            const searchValue = search.toLowerCase();
+            filteredData = filteredData.filter((bond) => {
+                const titleMatch = bond.title.toLowerCase().includes(searchValue);
+                const usernameMatch = bond?.issuer_id?.user_id?.username?.toLowerCase()?.includes(searchValue);
+                return titleMatch || usernameMatch;
+            });
+        }
+
+        setBondData(filteredData);
+    };
+    const fetchAccordingToMonth = (e) => {
+        setSelectedMonth(e.target.value);
+        applyFilters();
+    };
+
+
+    const filterItems = (value) => {
+        setSearch(value);
+        applyFilters();
+    };
+
+    const handlePriceRangeChange = (e) => {
+        setSelectedPriceRange(e.target.value);
+        applyFilters();
+    };
+
+
+
+
+
+    useEffect(() => {
+        applyFilters();
+    }, [selectedMonth, selectedPriceRange, search]);
+
 
     useEffect(() => {
         fetchBondList()
@@ -136,7 +203,8 @@ const BondListingTable = () => {
                 }
             }
             let response = await axios.get(`${BASE_URL}/bond-listingData`, headers)
-
+            console.log("BOND LISTING DATA")
+            console.log(response.data)
             setBondData(response.data.bondsList)
             setOriginalBondData(response.data.bondsList)
             setLoading(false)
@@ -155,18 +223,6 @@ const BondListingTable = () => {
     }
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    const fetchAccordingToMonth = (e) => {
-        const monthName = e.target.value;
-        setSelectedMonth(e.target.value)
-        const monthIndex = months.indexOf(monthName);
-        if (monthIndex === -1) return;
-        setBondData((prevBondData) => {
-            return originalBondData.filter((bond) => {
-                const bondDate = new Date(bond.createdAt);
-                return bondDate.getMonth() === monthIndex;
-            });
-        });
-    };
 
     const getStatusClass = (status) => {
         switch (status) {
@@ -186,6 +242,13 @@ const BondListingTable = () => {
         }
     }, [bondData])
 
+
+    useEffect(() => {
+        applyFilters();
+    }, [selectedMonth, selectedPriceRange, search]);
+
+
+
     return (
         <>
             <ToastContainer containerId="containerB" limit={1} />
@@ -201,7 +264,7 @@ const BondListingTable = () => {
                             onChange={fetchAccordingToMonth}
                             className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
                         >
-                            <option value="default">Issuer</option>
+                            <option value="default">Month</option>
                             {months.map((month) => (
                                 <option key={month} value={month}>
                                     {month}
@@ -209,14 +272,14 @@ const BondListingTable = () => {
                             ))}
                         </select>
                         <select
-                            value={selectedMonth}
-                            onChange={fetchAccordingToMonth}
+                            value={selectedPriceRange}
+                            onChange={handlePriceRangeChange}
                             className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
                         >
                             <option value="default">Price Range</option>
-                            {months.map((month) => (
-                                <option key={month} value={month}>
-                                    {month}
+                            {priceRanges.map((range) => (
+                                <option key={range.value} value={range.value}>
+                                    {range.label}
                                 </option>
                             ))}
                         </select>
@@ -226,6 +289,8 @@ const BondListingTable = () => {
                             <div className="w-full bg-[#F6F6F6] rounded-[20px] px-[10px] py-[10px] flex items-center">
                                 <input
                                     type="text"
+                                    value={search}
+                                    onChange={(e) => filterItems(e.target.value)}
                                     placeholder="Search here..."
                                     className="outline-none border-none bg-transparent w-[90%]"
                                 />
@@ -248,6 +313,7 @@ const BondListingTable = () => {
                             <thead>
                                 <tr className="bg-[#FDFBFD]">
                                     <th className="p-[10px] text-left border-b border-gray-300">Issuer</th>
+                                    <th className="p-[10px] text-left border-b border-gray-300">Bond Title</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Mission</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Price</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Validity</th>
@@ -258,10 +324,10 @@ const BondListingTable = () => {
                             <tbody>
                                 {bondData?.map((bond, index) => (
                                     <tr key={index}>
+                                        <td className="p-[10px] font-bold">{bond?.issuer_id?.user_id?.username}</td>
                                         <td className="p-[10px] font-bold">{bond?.title}</td>
+                                        <td className="p-[10px]">{bond?.missions?.length>0?bond?.missions[0]?.task_type:'No mission'}</td>
                                         <td className="p-[10px]">{'$' + bond?.bond_issuerance_amount}</td>
-                                        <td className="p-[10px] text-[#1DBF73]">{bond?.total_bonds
-                                        }</td>
                                         <td className="p-[10px] font-bold">{bond?.validity_number + ' months'}</td>
                                         <td className="p-[10px] font-bold"> {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}</td>
 
@@ -280,23 +346,37 @@ const BondListingTable = () => {
                                     <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Issuer</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.issuer_id?.user_id?.username}</p>
+                                        </div>
+
+                                        <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Bond Title</h1>
                                             <p className="text-[16px] font-semibold">{bond?.title}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
-                                            <p className="text-[16px] font-semibold">{'$' + bond?.bond_issuerance_amount}</p>
+                                            <p className="text-[16px] font-semibold">{bond?.missions?.length>0?bond?.missions[0]?.task_type:'No mission'}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.total_bonds}</p>
+                                            <p className="text-[16px] font-semibold">{'$' + bond?.bond_issuerance_amount}</p>
+                                        </div>
+
+                                        <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Validity</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.validity_number + ' months'}</p>
+                                        </div>
+                                        <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Status</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
 
                                             <p className="text-[16px] text-[#1DBF73] underline font-semibold">
-                                                <Link to={`/promisebonddetail/${bond?.title}`}>View</Link>
+                                            <Link to={`/promisebonddetail/${bond?._id}`}>View</Link>
                                             </p>
                                         </div>
 
@@ -368,7 +448,7 @@ const BondListingTable = () => {
                                 <button
                                     type="button"
                                     onClick={handleAddLink}
-                                    className="mt-4 px-6 py-2 bg-[#1DBF73] text-white font-semibold rounded-[20px] hover:bg-blue-600"
+                                    className="mt-4 px-6 py-2 bg-[#1DBF73] text-white font-semibold rounded-[20px]"
                                 >
                                     Add More Links
                                 </button>
@@ -422,50 +502,50 @@ const BondListingTable = () => {
                             <div className="mt-[10px]">
                                 <label htmlFor="quantity" className="block text-xl  font-semibold text-[#272226]">Quantity</label>
                                 <input
-  value={bondstate.quantity}
-  type="text"
-  name="quantity"
-  placeholder="Enter Quantity"
-  className="mt-4 bg-[#1C1C1C14] block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-  onKeyPress={(e) => {
-    
-    if (!/^\d$/.test(e.key)) {
-      e.preventDefault();
-    }
-  }}
-  onChange={(e) => {
-    const value = e.target.value.replace(/\D/g, ""); 
-    setBondState({
-      ...bondstate,
-      quantity: value,
-    });
-  }}
-/>
+                                    value={bondstate.quantity}
+                                    type="text"
+                                    name="quantity"
+                                    placeholder="Enter Quantity"
+                                    className="mt-4 bg-[#1C1C1C14] block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    onKeyPress={(e) => {
+
+                                        if (!/^\d$/.test(e.key)) {
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/\D/g, "");
+                                        setBondState({
+                                            ...bondstate,
+                                            quantity: value,
+                                        });
+                                    }}
+                                />
 
 
                             </div>
                             <div className="mt-[10px]">
                                 <label htmlFor="price" className="block text-xl  font-semibold text-[#272226]">Bond Price</label>
                                 <input
-  value={bondstate.bond_price}
-  type="text"
-  name="price"
-  className="mt-4 bg-[#1C1C1C14] block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-  placeholder="Enter Bond Price"
-  onKeyPress={(e) => {
+                                    value={bondstate.bond_price}
+                                    type="text"
+                                    name="price"
+                                    className="mt-4 bg-[#1C1C1C14] block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    placeholder="Enter Bond Price"
+                                    onKeyPress={(e) => {
 
-    if (!/^\d$/.test(e.key)) {
-      e.preventDefault();
-    }
-  }}
-  onChange={(e) => {
-    const value = e.target.value.replace(/\D/g, ""); 
-    setBondState({
-      ...bondstate,
-      bond_price: value,
-    });
-  }}
-/>
+                                        if (!/^\d$/.test(e.key)) {
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/\D/g, "");
+                                        setBondState({
+                                            ...bondstate,
+                                            bond_price: value,
+                                        });
+                                    }}
+                                />
 
 
                             </div>

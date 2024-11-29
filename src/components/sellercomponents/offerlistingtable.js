@@ -87,7 +87,7 @@ const OfferListingTable = () => {
             <ToastContainer containerId="buyerOfferListing" limit={1} />
             <div className="bg-white p-[20px] max-h-[700px] overflow-y-auto rounded-[20px] shadow-md">
                 <div className="flex justify-between items-center mb-[20px]">
-                    <h1 className="text-[#2563EB] text-[24px] font-semibold">Offers</h1>
+                    <h1 className="text-[#1DBF73] text-[24px] font-semibold">Offers</h1>
                     <select
                         value={selectedMonth}
                         onChange={fetchAccordingToMonth}
@@ -127,9 +127,9 @@ const OfferListingTable = () => {
                                         <td className="p-[10px] border-l border-gray-300">{offer?.price}</td>
                                         <td className="p-[10px] border-l border-r border-gray-300">{offer?.number_of_bonds}</td>
                                         <td className="border-l border-r border-gray-300 p-[10px] grid gap-[10px] grid-cols-2">
-                                            <div onClick={() => acceptBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#6B33E3] border rounded-[20px] border-[#D0D5DD]'>Accept</div>
+                                            <div onClick={() => acceptBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Accept</div>
 
-                                            <div onClick={() => rejectBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#6B33E3] border rounded-[20px] border-[#D0D5DD]'>Reject</div>
+                                            <div onClick={() => rejectBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Reject</div>
                                         </td>
                                     </tr>
                                 ))}
@@ -160,9 +160,9 @@ const OfferListingTable = () => {
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Options</h1>
-                                            <div onClick={() => acceptBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#6B33E3] border rounded-[20px] border-[#D0D5DD]'>Accept</div>
+                                            <div onClick={() => acceptBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Accept</div>
 
-                                            <div onClick={() => rejectBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#6B33E3] border rounded-[20px] border-[#D0D5DD]'>Reject</div>
+                                            <div onClick={() => rejectBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Reject</div>
                                         </div>
 
                                     </div>

@@ -175,7 +175,7 @@ const Bid = () => {
                         {status !== "Sale Complete" ? (
                             <div className="flex justify-between lg:flex-row flex-col gap-[20px]">
                                 <label className="block text-gray-700 font-semibold mb-2">
-                                        <p className="text-[#1DBF73] font-semibold">${desiredSalePrice}/bond</p>
+                                    <p className="text-[#1DBF73] font-semibold">${desiredSalePrice}</p>
                                     <div className="flex items-center mt-1">
                                         {/* Decrease button */}
                                         <button
@@ -191,12 +191,22 @@ const Bid = () => {
                                             type="number"
                                             value={desiredSalePrice}
                                             onChange={(e) => {
-                                                const value = Number(e.target.value);
-                                                setDesiredSalePrice(value >= 0 ? value : 0);
+
+                                                let value = e.target.value;
+
+
+                                                if (value.startsWith("0") && value.length > 1) {
+                                                    value = value.replace(/^0+/, "");
+                                                }
+
+
+                                                const numericValue = Number(value);
+                                                setDesiredSalePrice(numericValue >= 0 ? numericValue : 0);
                                             }}
                                             min="0"
                                             className="w-full px-4 py-2 border-t border-b border-gray-300 focus:outline-none text-center"
                                         />
+
 
                                         {/* Increase button */}
                                         <button

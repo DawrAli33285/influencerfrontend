@@ -10,10 +10,10 @@ export default function TopIssuers({loading,state,setState}) {
                 <p className="font-bold xl:text-[1.5rem] text-[1.3rem]">
                     Meet Our  <span className="font-normal text-[#1DBF73] italic">Top Issuers.</span>
                 </p>
-                <Link to="/" className="text-[#1DBF73] font-bold xl:text-[1.5rem] text-[1.3rem]">View All Promise Bond</Link>
+                <Link to="/search?filter=issuer&search=" className="text-[#1DBF73] font-bold xl:text-[1.5rem] text-[1.3rem]">View All Issuers</Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px]">
-            {loading?<div className='flex justify-center items-center'>
+            {loading?<div className='flex'>
                     <MoonLoader color="#6B33E3" size={100} />
                 </div>:!state?.issuers?.length>0?<div className='flex justify-center items-center'>
                     <p>No record found</p>

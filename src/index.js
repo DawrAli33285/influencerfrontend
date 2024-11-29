@@ -48,6 +48,11 @@ import BuyerViewBond from './pages/buyerviewbond';
 import BuyerMission from './pages/buyermission';
 import Search from './pages/search';
 import Profile from './pages/profile';
+import SellerMiddleware from './middlewares/issuerrmiddleware';
+import IssuerMiddleware from './middlewares/issuerrmiddleware';
+import BuyerMiddleware from './middlewares/buyermiddleware';
+import Referrals from './pages/referrals';
+import OfferListingTable from './components/sellercomponents/offerlistingtable';
 
 
 const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
@@ -95,48 +100,75 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element:
-      <AdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <Dashboard />
-          </BondListProvider>
-        </MissionListProvider>
-      </AdminHeader>
-
+    element: <IssuerMiddleware />,
+    children: [
+      {
+        path: "",
+        element: (
+          <AdminHeader>
+            <MissionListProvider>
+              <BondListProvider>
+                <Dashboard />
+              </BondListProvider>
+            </MissionListProvider>
+          </AdminHeader>
+        ),
+      },
+    ],
   },
+  
   {
     path: "/inbox",
     element:
-      <SellerAdminHeader>
+     <BuyerMiddleware/>,
+     children:[
+      {
+        path:"",
+        element: <SellerAdminHeader>
         <MissionListProvider>
           <BondListProvider>
             <Inbox />
           </BondListProvider>
         </MissionListProvider>
       </SellerAdminHeader>
+      }
+     ]
   },
   {
     path: "/settings",
     element:
-      <AdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <Settings />
-          </BondListProvider>
-        </MissionListProvider>
-      </AdminHeader>
+     <IssuerMiddleware/>,
+     children:[
+      {
+        path:"",
+        element:(
+          <AdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <Settings />
+            </BondListProvider>
+          </MissionListProvider>
+        </AdminHeader>
+        )
+      }
+     ]
   },
   {
     path: "/billing",
     element:
-      <AdminHeader>
+    <BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<SellerAdminHeader>
         <MissionListProvider>
           <BondListProvider>
             <Billing />
           </BondListProvider>
         </MissionListProvider>
-      </AdminHeader>
+      </SellerAdminHeader>
+      }
+    ]
   },
   {
     path: "/promisebonddetail/:id",
@@ -164,20 +196,30 @@ const router = createBrowserRouter([
   },
   {
     path: "/sponsorbond",
-    element:
-      <BondListProvider>
-        <MissionListProvider>
-
-
-          <AdminHeader>
-            <SponsorBond />
-          </AdminHeader>
-        </MissionListProvider>
-      </BondListProvider>,
-  },
+    element: <IssuerMiddleware />,
+    children: [
+      {
+        path: "", 
+        element: (
+          <BondListProvider>
+            <MissionListProvider>
+              <AdminHeader>
+                <SponsorBond />
+              </AdminHeader>
+            </MissionListProvider>
+          </BondListProvider>
+        ),
+      },
+    ],
+  },  
   {
     path: "/mission",
-    element: <MissionListProvider>
+    element: <IssuerMiddleware/>,
+    children:[
+      {
+        path:'',
+        element:(
+          <MissionListProvider>
       <BondListProvider>
 
 
@@ -185,41 +227,96 @@ const router = createBrowserRouter([
           <Mission />
         </AdminHeader>
       </BondListProvider>
-    </MissionListProvider>,
+    </MissionListProvider>
+
+   
+        )
+      }
+    ]
   },
   {
     path: "/buyerdashboard",
-    element: <SellerAdminHeader>
-      <MissionListProvider>
-        <BondListProvider>
-          <SellerDashboard />
-        </BondListProvider>
-      </MissionListProvider>
-    </SellerAdminHeader>
+    element: <BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<SellerAdminHeader>
+        <MissionListProvider>
+          <BondListProvider>
+            <SellerDashboard />
+          </BondListProvider>
+        </MissionListProvider>
+      </SellerAdminHeader>
+      }
+    ]
+  },
+  {
+    path: "/referrals",
+    children:[
+      {
+        path:"",
+        element:<AdminHeader>
+        <MissionListProvider>
+          <BondListProvider>
+            <Referrals />
+          </BondListProvider>
+        </MissionListProvider>
+      </AdminHeader>
+      }
+    ]
   },
   {
     path: "/market",
-    element: <SellerAdminHeader>
-      <MissionListProvider>
-        <BondListProvider>
-          <Market />
-        </BondListProvider>
-      </MissionListProvider>
-    </SellerAdminHeader>
+    element: <BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<SellerAdminHeader>
+        <MissionListProvider>
+          <BondListProvider>
+            <Market />
+          </BondListProvider>
+        </MissionListProvider>
+      </SellerAdminHeader>
+      }
+    ]
   },
   {
     path: `/influenceroffer`,
     element: <InfluencerOffer />
   },
   {
+    path: "/bidoffers",
+    element: <BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<SellerAdminHeader>
+        <MissionListProvider>
+          <BondListProvider>
+          <OfferListingTable/>
+          </BondListProvider>
+        </MissionListProvider>
+      </SellerAdminHeader>
+      }
+    ]
+  },
+
+  {
     path: "/buyersponsorbond",
-    element: <SellerAdminHeader>
-      <MissionListProvider>
-        <BondListProvider>
-          <MyBond />
-        </BondListProvider>
-      </MissionListProvider>
-    </SellerAdminHeader>
+    element: <BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<SellerAdminHeader>
+        <MissionListProvider>
+          <BondListProvider>
+            <MyBond />
+          </BondListProvider>
+        </MissionListProvider>
+      </SellerAdminHeader>
+      }
+    ]
   },
   {
     path: "/buyerpromisebonddetail/:id",

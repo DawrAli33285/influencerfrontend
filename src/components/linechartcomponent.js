@@ -20,11 +20,7 @@ const LineChartComponent = () => {
           <h2 className="text-black text-2xl font-semibold mb-1">Total Earnings to Date</h2>
           <p className="text-[#1C1C1CA3]">All time payment</p>
         </div>
-        <select className="border border-gray-300 text-gray-700 py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="All Time">All Time</option>
-          <option value="Last 7 Days">Last 7 Days</option>
-          <option value="Last 30 Days">Last 30 Days</option>
-        </select>
+      
       </div>
 
       {/* Line Chart */}
