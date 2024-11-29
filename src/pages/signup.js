@@ -82,14 +82,17 @@ export default function SignUp() {
     useEffect(() => {
         const fetchCountryCodes = async () => {
             try {
-                const response = await axios.get('https://restcountries.com/v3.1/all');
-                const countries = response.data;
-                const countryCodeList = countries.map((country) => ({
-                    name: country.name.common,
-                    code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : ""),
-                    flag: country.flags.svg,
-                }));
-                setCountryCodes(countryCodeList);
+                fetch('https://restcountries.com/v3.1/all')
+                .then((response) => response.json())
+                .then((countries) => {
+                    const countryCodeList = countries.map((country) => ({
+                        name: country.name.common,
+                        code: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : ""),
+                        flag: country.flags.svg,
+                    }));
+                    setCountryCodes(countryCodeList);
+                })
+                .catch((error) => console.error("Error fetching country codes: ", error));
             } catch (error) {
                 console.error("Error fetching country codes: ", error);
             }

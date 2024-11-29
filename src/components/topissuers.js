@@ -3,6 +3,7 @@ import img from "../explore4.png";
 import scnd from "../imagerst.png"
 import { MoonLoader } from 'react-spinners';
 import third from "../signuppage.jpeg"
+import { BASE_URL } from "../baseURL";
 export default function TopIssuers({loading,state,setState}) {
     return (
         <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[40px]">
@@ -19,7 +20,9 @@ export default function TopIssuers({loading,state,setState}) {
                     <p>No record found</p>
                 </div>:state?.issuers?.map((val,i)=>{
                 return <div key={val?._id} className="bg-white  flex flex-col gap-[20px] rounded-[20px] relative">
-                <img src={val?.user_id?.avatar?val?.user_id?.avatar:img} alt="cardimg" className="rounded-[10px] w-full h-full" />
+                <img src={val?.user_id?.avatar 
+        ? val.user_id.avatar.replace('http://localhost:5000', BASE_URL) 
+        : img}  alt="cardimg" className="rounded-[10px] w-full h-full" />
                 <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[20px] rounded-[20px] justify-end">
                     <p className="text-white text-base font-bold">{val?.user_id?.username}</p>
                     <p className="text-[1rem] font-bold text-[#74767E]">{val?.bonds[0]?.missions[0]?.task_type}</p>

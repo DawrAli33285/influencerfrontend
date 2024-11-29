@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import img from "../girl.png";
 import scnd from "../girl2.png"
 import third from "../boy.png"
+import { BASE_URL } from "../baseURL";
 import { MoonLoader } from "react-spinners";
 export default function ActiveBids({state,loading}) {
     return (
@@ -30,7 +31,9 @@ export default function ActiveBids({state,loading}) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px]">
                 {state?.market?.length>0?state?.market?.map((val,i)=>{
                     return <div className="bg-white  flex flex-col gap-[20px] rounded-[20px] relative">
-                    <img src={val?.photos[0]?val?.photos[0]:img} alt="cardimg" className="rounded-[10px] w-full h-full" />
+                    <img  src={val?.photos[0] 
+        ? val.photos[0].replace('http://localhost:5000', BASE_URL) 
+        : img}  alt="cardimg" className="rounded-[10px] w-full h-full" />
                     <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[20px] rounded-[20px] justify-end">
                         <p className="text-white text-[1.3rem] font-bold">{val?.issuer_id?.user_id?.username}</p>
                         <p className="text-[1.3rem] font-bold text-[#74767E]">{val?.missions?.length>0?val?.missions[0]?.description:`No mission`}</p>

@@ -4,6 +4,7 @@ import exploretwo from "../explore2.png";
 import explorethree from "../explore3.png";
 import { MoonLoader } from 'react-spinners';
 import explorefour from "../explore4.png";
+import { BASE_URL } from "../baseURL";
 export default function ExploreBond({state,setState,loading}) {
     return (
         <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[40px]">
@@ -27,7 +28,11 @@ export default function ExploreBond({state,setState,loading}) {
                               );
                     
                     return <div key={bond?._id} className="bg-white p-[20px] flex flex-col gap-[20px] rounded-[20px]">
-                    <img src={bond?.photos[0]} alt="cardimg" className="rounded-[10px] h-[250px] w-full object-cover" />
+                    <img 
+    src={bond?.photos[0]?.replace('http://localhost:5000', BASE_URL) || `${BASE_URL}/defaultImage.webp`} 
+    alt="cardimg" 
+    className="rounded-[10px] h-[250px] w-full object-cover" 
+/>
                     <div className="flex justify-between">
                         <div className="flex gap-[10px] font-bold">
                             <img src="https://png.pngitem.com/pimgs/s/22-223925_female-avatar-female-avatar-no-face-hd-png.png" alt="avatar" className="w-[24px] h-[24px] rounded-full" />
