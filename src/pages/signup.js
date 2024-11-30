@@ -55,6 +55,9 @@ export default function SignUp() {
                 toast.dismiss()
                 toast.success(response.data.message, { containerId: "containerF" })
                 localStorage.setItem('token', response.data.token)
+                localStorage.setItem('buyerToken', response.data.buyerToken)
+                localStorage.setItem("phoneNumber", response.data.phoneNumber)
+                localStorage.setItem("email", response.data.email)
                 setFormData({
                     country_code: '',
                     username: '',
@@ -64,6 +67,7 @@ export default function SignUp() {
                     agree: false,
                 })
 
+                navigate('/verification')
             } catch (e) {
                 console.log(e)
                 if (e?.response?.data?.error) {
