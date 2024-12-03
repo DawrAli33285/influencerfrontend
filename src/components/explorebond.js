@@ -119,7 +119,7 @@ export default function ExploreBond({ state, setState, loading }) {
 
                             </div>
                             <p className="text-[1rem] px-[20px] text-[#74767E]">{bond?.title}</p>
-                            <p className="text-[1rem] px-[20px] font-bold">{bond?.missions[0]?.description}</p>
+                            <p className="text-[1rem] px-[20px] font-bold">{bond?.missions[0]?.description.slice(0,37)}...</p>
                             <div className="w-full px-[20px] h-[1px] bg-[#E9E9E9]"></div>
 
                             <div className="flex px-[20px] pb-[20px] justify-between">
