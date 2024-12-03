@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function HomeHeader() {
+    const location = useLocation();
+    const isHomePage = location.pathname === "/";
     const [showmenu, setShoMenu] = useState(false);
     const menutoggle = () => {
         setShoMenu(!showmenu);
     }
 
     return (
-        <div className="w-full z-50 relative lg:px-[40px] px-[20px] py-[40px] items-center flex justify-between">
-            <div className="lg:w-fit">
+        <div
+            className={`w-full z-50 ${isHomePage ? "absolute" : "relative"
+                } top-0 left-0 lg:px-[40px] px-[20px] py-[40px] items-center flex justify-between`}
+        >            <div className="lg:w-fit">
                 <svg width="200" height="40" viewBox="0 0 258 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.56817 24.541V20.7178H12.6541C14.086 20.7178 15.186 20.3849 15.9538 19.7191C16.732 19.0533 17.1212 18.1014 17.1212 16.8635V16.8322C17.1212 15.6047 16.732 14.658 15.9538 13.9922C15.186 13.3264 14.086 12.9935 12.6541 12.9935H2.56817V9.09233H13.4946C15.3105 9.09233 16.8773 9.41482 18.1951 10.0598C19.5129 10.6944 20.5298 11.5891 21.2458 12.7438C21.9618 13.8882 22.3198 15.2302 22.3198 16.7698V16.801C22.3198 18.3303 21.9618 19.6775 21.2458 20.8427C20.5298 22.0078 19.5129 22.9181 18.1951 23.5735C16.8773 24.2185 15.3105 24.541 13.4946 24.541H2.56817ZM0 31.6099V9.09233H5.12078V31.6099H0Z" fill="#1DBF73" />
                     <path d="M24.779 31.6099V14.9909L29.7441 15.0065V18.3615H29.8375C30.1799 17.186 30.8077 16.2757 31.7208 15.6307C32.634 14.9753 33.7598 14.6476 35.0984 14.6476C35.4097 14.6476 35.7054 14.6684 35.9856 14.71C36.2761 14.7412 36.5303 14.7828 36.7482 14.8349V18.8609C36.4785 18.7984 36.1672 18.7516 35.8144 18.7204C35.4719 18.6892 35.1191 18.6736 34.756 18.6736C33.7391 18.6736 32.8519 18.8609 32.0944 19.2354C31.3473 19.6099 30.7662 20.1717 30.3512 20.9207C29.9465 21.6593 29.7441 22.58 29.7441 23.6827V31.6099H24.779Z" fill="#1DBF73" />
@@ -30,16 +35,16 @@ export default function HomeHeader() {
                 <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 12H20" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M5 17H20" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M5 7H20" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> </g></svg>
             </div>
             <nav className="lg:flex items-center gap-[30px] hidden">
-                <Link to="/" className="text-[18px] text-[#1dbf73]">Home</Link>
-                <Link to="/aboutus" className="text-[18px] hover:text-[#1dbf73]">About Us</Link>
-                <Link to="/howitworks" className="text-[18px] hover:text-[#1dbf73]">How It Works</Link>
-                <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Market</Link>
-                <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Support</Link>
-                <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">PromiseBond</Link>
+                <Link to="/" className="text-[18px]  text-[#1dbf73]">Home</Link>
+                <Link to="/aboutus" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>About Us</Link>
+                <Link to="/howitworks" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>How It Works</Link>
+                <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Market</Link>
+                <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Support</Link>
+                <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>PromiseBond</Link>
             </nav>
             <div className="lg:flex hidden items-center gap-[10px]">
-                <Link to="/signin" className="rounded-[10px] px-[24px] py-[8px] text-[18px]">Login</Link>
-                <Link to="/signup" className="text-white bg-[#1dbf73] border-[1px] rounded-[10px] px-[24px] py-[8px] text-[18px]">Signup</Link>
+                <Link to="/signin" className={`rounded-[10px] px-[24px] ${isHomePage ? 'text-white' : 'text-black'} py-[8px] text-[18px]`}>Login</Link>
+                <Link to="/signup" className="text-black bg-white border-[1px] rounded-[10px] px-[24px] py-[8px] text-[18px]">Signup</Link>
 
             </div>
             <div className={`absolute top-0 h-[100vh] ${showmenu ? 'left-0 w-[80%]' : 'left-[-100%] w-0'} bg-white flex flex-col shadow-md`}>
