@@ -31,14 +31,14 @@ export default function ActiveBids({ state, loading }) {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px]">
                     {state?.market?.length > 0 ? state?.market?.map((val, i) => {
-                        return <div className="bg-white  flex flex-col gap-[20px] rounded-[20px] relative">
+                        return <div className="bg-white  w-[342px]  flex flex-col gap-[20px] rounded-[20px] relative">
                             <img src={val?.photos[0]
                                 ? val.photos[0].replace('http://localhost:5000', BASE_URL)
-                                : img} alt="cardimg" className="rounded-[10px] w-full h-full" />
-                            <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[20px] rounded-[20px] justify-end">
-                                <p className="text-white text-[1.3rem] font-bold">{val?.issuer_id?.user_id?.username}</p>
-                                <p className="text-[1.3rem] font-bold text-[#74767E]">{val?.missions?.length > 0 ? val?.missions[0]?.description : `No mission`}</p>
-                                <span className="text-[1.3rem] font-bold  text-white">${val?.bond_issuerance_amount}</span>
+                                : img} alt="cardimg"  className="rounded-[10px] w-[342px] h-[489px] object-cover" />
+                            <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[5px] rounded-[20px] justify-end">
+                                <p className="text-white text-[17px] font-bold">{val?.issuer_id?.user_id?.username}</p>
+                                <p className="text-[14px] font-bold text-[#FFFFFFBF]">{val?.missions?.length > 0 ? val?.missions[0]?.description : `No mission`}</p>
+                                <span className="text-[18px] font-bold  text-white">${val?.bond_issuerance_amount}</span>
                             </div>
                         </div>
                     }) : <div className="flex w-full justify-center items-center text-center">

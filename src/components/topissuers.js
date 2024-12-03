@@ -9,7 +9,54 @@ import { MoonLoader } from 'react-spinners';
 import third from "../signuppage.jpeg"
 import { BASE_URL } from "../baseURL";
 import { Navigation } from 'swiper/modules';
+import { useState } from "react";
 export default function TopIssuers({ loading, state, setState }) {
+    const [selectedIssuer, setSelectedIssuer] = useState("default");
+
+    const issuers = state.issuers.map((val,i)=>{
+return val.user_id.username
+    })   
+ 
+
+    const handleIssuerChange = (event) => {
+        setSelectedIssuer(event.target.value);
+        console.log("Selected Issuer:", event.target.value);
+    };
+    const [selectedPriceRange, setSelectedPriceRange] = useState("default")
+    const priceRanges = [
+        { label: "Below $50", value: "0-50" },
+        { label: "$50 - $100", value: "50-100" },
+        { label: "$100 - $500", value: "100-500" },
+        { label: "$500 - $1000", value: "500-1000" },
+        { label: "Above $1000", value: "1000+" }
+    ];
+    const handlePriceRangeChange = (e) => {
+        setSelectedPriceRange(e.target.value);
+
+    };
+    const filterIssuers = () => {
+        return state.issuers.filter((issuer) => {
+            // Filter by issuer name
+            const matchesIssuer =
+                selectedIssuer === "default" ||
+                issuer.user_id.username === selectedIssuer;
+
+            // Filter by price range
+            const matchesPriceRange =
+                selectedPriceRange === "default" ||
+                (() => {
+                    const [min, max] = selectedPriceRange.split("-").map(Number);
+                    const issuerBondAmount = issuer.bonds[0]?.bond_issuerance_amount || 0; // Default to 0 if no bonds
+                    return max
+                        ? issuerBondAmount >= min && issuerBondAmount <= max
+                        : issuerBondAmount >= min;
+                })();
+
+            return matchesIssuer && matchesPriceRange;
+        });
+    };
+
+    const filteredIssuers = filterIssuers();
 
     return (
         <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[40px]">
@@ -18,13 +65,41 @@ export default function TopIssuers({ loading, state, setState }) {
                     Meet Our  <span className="font-normal text-[#1DBF73] italic">Top Issuers.</span>
                 </p>
                 <p className="text-[1rem] text-center lg:w-[70%] mx-auto">Discover the trusted issuers that power our platform, offering unmatched reliability and experties.Explore their unique features and benefits to find the perfect fit for your need</p>
+                <div className="flex justify-center gap-[20px] mt-[10px]">
+                    <select
+                        value={selectedIssuer}
+                        onChange={handleIssuerChange}
+                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
+                    >
+                        <option value="default" >
+                            Select Issuer
+                        </option>
+                        {issuers.map((issuer, index) => (
+                            <option key={index} value={issuer}>
+                                {issuer}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        value={selectedPriceRange}
+                        onChange={handlePriceRangeChange}
+                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
+                    >
+                        <option  value="default">Price Range</option>
+                        {priceRanges.map((range) => (
+                            <option key={range.value} value={range.value}>
+                                {range.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
             <div>
                 {loading ? (
                     <div className="flex justify-center items-center">
                         <MoonLoader color="#6B33E3" size={100} />
                     </div>
-                ) : !state?.issuers?.length > 0 ? (
+                ) : !filteredIssuers?.length > 0 ? (
                     <div className="flex justify-center items-center">
                         <p>No record found</p>
                     </div>
@@ -35,6 +110,7 @@ export default function TopIssuers({ loading, state, setState }) {
                                 nextEl: ".custom-next",
                                 prevEl: ".custom-prev",
                             }}
+
                             modules={[Navigation]}
                             className="mySwiper"
                             slidesPerView={4}
@@ -43,18 +119,16 @@ export default function TopIssuers({ loading, state, setState }) {
                                 1024: {
                                     slidesPerView: 4,
                                 },
-                                768: {
-                                    slidesPerView: 2,
-                                },
+                               
                                 640: {
                                     slidesPerView: 1,
                                 },
                             }}
                         >
-                            {state?.issuers?.map((val) => (
+                            {filteredIssuers?.map((val) => (
                                 <SwiperSlide>
                                     <div key={val?._id} className="p-2">
-                                        <div className="bg-white flex flex-col gap-[20px] rounded-[20px] relative">
+                                        <div className="bg-white flex flex-col gap-[20px]  rounded-[20px] relative">
                                             <img
                                                 src={
                                                     val?.user_id?.avatar
@@ -62,7 +136,8 @@ export default function TopIssuers({ loading, state, setState }) {
                                                         : img
                                                 }
                                                 alt="cardimg"
-                                                className="rounded-[10px] w-full h-[400px]"
+                                                className="rounded-[10px] w-[342px] h-[489px] object-cover" 
+                                                
                                             />
                                             <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[20px] rounded-[20px] justify-end">
                                                 <p className="text-white text-base font-bold">{val?.user_id?.username}</p>

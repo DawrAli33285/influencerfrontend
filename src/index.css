@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@font-face {
+  font-family: 'Helvetica';
+  src: url('Helvetica.woff2') format('woff2'),
+      url('Helvetica.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,11 +26,16 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Helvetica', sans-serif;
 }
 #root{
   overflow-x: hidden;
 }
 .custom-inset-shadow {
   box-shadow: inset 8px 0px 0px 0px #c0a3fc
+}
+@media(max-width:768px){
+  .swiper-slide{
+    min-width: 100% !important;
+  }
 }

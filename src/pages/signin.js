@@ -56,8 +56,8 @@ export default function SignIn() {
                 toast.success(response.data.message, { containerId: "signIn" })
                 if (response.data.user.is_email_verified == false || response.data.user.Is_mobile_number_verified == false) {
                     localStorage.setItem("email", response.data.user.email)
-                    let phoneNumber = response.data.user.country_code_id.country_code + response.data.user.mobile_number
-                    localStorage.setItem("phoneNumber", phoneNumber)
+                   
+                   
                     localStorage.removeItem("token")
                     localStorage.removeItem("buyerToken")
                     navigate('/verification')
@@ -68,6 +68,7 @@ export default function SignIn() {
                     navigate('/dashboard')
                 }
             } catch (e) {
+                console.log(e.message)
                 if (e?.response?.data?.error) {
                     toast.error(e?.response?.data?.error, { containerId: "signIn" })
                     return;
@@ -97,8 +98,7 @@ export default function SignIn() {
             toast.success(response.data.message, { containerId: "signIn" })
             if (response.data.user.is_email_verified === false || response.data.user.Is_mobile_number_verified === false) {
                 localStorage.setItem("email", response.data.user.email)
-                let phoneNumber = response.data.user.country_code_id.country_code + response.data.user.mobile_number
-                localStorage.setItem("phoneNumber", phoneNumber)
+               
                 localStorage.removeItem("token")
                 localStorage.removeItem("buyerToken")
                 navigate('/verification')

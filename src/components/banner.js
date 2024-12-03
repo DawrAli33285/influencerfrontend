@@ -9,9 +9,14 @@ export default function Banner() {
     const navigate = useNavigate();
     return (
         <div className="w-full  relative h-full min-h-[500px]">
-            <div className="w-full ">
-                <img src={banner} alt="img" />
-            </div>
+<div className="relative w-full">
+    <img src={banner} alt="img" className="w-full h-auto" />
+    <div className="absolute inset-0 bg-black/40"></div> 
+    <div className="absolute inset-0 flex items-center justify-center text-white">
+      
+    </div>
+</div>
+
             <div className=" top-0 left-0 flex items-center bg-[#00000052] absolute lg:px-[6rem] px-[20px] py-[20px] w-full h-full">
                 <div className="flex flex-col gap-[10px] lg:w-[50%]">
                     <h2 className="font-bold xl:text-[2.2rem] text-[1.6rem] text-white">
