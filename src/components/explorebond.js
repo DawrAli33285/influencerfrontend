@@ -65,7 +65,7 @@ export default function ExploreBond({ state, setState, loading }) {
                     <select
                         value={selectedIssuer}
                         onChange={handleIssuerChange}
-                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
+                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
                     >
                         <option  value="default">
                             Select Bond
@@ -79,7 +79,7 @@ export default function ExploreBond({ state, setState, loading }) {
                     <select
                         value={selectedPriceRange}
                         onChange={handlePriceRangeChange}
-                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
+                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
                     >
                         <option  value="default">Price Range</option>
                         {priceRanges.map((range) => (
@@ -119,7 +119,7 @@ export default function ExploreBond({ state, setState, loading }) {
 
                             </div>
                             <p className="text-[1rem] px-[20px] text-[#74767E]">{bond?.title}</p>
-                            <p className="text-[1rem] px-[20px] font-bold">{bond?.missions[0]?.description.slice(0,37)}...</p>
+                            <p className="text-[1rem] px-[20px] font-bold">{bond?.missions[0]?.description?.length>40?bond?.missions[0]?.description.slice(0,37)+'...':bond?.missions[0]?.description}</p>
                             <div className="w-full px-[20px] h-[1px] bg-[#E9E9E9]"></div>
 
                             <div className="flex px-[20px] pb-[20px] justify-between">

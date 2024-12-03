@@ -69,7 +69,7 @@ return val.user_id.username
                     <select
                         value={selectedIssuer}
                         onChange={handleIssuerChange}
-                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
+                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
                     >
                         <option value="default" >
                             Select Issuer
@@ -83,7 +83,7 @@ return val.user_id.username
                     <select
                         value={selectedPriceRange}
                         onChange={handlePriceRangeChange}
-                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
+                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
                     >
                         <option  value="default">Price Range</option>
                         {priceRanges.map((range) => (
