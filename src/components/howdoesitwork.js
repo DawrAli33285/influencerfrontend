@@ -15,7 +15,7 @@ export default function HowDoesItWork() {
                         with just few simple steps, you can issue, sell and fullfill Promise Bonds/ Here's the journey
                     </p>
                 </div>
-                <Link to="/" className=" underline text-[1rem] mt-[40px] text-center">See more</Link>
+                <Link to="/howitworks" className=" underline text-[1rem] mt-[40px] text-center">See more</Link>
             </div>
             <div className="grid gap-[20px] md:grid-cols-3 grid-cols-1">
                 <div className="bg-white p-[20px] flex flex-col gap-[10px] rounded-[20px]">

@@ -53,13 +53,16 @@ export default function NewIndex() {
             <div className="w-full relative">
                 <HomeHeader />
                 <Banner />
-                <HowDoesItWork />
-                <WhyChooseUs />
-                <ExploreBond loading={loading} state={state} setState={setState} />
-                <TopIssuers loading={loading} state={state} setState={setState} />
-                <ActiveBids loading={loading} state={state} setState={setState} />
-                <Reviews />
-                <div className="w-full bg-[#1dbf735e] lg:p-[40px] lg:mt-[9rem] p-[20px]">
+                <div className="max-w-[1440px] mx-auto">
+                    <HowDoesItWork />
+                    <WhyChooseUs />
+                    <ExploreBond loading={loading} state={state} setState={setState} />
+                    <TopIssuers loading={loading} state={state} setState={setState} />
+                    <ActiveBids loading={loading} state={state} setState={setState} />
+                    <Reviews />
+
+                </div>
+                <div className="w-full bg-[#1dbf735e] lg:p-[40px]  mx-auto lg:mt-[9rem] p-[20px]">
                     <div className="flex lg:flex-row flex-col-reverse lg:gap-[40px] gap-[20px] max-w-[900px] mx-auto">
                         <div className="flex lg:w-[50%] justify-center w-full flex-col gap-[20px]">
                             <div>

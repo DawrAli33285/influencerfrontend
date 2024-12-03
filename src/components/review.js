@@ -14,8 +14,8 @@ const reviewsData = [
     review: "The innovative solutions offered by YourBank have greatly improved my productivity. The intuitive design and powerful tools are exactly what I needed to stay ahead in my career.",
   },
   {
-    name: "Tod",
-    profession: "UI/UX Designer",
+    name: "John",
+    profession: "Marketing Manager",
     avatar: "https://via.placeholder.com/80",
     review: "The innovative solutions offered by YourBank have greatly improved my productivity. The intuitive design and powerful tools are exactly what I needed to stay ahead in my career.",
   },
@@ -40,11 +40,11 @@ export default function Reviews() {
       </div>
 
       {/* Users Section */}
-      <div className="grid grid-cols-4 gap-[20px] items-center">
+      <div className="flex justify-center flex-row gap-[20px] items-center">
         {reviewsData.map((user, index) => (
           <div
             key={index}
-            className={`flex items-center gap-[20px] border  rounded-[20px] p-[10px] w-full max-w-[600px] cursor-pointer ${
+            className={`flex items-center gap-[20px] border  rounded-[100px] p-[10px] w-full max-w-[330px] h-[4.5rem] cursor-pointer ${
               user.name === selectedReview.name ? "border-[#1DBF73]" : "border-none"
             }`}
             onClick={() => setSelectedReview(user)}
