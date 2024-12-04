@@ -40,7 +40,7 @@ export default function Terms() {
         <div className="w-full">
             <HomeHeader />
             <div className="px-[30px]">
-                <h2 className="lg:text-[2.2rem] text-[1.6rem] font-semibold">
+                <h2 className="xl:text-[2.38rem] text-[1.50rem] font-semibold">
                     Terms and Privacy
                 </h2>
                 <p className="text-[1rem] mt-[10px] text-[#1C1C1CA3]">
@@ -57,7 +57,7 @@ export default function Terms() {
                         {options.map((option, index) => (
                             <div
                                 key={index}
-                                className={`flex items-center gap-[10px] cursor-pointer border-l-[4px] pl-[10px] ${activeOption === option
+                                className={`flex items-center lg:text-[1.25rem] text-[1rem] gap-[10px] cursor-pointer border-l-[4px] pl-[10px] ${activeOption === option
                                     ? "border-[#1DBF73] text-[#1DBF73] font-bold"
                                     : "border-transparent text-[#1C1C1CA3]"
                                     }`}
@@ -76,10 +76,10 @@ export default function Terms() {
                                 className={`flex flex-col gap-[20px] ${activeOption === term.question ? "" : "hidden"
                                     }`}
                             >
-                                <h3 className="text-[1.3rem] font-bold">
+                                <h3 className="lg:text-[1.25rem] text-[1rem] font-bold">
                                     {term.question}
                                 </h3>
-                                <p className="text-[1rem] mt-[10px] text-[#1C1C1CA3]">
+                                <p className="lg:text-[0.94rem] text-[0.75rem] mt-[10px] text-[#1C1C1CA3]">
                                     {term.answer}
                                 </p>
                             </div>
@@ -88,15 +88,15 @@ export default function Terms() {
                 </div>
             </div>
             <div className="w-full bg-[#1dbf733b] flex-col gap-[20px] flex justify-center items-center min-h-[425px]">
-                <h2 className="lg:text-[2.2rem] text-center text-[1.6rem] font-semibold">
+                <h2 className="xl:text-[2.38rem] text-[1.50rem] text-center  font-semibold">
                     Still Have Question
                 </h2>
-                <p className="text-[1rem] mt-[10px] text-center">
+                <p className="lg:text-[0.94rem] text-[0.75rem] mt-[10px] text-center">
                     Contact us at <span className="underline">support@sponsorbond.com</span> for more assistance!
                 </p>
                 <div className="flex bg-white rounded-[6px] lg:w-[600px] py-[10px] px-[20px] justify-between">
-                    <input type="email" placeholder="Enter Your Email" className="outline-none border-none w-[80%]" />
-                    <button className="bg-[#1DBF73] xl:px-[20px] xl:py-[10px] xl:text-[1rem] text-[.8rem] text-white font-bold  xl:w-fit lg:w-[30%]">
+                    <input type="email" placeholder="Enter Your Email" className="lg:text-[0.94rem] text-[0.75rem] outline-none border-none w-[80%]" />
+                    <button className="bg-[#1DBF73] xl:px-[20px] xl:py-[10px] lg:text-[0.94rem] text-[0.75rem] text-white font-bold  xl:w-fit lg:w-[30%]">
                         Send
                     </button>
                 </div>

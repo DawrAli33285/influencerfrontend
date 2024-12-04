@@ -63,15 +63,15 @@ export default function NewIndex() {
 
                 </div>
                 <div className="w-full bg-[#1dbf735e] lg:p-[40px]  mx-auto lg:mt-[9rem] px-[20px] pt-[20px]">
-                    <div className="flex lg:flex-row flex-col lg:gap-[40px] gap-[20px] max-w-[900px] mx-auto">
+                    <div className="flex lg:flex-row flex-col lg:gap-[40px] gap-[20px] max-w-[980px] mx-auto">
                         <div className="flex lg:w-[50%] justify-center w-full flex-col gap-[20px]">
                             <div>
-                                <h2 className="lg:text-[1.2rem] text-[1.6rem]  font-bold">Fullfill your promises, share</h2>
-                                <h2 className="lg:text-[1.2rem] text-[1.6rem]  font-bold">your progress, and level up</h2>
-                                <p className="lg:text-[.8rem]  mt-[10px]">Learn more about promise bonds</p>
+                                <h2 className="lg:text-[2.38rem] text-[1.50rem]  font-bold">Fullfill your promises, share</h2>
+                                <h2 className="lg:text-[2.38rem] text-[1.50rem]  font-bold">your progress, and level up</h2>
+                                <p className="lg:text-[0.94rem] text-[0.75rem] mt-[10px]">Learn more about promise bonds</p>
 
                             </div>
-                            <Link to="/signup" class="bg-[#1DBF73] px-[20px] py-[10px] xl:py-[10px] xl:text-[.9rem] text-[.6rem] text-white font-bold  w-fit ">
+                            <Link to="/signup" class="bg-[#1DBF73] px-[20px] py-[10px] xl:py-[10px] lg:text-[0.94rem] text-[0.75rem] text-white font-bold  w-fit ">
                                 Get Started
                             </Link>
                         </div>

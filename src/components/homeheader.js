@@ -35,19 +35,19 @@ export default function HomeHeader() {
                 </svg>
 
             </div>
-            <Link to="/signin" className={` lg:hidden block rounded-[10px] px-[10px] ${isHomePage ? 'text-white' : 'text-black'} py-[8px] text-[18px]`}>Login</Link>
+            <Link to="/signin" className={` lg:hidden block rounded-[10px] px-[10px] ${isHomePage ? 'text-white' : 'text-black'} py-[8px] lg:text-[0.94rem] text-[0.75rem]`}>Login</Link>
 
             <nav className="lg:flex items-center gap-[30px] hidden">
-                <Link to="/" className="text-[18px]  text-[#1dbf73]">Home</Link>
-                <Link to="/aboutus" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>About Us</Link>
-                <Link to="/howitworks" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>How It Works</Link>
-                <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Market</Link>
-                <Link to="/support" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Support</Link>
-                <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>PromiseBond</Link>
+                <Link to="/" className="lg:text-[0.94rem] text-[0.75rem]  text-[#1dbf73]">Home</Link>
+                <Link to="/aboutus" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>About Us</Link>
+                <Link to="/howitworks" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>How It Works</Link>
+                <Link to="/mission" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Market</Link>
+                <Link to="/support" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Support</Link>
+                <Link to="/mission" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>PromiseBond</Link>
             </nav>
             <div className="lg:flex hidden items-center gap-[10px]">
-                <Link to="/signin" className={`rounded-[10px] px-[24px] ${isHomePage ? 'text-white' : 'text-black'} py-[8px] text-[18px]`}>Login</Link>
-                <Link to="/signup" className="text-black bg-white border-[1px] rounded-[10px] px-[24px] py-[8px] text-[18px]">Signup</Link>
+                <Link to="/signin" className={`rounded-[10px] px-[24px] ${isHomePage ? 'text-white' : 'text-black'} py-[8px] lg:text-[0.94rem] text-[0.75rem]`}>Login</Link>
+                <Link to="/signup" className="text-black bg-white border-[1px] rounded-[10px] px-[24px] py-[8px] lg:text-[0.94rem] text-[0.75rem]">Signup</Link>
 
             </div>
             <div className={`absolute top-0 h-[100vh] ${showmenu ? 'left-0 w-[80%]' : 'left-[-100%] w-0'} bg-white flex flex-col shadow-md`}>
@@ -55,17 +55,17 @@ export default function HomeHeader() {
                     <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Menu / Close_SM"> <path id="Vector" d="M16 16L12 12M12 12L8 8M12 12L16 8M12 12L8 16" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
                 </div>
                 <nav className="flex px-[20px] flex-col gap-[30px] ">
-                    <Link to="/" className="text-[18px] text-[#1dbf73]">Home</Link>
-                    <Link to="/aboutus" className="text-[18px] hover:text-[#1dbf73]">About Us</Link>
+                    <Link to="/" className="lg:text-[0.94rem] text-[0.75rem] text-[#1dbf73]">Home</Link>
+                    <Link to="/aboutus" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">About Us</Link>
 
-                    <Link to="/sponsorbond" className="text-[18px] hover:text-[#1dbf73]">How It Works</Link>
-                    <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Market</Link>
-                    <Link to="/support" className="text-[18px] hover:text-[#1dbf73]">Support</Link>
-                    <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">PromiseBond</Link>
+                    <Link to="/sponsorbond" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">How It Works</Link>
+                    <Link to="/mission" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">Market</Link>
+                    <Link to="/support" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">Support</Link>
+                    <Link to="/mission" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">PromiseBond</Link>
                 </nav>
                 <div className="flex flex-col gap-[10px] px-[20px] mt-[30px]">
-                    <Link to="/signin" className="rounded-[10px] px-[24px] py-[8px] text-[18px]">Login</Link>
-                    <Link to="/signup" className="text-white bg-[#1dbf73] border-[1px] rounded-[10px] px-[24px] py-[8px] text-[18px]">Signup</Link>
+                    <Link to="/signin" className="rounded-[10px] px-[24px] py-[8px] lg:text-[0.94rem] text-[0.75rem]">Login</Link>
+                    <Link to="/signup" className="text-white bg-[#1dbf73] border-[1px] rounded-[10px] px-[24px] py-[8px] lg:text-[0.94rem] text-[0.75rem]">Signup</Link>
 
                 </div>
             </div>

@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-@font-face {
-  font-family: 'Helvetica';
-  src: url('Helvetica.woff2') format('woff2'),
-      url('Helvetica.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,7 +19,7 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 #root{
   overflow-x: hidden;

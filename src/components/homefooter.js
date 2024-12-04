@@ -2,18 +2,18 @@ import { Link } from "react-router-dom";
 
 export default function HomeFooter() {
     return (
-        <div className="w-full flex lg:px-[40px] px-[20px] flex-col gap-[20px] bg-[#222222]">
+        <div className="w-full flex  flex-col gap-[20px] bg-[#222222]">
             <div className="bg-[#222222] flex lg:flex-row flex-col gap-[20px]  py-[40px] justify-between">
                 <div className="w-full xl:w-[50%]">
-                    <nav className="flex lg:items-center gap-[30px] w-full  xl:flex-row flex-col justify-center">
-                        <Link to="/" className="text-[18px]  text-white">Terms and service</Link>
-                        <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">Site Map</Link>
+                    <nav className="flex lg:items-center gap-[30px] w-full  justify-center">
+                        <Link to="/" className="lg:text-[0.94rem] text-[0.75rem]  text-white">Terms and service</Link>
+                        <Link to="/howitworks" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Privacy Policy</Link>
+                        <Link to="/market" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Site Map</Link>
 
                     </nav>
                 </div>
                 <div className="w-full lg:w-[50%] flex  gap-[10px] items-center  justify-center px-[40px]">
-                    <p className="text-white">Follow Us On</p>
+                    <p className="text-white lg:text-[0.94rem] text-[0.75rem]">Follow Us On</p>
                     <svg width="260" height="24" viewBox="0 0 260 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M20.1963 3H4.85686C4.12314 3 3.5 3.58029 3.5 4.29514V19.704C3.5 20.4197 3.90886 21 4.64257 21H19.982C20.7166 21 21.5 20.4197 21.5 19.704V4.29514C21.5 3.58029 20.9309 3 20.1963 3ZM10.3571 9.85714H12.7803V11.0923H12.8069C13.1763 10.4263 14.2674 9.75 15.6166 9.75C18.206 9.75 18.9286 11.1249 18.9286 13.6714V18.4286H16.3571V14.1403C16.3571 13.0003 15.902 12 14.8374 12C13.5449 12 12.9286 12.8751 12.9286 14.3117V18.4286H10.3571V9.85714ZM6.07143 18.4286H8.64286V9.85714H6.07143V18.4286ZM8.96429 6.85714C8.96429 7.74514 8.24514 8.46429 7.35714 8.46429C6.46914 8.46429 5.75 7.74514 5.75 6.85714C5.75 5.96914 6.46914 5.25 7.35714 5.25C8.24514 5.25 8.96429 5.96914 8.96429 6.85714Z" fill="white" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M59.5053 7.37695C56.9514 7.37695 54.8795 9.44766 54.8795 12C54.8795 14.5523 56.9514 16.623 59.5053 16.623C62.0591 16.623 64.131 14.5523 64.131 12C64.131 9.44766 62.0591 7.37695 59.5053 7.37695ZM59.5053 14.9988C57.8484 14.9988 56.5047 13.6559 56.5047 12C56.5047 10.3441 57.8484 9.00117 59.5053 9.00117C61.1621 9.00117 62.5059 10.3441 62.5059 12C62.5059 13.6559 61.1621 14.9988 59.5053 14.9988Z" fill="white" />
@@ -33,10 +33,10 @@ export default function HomeFooter() {
                 <div className="flex flex-col gap-[20px] lg:px-[40px] px-[20px]">
                     <p className="text-white font-semibold text-[22px]">About</p>
                     <nav className="flex  gap-[10px] w-full   flex-col">
-                        <Link to="/" className="text-[18px]  text-white">Press and News</Link>
-                        <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">Parntership</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/terms" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
+                        <Link to="/" className="lg:text-[0.94rem] text-[0.75rem]  text-white">Press and News</Link>
+                        <Link to="/howitworks" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Parntership</Link>
+                        <Link to="/market" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
+                        <Link to="/terms" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Terms</Link>
 
 
                     </nav>
@@ -45,10 +45,10 @@ export default function HomeFooter() {
                 <div className="flex flex-col gap-[20px] lg:px-[40px] px-[20px]">
                     <p className="text-white font-semibold text-[22px]">Quick Links</p>
                     <nav className="flex  gap-[10px] w-full   flex-col">
-                        <Link to="/" className="text-[18px]  text-white">Press and News</Link>
-                        <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">Parntership</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/terms" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
+                        <Link to="/" className="lg:text-[0.94rem] text-[0.75rem]  text-white">Press and News</Link>
+                        <Link to="/howitworks" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Parntership</Link>
+                        <Link to="/market" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
+                        <Link to="/terms" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Terms</Link>
 
 
                     </nav>
@@ -57,20 +57,20 @@ export default function HomeFooter() {
                 <div className="flex flex-col gap-[20px] lg:px-[40px] px-[20px]">
                     <p className="text-white font-semibold text-[22px]">Support</p>
                     <nav className="flex  gap-[10px] w-full   flex-col">
-                        <Link to="/" className="text-[18px]  text-white">Press and News</Link>
-                        <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">Parntership</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/terms" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
+                        <Link to="/" className="lg:text-[0.94rem] text-[0.75rem]  text-white">Press and News</Link>
+                        <Link to="/howitworks" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Parntership</Link>
+                        <Link to="/market" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
+                        <Link to="/terms" className="lg:text-[0.94rem] text-[0.75rem] text-white hover:text-[#1dbf73]">Terms</Link>
 
 
                     </nav>
 
                 </div>
                 <div className="flex flex-col gap-[20px] lg:px-[40px] px-[20px]">
-                    <p className="text-white font-semibold text-[22px]">Subscribe</p>
+                    <p className="text-white font-semibold lg:text-[0.94rem] text-[0.75rem]">Subscribe</p>
                     <div className="w-full rounded-[10px] px-[10px] flex justify-between py-[10px] bg-[#ffffff3b]">
-                        <input placeholder="Enter Your Email Address" className=" outline-none bg-transparent border-none text-white w-[80%]" />
-                        <button className="text-[#1dbf73] text-[14px]">Send</button>
+                        <input placeholder="Enter Your Email Address" className=" outline-none bg-transparent border-none lg:text-[0.94rem] text-[0.75rem] text-white w-[80%]" />
+                        <button className="text-[#1dbf73] lg:text-[0.94rem] text-[0.75rem]">Send</button>
                     </div>
 
                 </div>

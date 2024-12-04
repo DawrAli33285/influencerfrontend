@@ -8,14 +8,14 @@ export default function HowDoesItWork() {
         <div className="w-full  px-[20px] py-[40px] xl:px-[40px] flex flex-col gap-[20px]">
             <div className="flex justify-between">
                 <div className="flex flex-col gap-[10px]">
-                    <p className="font-bold xl:text-[1.5rem] text-[1.3rem]">
-                        How Does It <span className="font-normal text-[#1DBF73] italic">Work</span>?
+                    <p className="font-bold xl:text-[2.38rem] text-[1.50rem]">
+                        How Does It <span className="font-normal text-[#1DBF73]">Work</span>?
                     </p>
-                    <p className="text-[.8rem]">
+                    <p className="lg:text-[0.94rem] text-[0.75rem]">
                         with just few simple steps, you can issue, sell and fullfill Promise Bonds/ Here's the journey
                     </p>
                 </div>
-                <Link to="/howitworks" className=" underline text-[1rem] mt-[40px] lg:block hidden text-center">See more</Link>
+                <Link to="/howitworks" className=" underline lg:text-[0.94rem] text-[0.75rem] mt-[40px] lg:block hidden text-center">See more</Link>
             </div>
             <div className="grid gap-[20px] md:grid-cols-3 grid-cols-1">
                 <div className="bg-white p-[20px] flex flex-col gap-[10px] rounded-[20px]">
@@ -36,8 +36,8 @@ export default function HowDoesItWork() {
                         </svg>
 
                     </div>
-                    <span className=" text-[1rem] font-semibold mt-[20px]">Sign Up</span>
-                    <p className="text-[1rem] text-[#6B7177]">Join our platform in minutes with email and phone verification.</p>
+                    <span className="lg:text-[1.25rem] text-[1rem] font-semibold mt-[20px]">Sign Up</span>
+                    <p className="lg:text-[0.94rem] text-[0.75rem] text-[#6B7177]">Join our platform in minutes with email and phone verification.</p>
 
                 </div>
 
@@ -59,9 +59,9 @@ export default function HowDoesItWork() {
                         </svg>
 
                     </div>
-                    <span className=" text-[1rem] font-semibold mt-[20px]">Issue Promise Bonds</span>
+                    <span className="lg:text-[1.25rem] text-[1rem] font-semibold mt-[20px]">Issue Promise Bonds</span>
 
-                    <p className="text-[1rem] text-[#6B7177]">Describe your mission, set a price, and get operator approval.</p>
+                    <p className="lg:text-[0.94rem] text-[0.75rem] text-[#6B7177]">Describe your mission, set a price, and get operator approval.</p>
                 </div>
 
 
@@ -83,13 +83,13 @@ export default function HowDoesItWork() {
                         </svg>
 
                     </div>
-                    <span className=" text-[1rem] font-semibold mt-[20px]">Promote & Sell</span>
+                    <span className="lg:text-[1.25rem] text-[1rem] font-semibold mt-[20px]">Promote & Sell</span>
 
-                    <p className="text-[1rem] text-[#6B7177]">Share your bond on social media and start earning.</p>
+                    <p className="lg:text-[0.94rem] text-[0.75rem] text-[#6B7177]">Share your bond on social media and start earning.</p>
                 </div>
 
             </div>
-            <Link to="/howitworks" className=" underline text-[1rem]  lg:hidden block text-center">See more</Link>
+            <Link to="/howitworks" className=" underline lg:text-[0.94rem] text-[0.75rem]  lg:hidden block text-center">See more</Link>
 
         </div>
     )

@@ -55,20 +55,20 @@ export default function Support() {
             return (
                 <div
                     key={currentIndex}
-                    className={`p-[10px] rounded-md  ${isOpen ? "bg-[#1dbf733b]" : ""
+                    className={`py-[10px] px-[20px] rounded-md  ${isOpen ? "bg-[#1dbf733b]" : ""
                         }`}
                 >
                     <div
                         className="flex justify-between items-center cursor-pointer"
                         onClick={() => toggleTab(currentIndex)}
                     >
-                        <p className="font-bold text-[1.1rem]">{faq.question}</p>
-                        <span className="text-[1.5rem] font-bold">
+                        <p className="font-bold lg:text-[1.25rem] text-[1rem]">{faq.question}</p>
+                        <span className="lg:text-[1.25rem] text-[1rem] font-bold">
                             {isOpen ? "-" : "+"}
                         </span>
                     </div>
                     {isOpen && (
-                        <p className="mt-[10px] text-[1rem] text-[#1C1C1CA3]">
+                        <p className="mt-[10px] lg:text-[0.94rem] text-[0.75rem] text-[#1C1C1CA3]">
                             {faq.answer}
                         </p>
                     )}
@@ -79,16 +79,16 @@ export default function Support() {
         <div className="w-full">
             <HomeHeader />
             <div className="px-[30px]">
-                <h2 className="lg:text-[2.2rem] text-center text-[1.6rem] font-semibold">
+                <h2 className="xl:text-[2.38rem] text-[1.50rem] text-center  font-semibold">
                     How Can We Help You?
                 </h2>
-                <p className="text-[1rem] mt-[10px] lg:w-[60%] mx-auto text-center text-[#1C1C1CA3]">
+                <p className="lg:text-[0.94rem] text-[0.75rem] mt-[10px] lg:w-[60%] mx-auto text-center text-[#1C1C1CA3]">
                     Our platform helps you monetize your talents, connect with supporters, and secure resources to grow, empowering you to achieve your dreams and build meaningful connections.                </p>
             </div>
             <div className="w-full px-[20px] py-[40px] max-w-[1440px] mx-auto xl:px-[30px] flex flex-col gap-[40px]">
                 
                 <div className="flex flex-col gap-[20px]">
-                    <h2 className="text-[1.4rem] font-semibold">
+                    <h2 className="lg:text-[1.25rem] text-[1rem] font-semibold">
                         Payments
                     </h2>
                     {renderFAQs(paymentsFAQs, 0)}
@@ -96,22 +96,22 @@ export default function Support() {
 
              
                 <div className="flex flex-col gap-[20px]">
-                    <h2 className="text-[1.4rem] font-semibold">
+                    <h2 className="lg:text-[1.25rem] text-[1rem] font-semibold">
                         Suggestions
                     </h2>
                     {renderFAQs(suggestionsFAQs, paymentsFAQs.length)}
                 </div>
             </div>
             <div className="w-full bg-[#1dbf733b] flex-col gap-[20px] flex justify-center items-center min-h-[425px]">
-                <h2 className="lg:text-[2.2rem] text-center text-[1.6rem] font-semibold">
+                <h2 className="xl:text-[2.38rem] text-[1.50rem] text-center  font-semibold">
                     Still Have Question
                 </h2>
-                <p className="text-[1rem] mt-[10px] text-center">
+                <p className="lg:text-[0.94rem] text-[0.75rem] mt-[10px] text-center">
                     Contact us at <span className="underline">support@sponsorbond.com</span> for more assistance!
                 </p>
                 <div className="flex bg-white rounded-[6px] lg:w-[600px] py-[10px] px-[20px] justify-between">
-                    <input type="email" placeholder="Enter Your Email" className="outline-none border-none w-[80%]" />
-                    <button className="bg-[#1DBF73] xl:px-[20px] xl:py-[10px] xl:text-[1rem] text-[.8rem] text-white font-bold  xl:w-fit lg:w-[30%]">
+                    <input type="email" placeholder="Enter Your Email" className="outline-none lg:text-[0.94rem] text-[0.75rem] border-none w-[80%]" />
+                    <button className="bg-[#1DBF73] xl:px-[20px] xl:py-[10px] lg:text-[0.94rem] text-[0.75rem] text-white font-bold  xl:w-fit lg:w-[30%]">
                         Send
                     </button>
                 </div>

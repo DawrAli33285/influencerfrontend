@@ -61,10 +61,10 @@ return val.user_id.username
     return (
         <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[40px]">
             <div className="flex items-center gap-[10px] flex-col">
-                <p className="font-bold xl:text-[1.5rem] text-[1.3rem]">
+                <p className="font-bold xl:text-[2.38rem] text-[1.50rem]">
                     Meet Our  <span className="font-normal text-[#1DBF73] italic">Top Issuers.</span>
                 </p>
-                <p className="text-[1rem] text-center lg:w-[70%] mx-auto">Discover the trusted issuers that power our platform, offering unmatched reliability and experties.Explore their unique features and benefits to find the perfect fit for your need</p>
+                <p className="lg:text-[0.94rem] text-[0.75rem] text-center lg:w-[70%] mx-auto">Discover the trusted issuers that power our platform, offering unmatched reliability and experties.Explore their unique features and benefits to find the perfect fit for your need</p>
                 
             </div>
             <div>
@@ -113,11 +113,11 @@ return val.user_id.username
                                                 
                                             />
                                             <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[20px] rounded-[20px] justify-end">
-                                                <p className="text-white text-base font-bold">{val?.user_id?.username}</p>
-                                                <p className="text-[1rem] font-bold text-[#74767E]">
+                                                <p className="text-white lg:text-[1.25rem] text-[1rem] font-bold">{val?.user_id?.username}</p>
+                                                <p className="lg:text-[0.94rem] text-[0.75rem] font-bold text-[#74767E]">
                                                     {val?.bonds[0]?.missions[0]?.task_type}
                                                 </p>
-                                                <span className="text-[1rem] font-bold text-base text-white">
+                                                <span className="lg:text-[1.25rem] text-[1rem] font-bold text-base text-white">
                                                     {val?.bonds?.length} Bonds Issued | Level 13
                                                 </span>
                                             </div>
@@ -141,7 +141,7 @@ return val.user_id.username
                     </div>
                 )}
             </div>
-            <Link to="/search?filter=issuer&search=" className="text-[#1DBF73] border-[#1DBF73] bg-[#1dbf7327] border rounded-[8px] w-fit px-[20px] py-[10px] mx-auto font-bold xl:text-[1rem] text-[.9rem]">View All Issuers</Link>
+            <Link to="/search?filter=issuer&search=" className="text-[#1DBF73] border-[#1DBF73] bg-[#1dbf7327] border rounded-[8px] w-fit px-[20px] py-[10px] mx-auto font-bold lg:text-[0.94rem] text-[0.75rem]">View All Issuers</Link>
 
         </div>
     )

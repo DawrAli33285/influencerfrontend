@@ -56,10 +56,10 @@ export default function ExploreBond({ state, setState, loading }) {
         <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[40px]">
             <div className="flex lg:flex-row flex-col justify-between">
               <div className="flex flex-col gap-3">
-              <p className="font-bold xl:text-[1.5rem] text-[1.3rem]">
-                    Explore Trending <span className="font-normal text-[#1DBF73] italic">Promise Bonds.</span>
+              <p className="font-bold xl:text-[2.38rem] text-[1.50rem]">
+                    Explore Trending <span className="font-normal text-[#1DBF73]">Promise Bonds.</span>
                 </p>
-                <p>Most viewed and all-time top-selling services</p>
+                <p className="lg:text-[0.94rem] text-[0.75rem]">Most viewed and all-time top-selling services</p>
               </div>
                 
             </div>
@@ -91,16 +91,16 @@ export default function ExploreBond({ state, setState, loading }) {
                                 </svg>
 
                             </div>
-                            <p className="text-[1rem] px-[20px] text-[#74767E]">{bond?.title}</p>
-                            <p className="text-[1rem] px-[20px] font-bold">{bond?.missions[0]?.description?.length>40?bond?.missions[0]?.description.slice(0,37)+'...':bond?.missions[0]?.description}</p>
+                            <p className="lg:text-[0.94rem] text-[0.75rem] px-[20px] text-[#74767E]">{bond?.title}</p>
+                            <p className="lg:text-[1.25rem] text-[1rem] px-[20px] ">{bond?.missions[0]?.description?.length>40?bond?.missions[0]?.description.slice(0,28)+'...':bond?.missions[0]?.description}</p>
                             <div className="w-full px-[20px] h-[1px] bg-[#E9E9E9]"></div>
 
                             <div className="flex px-[20px] pb-[20px] justify-between">
-                                <div className="flex gap-[10px] font-bold">
+                                <div className="flex gap-[10px] lg:text-[1.25rem] text-[1rem]">
                                     <img src="https://png.pngitem.com/pimgs/s/22-223925_female-avatar-female-avatar-no-face-hd-png.png" alt="avatar" className="w-[24px] h-[24px] rounded-full" />
                                     {bond?.issuer_id?.user_id?.username}
                                 </div>
-                                <span className="text-[1rem] font-bold"><span className="text-[#74767E] font-normal text-[.8rem] pr-[2px]">Starting at:</span>${bond?.bond_issuerance_amount}</span>
+                                <span className="lg:text-[1.25rem] text-[1rem]"><span className="text-[#74767E] font-normal text-[.8rem] pr-[2px]">Starting at:</span>${bond?.bond_issuerance_amount}</span>
                             </div>
 
 
@@ -113,7 +113,7 @@ export default function ExploreBond({ state, setState, loading }) {
                 })}
 
             </div>
-            <Link to={`/search?filter=bond&search=`} className="text-[#1DBF73] border-[#1DBF73] bg-[#1dbf7327] border rounded-[8px] w-fit px-[20px] py-[10px] mx-auto font-bold xl:text-[1rem] text-[.9rem]">View All Promise Bond</Link>
+            <Link to={`/search?filter=bond&search=`} className="text-[#1DBF73] border-[#1DBF73] bg-[#1dbf7327] border rounded-[8px] w-fit px-[20px] py-[10px] mx-auto font-bold lg:text-[0.94rem] text-[0.75rem]">View All Promise Bond</Link>
 
         </div>
     )
