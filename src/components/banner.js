@@ -9,17 +9,18 @@ export default function Banner() {
     const navigate = useNavigate();
     return (
         <div className="w-full  relative h-full min-h-[500px]">
-<div className="relative w-full">
-    <img src={banner} alt="img" className="w-full h-auto" />
-    <div className="absolute inset-0 bg-black/40"></div> 
-    <div className="absolute inset-0 flex items-center justify-center text-white">
-      
-    </div>
+<div className="relative w-full h-[500px]">
+  <img src={banner} alt="img" className="w-full h-full object-cover" />
+  <div className="absolute inset-0 bg-black/40"></div>
+  <div className="absolute inset-0 flex items-center justify-center text-white">
+   
+  </div>
 </div>
 
-            <div className=" top-0 left-0 flex items-center bg-[#00000052] absolute lg:px-[6rem] px-[20px] py-[20px] w-full h-full">
-                <div className="flex flex-col gap-[10px] lg:w-[50%]">
-                    <h2 className="font-bold xl:text-[2.2rem] text-[1.6rem] text-white">
+
+            <div className="top-0 left-0 flex items-center bg-[#00000052] absolute lg:px-[6rem] px-[20px] py-[20px] w-full h-full">
+                <div className="flex flex-col gap-[10px] lg:w-[50%] lg:mt-0 mt-[5rem]">
+                    <h2 className="font-bold xl:text-[2.2rem] text-center px-[2.5rem] text-[1.6rem] text-white">
                         Empowering Influencers with <span className="font-bold text-[#1DBF73]">Promise Bonds.</span> Get the support you need, when you need it.
                     </h2>
                     <div className="flex gap-[10px] lg:flex-row rounded-[10px] py-[1rem] px-[1rem] bg-[#F6F6F6] flex-col w-full mt-[20px]">
@@ -65,7 +66,7 @@ export default function Banner() {
                         </div>
                         <button onClick={(e) => {
                             navigate(`/search?filter=${state?.filter}&search=${state?.search}`)
-                        }} class="bg-[#1DBF73] xl:px-[20px] xl:py-[10px] xl:text-[1rem] text-[.8rem] text-white font-bold rounded-[1rem] xl:w-fit lg:w-[20%]">
+                        }} class="bg-[#1DBF73] xl:px-[20px] xl:py-[10px] py-[10px] xl:text-[1rem] text-[.8rem] text-white font-bold rounded-[1rem] xl:w-fit lg:w-[20%]">
                             Search
                         </button>
                     </div>
