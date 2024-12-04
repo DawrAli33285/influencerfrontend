@@ -53,6 +53,7 @@ import IssuerMiddleware from './middlewares/issuerrmiddleware';
 import BuyerMiddleware from './middlewares/buyermiddleware';
 import Referrals from './pages/referrals';
 import OfferListingTable from './components/sellercomponents/offerlistingtable';
+import Support from './pages/support';
 
 
 const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <NewIndex />,
+  },
+  {
+    path: "/support",
+    element: <Support />,
   },
   {
     path: "/search",

@@ -1,0 +1,42 @@
+import wedo from "../whywedifferent.png"
+export default function WhyDifferent() {
+    return (
+        <div className={`flex flex-col justify-center px-[20px] lg:gap-[40px] lg:px-[3rem] lg:flex-row  items-center py-[4rem]`}>
+
+            <div className="w-full lg:w-1/2">
+                <h2 className="font-bold xl:text-[2.2rem] text-[1.6rem] mb-[10px] text-black">
+                    How We Are <span className="font-bold text-[#1DBF73]">Different</span>
+                </h2>
+
+                <div className="flex flex-col mt-[20px] gap-[10px]">
+                    <div className="gap-[10px] flex flex-col">
+                        <p className="text-lg font-semibold text-[#222222]">
+                            Innovative Promise Bonds                        </p>
+                        <p className="text-md text-[#222222]">
+                            A unique financial model designed to support creators and ensure accountability.                        </p>
+                    </div>
+                    <div className="gap-[10px] flex flex-col">
+                        <p className="text-lg font-semibold text-[#222222]">
+                            Community-Driven Approach                        </p>
+                        <p className="text-md text-[#222222]">
+                            Built for creators, by creators, with a focus on trust and transparency.</p>                    </div>
+                    <div className="gap-[10px] flex flex-col">
+                        <p className="text-lg font-semibold text-[#222222]">
+                            Dynamic Marketplace                        </p>
+                        <p className="text-md text-[#222222]">
+                            Built for creators, by creators, with a focus on trust and transparency.                        </p>
+                    </div>
+                    <div className="gap-[10px] flex flex-col">
+                        <p className="text-lg font-semibold text-[#222222]">
+                            Level-Up System                        </p>
+                        <p className="text-md text-[#222222]">
+                            Our platform rewards dedication and performance, unlocking greater opportunities as you grow.                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="w-full lg:w-1/2 max-h-[500px] h-[500px]">
+                <img src={wedo} alt="machli" className="w-full h-full object-cover" />
+            </div>
+        </div>
+    )
+}

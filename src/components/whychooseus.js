@@ -4,7 +4,7 @@ export default function WhyChooseUs() {
     return (
         <div className="w-full bg-white px-[20px] py-[40px] xl:px-[40px] flex flex-col gap-[20px]">
 
-            <div className="lg:grid flex flex-col-reverse lg:grid-cols-2 w-full mt-[40px] gap-[40px]">
+            <div className="lg:grid flex flex-col lg:grid-cols-2 w-full mt-[40px] gap-[40px]">
                 <div className="w-full flex flex-col justify-between gap-[20px]">
                     <p className="font-bold xl:text-[1.5rem] text-[1.3rem]">
                         Why Choose <span className="font-normal text-[#1DBF73] italic">Us</span>?
@@ -101,7 +101,7 @@ export default function WhyChooseUs() {
                             </p>
                         </div>
                     </div>
-                    <button class="bg-[#1DBF73] px-[20px] py-[10px] xl:py-[20px] xl:text-[.9rem] text-[.6rem] text-white font-bold rounded-[.63rem] w-fit ">
+                    <button class="bg-[#1DBF73] px-[20px] py-[10px] xl:py-[20px] xl:text-[.9rem] text-[.6rem] text-white font-bold rounded-[.63rem] w-fit  lg:mx-0 mx-auto">
                         Discover All Features
                     </button>
                 </div>

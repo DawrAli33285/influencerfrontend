@@ -35,7 +35,7 @@ body {
   box-shadow: inset 8px 0px 0px 0px #c0a3fc
 }
 @media(max-width:768px){
-  .swiper-slide{
+  /* .swiper-slide{
     min-width: 100% !important;
-  }
+  } */
 }

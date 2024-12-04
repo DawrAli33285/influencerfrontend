@@ -36,7 +36,7 @@ export default function HomeFooter() {
                         <Link to="/" className="text-[18px]  text-white">Press and News</Link>
                         <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">Parntership</Link>
                         <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
+                        <Link to="/terms" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
 
 
                     </nav>
@@ -48,7 +48,7 @@ export default function HomeFooter() {
                         <Link to="/" className="text-[18px]  text-white">Press and News</Link>
                         <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">Parntership</Link>
                         <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
+                        <Link to="/terms" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
 
 
                     </nav>
@@ -60,7 +60,7 @@ export default function HomeFooter() {
                         <Link to="/" className="text-[18px]  text-white">Press and News</Link>
                         <Link to="/howitworks" className="text-[18px] text-white hover:text-[#1dbf73]">Parntership</Link>
                         <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">PRivacy Policy</Link>
-                        <Link to="/market" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
+                        <Link to="/terms" className="text-[18px] text-white hover:text-[#1dbf73]">Terms</Link>
 
 
                     </nav>

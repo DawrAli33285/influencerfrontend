@@ -65,34 +65,7 @@ return val.user_id.username
                     Meet Our  <span className="font-normal text-[#1DBF73] italic">Top Issuers.</span>
                 </p>
                 <p className="text-[1rem] text-center lg:w-[70%] mx-auto">Discover the trusted issuers that power our platform, offering unmatched reliability and experties.Explore their unique features and benefits to find the perfect fit for your need</p>
-                <div className="flex justify-center gap-[20px] mt-[10px]">
-                    <select
-                        value={selectedIssuer}
-                        onChange={handleIssuerChange}
-                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
-                    >
-                        <option value="default" >
-                            Select Issuer
-                        </option>
-                        {issuers.map((issuer, index) => (
-                            <option key={index} value={issuer}>
-                                {issuer}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        value={selectedPriceRange}
-                        onChange={handlePriceRangeChange}
-                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
-                    >
-                        <option  value="default">Price Range</option>
-                        {priceRanges.map((range) => (
-                            <option key={range.value} value={range.value}>
-                                {range.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                
             </div>
             <div>
                 {loading ? (
@@ -113,7 +86,7 @@ return val.user_id.username
 
                             modules={[Navigation]}
                             className="mySwiper"
-                            slidesPerView={4}
+                            
                             spaceBetween={20}
                             breakpoints={{
                                 1024: {

@@ -23,7 +23,7 @@ export default function Banner() {
                         Empowering Influencers with <span className="font-bold text-[#1DBF73]">Promise Bonds.</span> Get the support you need, when you need it.
                     </h2>
                     <div className="flex gap-[10px] lg:flex-row rounded-[10px] py-[1rem] px-[1rem] bg-[#F6F6F6] flex-col w-full mt-[20px]">
-                        <div className="w-full xl:w-[90%] lg:w-[80%]    py-[10px] flex items-center">
+                        <div className="w-full xl:w-[90%] lg:w-[80%] gap-[10px]  lg:flex-row flex-col   py-[10px] flex items-center">
                             <input
                                 value={state.search}
                                 onChange={(e) => {
@@ -34,10 +34,10 @@ export default function Banner() {
                                 }}
                                 type="text"
                                 placeholder="Search here..."
-                                className="outline-none border-none bg-transparent w-[70%] lg:w-[60%]"
+                                className="outline-none lg:border-none bg-transparent w-full lg:border-b-0 border-b border-solid border-b-[#e5e7eb] lg:w-[60%]"
                             />
-                            <span className="mx-[10px] text-[#000]">|</span>
-                            <div className="relative w-[30%] lg:w-[40%] flex items-center">
+                            <span className="mx-[10px] text-[#000] lg:block hidden">|</span>
+                            <div className="relative w-full lg:w-[40%] flex items-center">
                                 <select
                                     value={state.filter}
                                     onChange={(e) => {

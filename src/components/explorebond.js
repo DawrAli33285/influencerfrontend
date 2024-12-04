@@ -61,34 +61,7 @@ export default function ExploreBond({ state, setState, loading }) {
                 </p>
                 <p>Most viewed and all-time top-selling services</p>
               </div>
-                <div className="flex gap-[20px] mt-[10px] lg:mt-0">
-                    <select
-                        value={selectedIssuer}
-                        onChange={handleIssuerChange}
-                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
-                    >
-                        <option  value="default">
-                            Select Bond
-                        </option>
-                        {issuers.map((issuer, index) => (
-                            <option key={index} value={issuer}>
-                                {issuer}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        value={selectedPriceRange}
-                        onChange={handlePriceRangeChange}
-                        className="text-center bg-white  text-black h-[3rem] w-[11rem] rounded-[32px] border-[1px] border-[#6161615f] outline-none lg:col-span-2"
-                    >
-                        <option  value="default">Price Range</option>
-                        {priceRanges.map((range) => (
-                            <option key={range.value} value={range.value}>
-                                {range.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                
             </div>
             
             

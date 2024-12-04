@@ -39,7 +39,7 @@ export default function HomeHeader() {
                 <Link to="/aboutus" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>About Us</Link>
                 <Link to="/howitworks" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>How It Works</Link>
                 <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Market</Link>
-                <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Support</Link>
+                <Link to="/support" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Support</Link>
                 <Link to="/mission" className={`text-[18px] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>PromiseBond</Link>
             </nav>
             <div className="lg:flex hidden items-center gap-[10px]">
@@ -57,7 +57,7 @@ export default function HomeHeader() {
 
                     <Link to="/sponsorbond" className="text-[18px] hover:text-[#1dbf73]">How It Works</Link>
                     <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Market</Link>
-                    <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">Support</Link>
+                    <Link to="/support" className="text-[18px] hover:text-[#1dbf73]">Support</Link>
                     <Link to="/mission" className="text-[18px] hover:text-[#1dbf73]">PromiseBond</Link>
                 </nav>
                 <div className="flex flex-col gap-[10px] px-[20px] mt-[30px]">
