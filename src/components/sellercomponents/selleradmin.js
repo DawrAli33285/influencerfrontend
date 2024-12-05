@@ -228,7 +228,7 @@ export default function SellerAdminHeader({ children }) {
                                 <path d="M9.10102 3C10.3636 1.76281 12.0927 1 14 1C17.866 1 21 4.13401 21 8C21 9.90734 20.2372 11.6365 18.9999 12.899M6.5 12L8 11V16.5M6.5 16.5H9.5M15 14C15 17.866 11.866 21 8 21C4.13401 21 1 17.866 1 14C1 10.134 4.13401 7 8 7C11.866 7 15 10.134 15 14Z" stroke={`${location.pathname === '/buyersponsorbond' ? '#1DBF73' : '#74767E'}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
-                            Sponsor Bond
+                            Promise Bond
                         </Link>
 
                         <Link
@@ -575,7 +575,7 @@ export default function SellerAdminHeader({ children }) {
                                         <path d="M9.10102 3C10.3636 1.76281 12.0927 1 14 1C17.866 1 21 4.13401 21 8C21 9.90734 20.2372 11.6365 18.9999 12.899M6.5 12L8 11V16.5M6.5 16.5H9.5M15 14C15 17.866 11.866 21 8 21C4.13401 21 1 17.866 1 14C1 10.134 4.13401 7 8 7C11.866 7 15 10.134 15 14Z" stroke={`${location.pathname === '/buyersponsorbond' ? '#1DBF73' : '#74767E'}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
 
-                                    Sponsor Bond
+                               Promise Bond
                                 </Link>
 
                                 <Link

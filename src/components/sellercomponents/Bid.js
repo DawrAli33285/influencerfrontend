@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Bid = () => {
     const [bondInfo] = useState({
-        name: "Sponsor Bond",
+        name: "Promise Bond",
         image: "/path/to/image.jpg",
         validityPeriod: "Jan 2024 - Dec 2028",
         initialPrice: 100,

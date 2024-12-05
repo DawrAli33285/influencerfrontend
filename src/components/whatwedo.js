@@ -11,7 +11,7 @@ export default function WhatWeDo() {
                     What We <span className="font-bold text-[#1DBF73]">Do</span> ?
                 </h2>
                 <p className="lg:text-[0.94rem] text-[0.75rem] text-[#222222]">
-                    We are a platform built on the belief that talent deserves recognition, and every creator has the power to turn their unique skills into real opportunities. Our mission is simple: to connect creators, influencers, and skilled individuals with audiences who value their expertise.                </p>
+                    We are a platform built on the belief that talent deserves recognition, and every creator has the power to turn their unique skills into real opportunities. Our mission is simple: to connect creators, issuers, and skilled individuals with audiences who value their expertise.                </p>
                 <div className="flex flex-col mt-[20px] gap-[10px]">
                     <div className="gap-[10px] flex items-center">
                         <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@ export default function WhatWeDo() {
                             <path d="M15.7657 0.359328C15.4533 0.0468906 14.9468 0.0468906 14.6343 0.359328L5.04983 9.94392L1.3657 6.2598C1.0533 5.94736 0.546797 5.94739 0.234328 6.2598C-0.0781094 6.5722 -0.0781094 7.0787 0.234328 7.39114L4.48414 11.6409C4.79645 11.9533 5.30333 11.9531 5.61552 11.6409L15.7657 1.4907C16.0781 1.1783 16.0781 0.671766 15.7657 0.359328Z" fill="#222222" />
                         </svg>
                         <p className="lg:text-[0.94rem] text-[0.75rem] text-[#222222]">
-                            It empowers influencers, professionals, and artists to monetize their talents.                        </p>
+                            It empowers issuers, professionals, and artists to monetize their talents.                        </p>
                     </div>
                     <div className="gap-[10px] flex items-center">
                         <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">

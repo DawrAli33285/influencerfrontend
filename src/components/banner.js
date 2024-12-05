@@ -21,7 +21,7 @@ export default function Banner() {
             <div className="top-0 left-0 flex items-center bg-[#00000052] absolute lg:px-[6rem] px-[20px] py-[20px] w-full h-full">
                 <div className="flex flex-col gap-[10px] lg:w-[50%] lg:mt-0 mt-[5rem]">
                     <h2 className="font-bold xl:text-[2.2rem]   text-center lg:text-start lg:px-[2.5rem] text-[2rem] text-white">
-                        Empowering Influencers with <span className="font-bold text-[#1DBF73]">Promise Bonds.</span> Get the support you need, when you need it.
+                        Empowering Issuers with <span className="font-bold text-[#1DBF73]">Promise Bonds.</span> Get the support you need, when you need it.
                     </h2>
                     <div className="flex gap-[10px] lg:flex-row rounded-[10px] py-[1rem] px-[1rem] bg-[#F6F6F6] flex-col w-full mt-[20px]">
                         <div className="w-full xl:w-[90%] lg:w-[80%] gap-[10px]  lg:flex-row flex-col   py-[10px] flex items-center">
@@ -48,7 +48,7 @@ export default function Banner() {
                                         })
                                     }}
                                     className="appearance-none lg:text-[0.94rem] text-[0.75rem] outline-none border-none bg-transparent w-full cursor-pointer pr-[30px]">
-                                    <option value="bond">Sponsor bond</option>
+                                    <option value="bond">Promise Bond</option>
                                     <option value="issuer">Issuer</option>
 
                                 </select>

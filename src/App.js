@@ -12,17 +12,17 @@ import HomeFooter from './components/homefooter';
 const sections = [
   {
     heading: "Influencer Discovery",
-    content: "Discover and connect with influencers effortlessly by searching and filtering based on niche, location, and engagement metrics. Our platform allows you to customize your search, making it easier than ever to find influencers who truly resonate with your brand. Whether you’re looking for lifestyle bloggers in a specific city or tech enthusiasts with high engagement rates, we provide comprehensive profiles that help you make informed decisions. Streamline your marketing efforts and collaborate with influencers.",
+    content: "Discover and connect with issuer effortlessly by searching and filtering based on niche, location, and engagement metrics. Our platform allows you to customize your search, making it easier than ever to find issuer who truly resonate with your brand. Whether you’re looking for lifestyle bloggers in a specific city or tech enthusiasts with high engagement rates, we provide comprehensive profiles that help you make informed decisions. Streamline your marketing efforts and collaborate with issuer.",
     image: `${frstimg}`,
   },
   {
     heading: "Campaign Management",
-    content: "Plan and manage your influencer campaigns seamlessly with our intuitive tools, designed to simplify the entire process from start to finish. With features that allow you to track progress, set goals, and analyze performance metrics in real-time, you can ensure your campaigns are both efficient and effective. Collaborate effortlessly with influencers, streamline communication, and stay organized with our user-friendly interface. Empower your marketing strategy.",
+    content: "Plan and manage your influencer campaigns seamlessly with our intuitive tools, designed to simplify the entire process from start to finish. With features that allow you to track progress, set goals, and analyze performance metrics in real-time, you can ensure your campaigns are both efficient and effective. Collaborate effortlessly with issuer, streamline communication, and stay organized with our user-friendly interface. Empower your marketing strategy.",
     image: `${scndimg}`,
   },
   {
     heading: "Trusted Connections",
-    content: "Build meaningful partnerships with vetted influencers to ensure authentic collaborations that resonate with your audience. Our platform carefully selects influencers who align with your brand's mission and values, enhancing your credibility and creating engaging content that captivates your target market. By focusing on quality over quantity, you can foster deeper connections that lead to lasting impact. Experience the difference that comes from working with trusted influencers.",
+    content: "Build meaningful partnerships with vetted issuer to ensure authentic collaborations that resonate with your audience. Our platform carefully selects issuer who align with your brand's mission and values, enhancing your credibility and creating engaging content that captivates your target market. By focusing on quality over quantity, you can foster deeper connections that lead to lasting impact. Experience the difference that comes from working with trusted issuer.",
     image: `${img}`,
   },
   {
@@ -44,7 +44,7 @@ function App() {
       answer: "Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the last year.",
     },
     {
-      question: "What criteria do you use to vet influencers?",
+      question: "What criteria do you use to vet issuer?",
       answer: "Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the last year.",
     },
     {
@@ -104,7 +104,7 @@ window.scrollTo(0,0)
           </div>
         ))}
 
-        <h1 className=' lg:text-5xl text-2xl text-center font-semibold mt-10'>Connect with Influencers, Amplify</h1>
+        <h1 className=' lg:text-5xl text-2xl text-center font-semibold mt-10'>Connect with issuer, Amplify</h1>
         <h1 className='lg:text-5xl text-2xl text-center font-semibold text-[#7638F9]'>Your Brand!</h1>
         <p className='mt-[20px] text-[#7E8183] text-center'>Discover the power of influencer marketing to grow your audience</p>
         <Link to="/signup" className='text-[16px] font-semibold bg-[#7638F9] rounded-[20px] py-[10px] px-[20px] w-fit text-white mx-auto my-[20px]'>Get Started With Us</Link>
@@ -150,12 +150,12 @@ window.scrollTo(0,0)
             <p className='text-[16px] text-[#7E8183]'>Creating an account is your first step toward unlocking a world of opportunities! By signing up, you’ll gain access to a powerful platform</p>
           </div>
           <div className=' shadow-lg w-full h-full flex flex-col p-[20px] rounded-[10px]'>
-            <h1 className='text-[20px] font-semibold mb-[10px]'>Find Influencers</h1>
-            <p className='text-[16px] text-[#7E8183]'>Search our extensive database to find influencers who perfectly match your brand's vision and values. With advanced filters and tailored.</p>
+            <h1 className='text-[20px] font-semibold mb-[10px]'>Find issuer</h1>
+            <p className='text-[16px] text-[#7E8183]'>Search our extensive database to find issuer who perfectly match your brand's vision and values. With advanced filters and tailored.</p>
           </div>
           <div className=' shadow-lg w-full h-full flex flex-col p-[20px] rounded-[10px]'>
             <h1 className='text-[20px] font-semibold mb-[10px]'>Create a Campaign</h1>
-            <p className='text-[16px] text-[#7E8183]'>Design your campaign and connect with your chosen influencers to create impactful collaborations that resonate with your audience.</p>
+            <p className='text-[16px] text-[#7E8183]'>Design your campaign and connect with your chosen issuer to create impactful collaborations that resonate with your audience.</p>
           </div>
           <div className=' shadow-lg w-full h-full flex flex-col p-[20px] rounded-[10px]'>
             <h1 className='text-[20px] font-semibold mb-[10px]'>Measure Results</h1>

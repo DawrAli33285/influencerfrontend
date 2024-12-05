@@ -16,7 +16,7 @@ export default function HomeHeader() {
                 } top-0 left-0 lg:px-[40px] px-[20px] py-[40px] items-center flex justify-between`}
         >
             <div onClick={menutoggle} className="flex lg:hidden items-center hover:cursor-pointer">
-            <svg width={25} height={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 12.75H5C4.80109 12.75 4.61032 12.671 4.46967 12.5303C4.32902 12.3897 4.25 12.1989 4.25 12C4.25 11.8011 4.32902 11.6103 4.46967 11.4697C4.61032 11.329 4.80109 11.25 5 11.25H19C19.1989 11.25 19.3897 11.329 19.5303 11.4697C19.671 11.6103 19.75 11.8011 19.75 12C19.75 12.1989 19.671 12.3897 19.5303 12.5303C19.3897 12.671 19.1989 12.75 19 12.75Z" fill="#ffffff"></path> <path d="M19 8.25H5C4.80109 8.25 4.61032 8.17098 4.46967 8.03033C4.32902 7.88968 4.25 7.69891 4.25 7.5C4.25 7.30109 4.32902 7.11032 4.46967 6.96967C4.61032 6.82902 4.80109 6.75 5 6.75H19C19.1989 6.75 19.3897 6.82902 19.5303 6.96967C19.671 7.11032 19.75 7.30109 19.75 7.5C19.75 7.69891 19.671 7.88968 19.5303 8.03033C19.3897 8.17098 19.1989 8.25 19 8.25Z" fill="#ffffff"></path> <path d="M19 17.25H5C4.80109 17.25 4.61032 17.171 4.46967 17.0303C4.32902 16.8897 4.25 16.6989 4.25 16.5C4.25 16.3011 4.32902 16.1103 4.46967 15.9697C4.61032 15.829 4.80109 15.75 5 15.75H19C19.1989 15.75 19.3897 15.829 19.5303 15.9697C19.671 16.1103 19.75 16.3011 19.75 16.5C19.75 16.6989 19.671 16.8897 19.5303 17.0303C19.3897 17.171 19.1989 17.25 19 17.25Z" fill="#ffffff"></path> </g></svg>
+                <svg width={25} height={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke={`${isHomePage ? 'white' : 'black'}`}><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 12.75H5C4.80109 12.75 4.61032 12.671 4.46967 12.5303C4.32902 12.3897 4.25 12.1989 4.25 12C4.25 11.8011 4.32902 11.6103 4.46967 11.4697C4.61032 11.329 4.80109 11.25 5 11.25H19C19.1989 11.25 19.3897 11.329 19.5303 11.4697C19.671 11.6103 19.75 11.8011 19.75 12C19.75 12.1989 19.671 12.3897 19.5303 12.5303C19.3897 12.671 19.1989 12.75 19 12.75Z" fill="#ffffff"></path> <path d="M19 8.25H5C4.80109 8.25 4.61032 8.17098 4.46967 8.03033C4.32902 7.88968 4.25 7.69891 4.25 7.5C4.25 7.30109 4.32902 7.11032 4.46967 6.96967C4.61032 6.82902 4.80109 6.75 5 6.75H19C19.1989 6.75 19.3897 6.82902 19.5303 6.96967C19.671 7.11032 19.75 7.30109 19.75 7.5C19.75 7.69891 19.671 7.88968 19.5303 8.03033C19.3897 8.17098 19.1989 8.25 19 8.25Z" fill="#ffffff"></path> <path d="M19 17.25H5C4.80109 17.25 4.61032 17.171 4.46967 17.0303C4.32902 16.8897 4.25 16.6989 4.25 16.5C4.25 16.3011 4.32902 16.1103 4.46967 15.9697C4.61032 15.829 4.80109 15.75 5 15.75H19C19.1989 15.75 19.3897 15.829 19.5303 15.9697C19.671 16.1103 19.75 16.3011 19.75 16.5C19.75 16.6989 19.671 16.8897 19.5303 17.0303C19.3897 17.171 19.1989 17.25 19 17.25Z" fill="#ffffff"></path> </g></svg>
             </div>
             <div className="lg:w-fit">
                 <svg width="200" height="40" viewBox="0 0 258 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,8 +42,10 @@ export default function HomeHeader() {
                 <Link to="/aboutus" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>About Us</Link>
                 <Link to="/howitworks" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>How It Works</Link>
                 <Link to="/mission" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Market</Link>
-                <Link to="/support" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Support</Link>
+                <Link to="/support" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>FAQ</Link>
                 <Link to="/mission" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>PromiseBond</Link>
+                <Link to="/terms" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Terms</Link>
+
             </nav>
             <div className="lg:flex hidden items-center gap-[10px]">
                 <Link to="/signin" className={`rounded-[10px] px-[24px] ${isHomePage ? 'text-white' : 'text-black'} py-[8px] lg:text-[0.94rem] text-[0.75rem]`}>Login</Link>
@@ -60,8 +62,10 @@ export default function HomeHeader() {
 
                     <Link to="/sponsorbond" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">How It Works</Link>
                     <Link to="/mission" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">Market</Link>
-                    <Link to="/support" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">Support</Link>
+                    <Link to="/support" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">FAQ</Link>
                     <Link to="/mission" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">PromiseBond</Link>
+                    <Link to="/terms" className={`lg:text-[0.94rem] text-[0.75rem] ${isHomePage ? 'text-white' : 'text-black'}  hover:text-[#1dbf73]`}>Terms</Link>
+
                 </nav>
                 <div className="flex flex-col gap-[10px] px-[20px] mt-[30px]">
                     <Link to="/signin" className="rounded-[10px] px-[24px] py-[8px] lg:text-[0.94rem] text-[0.75rem]">Login</Link>

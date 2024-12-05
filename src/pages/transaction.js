@@ -210,7 +210,7 @@ toast.error("Client error please try again",{containerId:"transaction"})
                     </div>
                     <div className="w-full h-[1px] bg-[#EAECF0]"></div>
                     <div>
-                        <label htmlFor="bondname" className="block text-xl  font-semibold text-[#272226]">Sponsor Bond Name</label>
+                        <label htmlFor="bondname" className="block text-xl  font-semibold text-[#272226]">Promise Bond Name</label>
                         <div className="mt-4">
                             <input type="text" value={state?.bond?.name} disabled name="bondname" className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500" placeholder={state?.bond?.title} />
                         </div>

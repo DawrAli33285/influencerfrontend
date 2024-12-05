@@ -1,10 +1,6 @@
 import HomeFooter from "../components/homefooter";
 import HomeHeader from "../components/homeheader";
-import left1 from "../leftside1.png"
-import left2 from "../leftside2.png"
-import left3 from "../leftside3.png"
-import left4 from "../leftside4.png"
-import midd from "../midsection.PNG"
+
 import bsns from "../bussinessmen.png";
 
 import machli from "../machli.png"
