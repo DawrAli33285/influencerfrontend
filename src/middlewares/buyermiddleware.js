@@ -28,7 +28,20 @@ const BuyerMiddleware = () => {
         };
 
         await axios.get(`${BASE_URL}/allowBuyerAccess`, headers);
-        
+      let issuertoken=localStorage.getItem('token')
+      const headersissuer= {
+        headers: {
+          Authorization: `Bearer ${issuertoken}`,
+        },
+      };
+      let response=await axios.get(`${BASE_URL}/allowIssuerAccess`, headersissuer);
+      if(response.data.issuer.user_id.status=="ONE WEEK SUSPENSION" || response.data.issuer.user_id.status=="PERMANENT"){
+        toast.error("User banned",{containerId:"issuerAuthentication"})
+        navigate('/')
+         }
+
+
+
       } catch (e) {
         
         if (e?.response?.data?.error) {

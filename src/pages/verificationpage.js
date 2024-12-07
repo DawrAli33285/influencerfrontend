@@ -13,8 +13,11 @@ export default function Verification() {
     const [showuserType, setShowUserType] = useState(false)
     const [showtype, setShowType] = useState(false)
     const [userType, setUserType] = useState(null);
-
+    const [followers, setFollowers] = useState(false)
     const [emailVerification, setEmailVerification] = useState(false);
+    const [followersCount,setFollowersCount]=useState(0)
+    const [token,setToken]=useState("")
+    
     const handleUserSelection = (type) => {
         setUserType(type);
         setShowType(true);
@@ -129,14 +132,26 @@ export default function Verification() {
 
             console.log(response.data)
             console.log("RESPONSE")
+           
             if (response.data.token) {
 
                 localStorage.setItem('token', response.data.token)
+                localStorage.setItem("buyerToken",response.data.buyertoken)
+                setToken(response.data.token)
                 // navigate('/dashboard')
-                setShowUserType(!showtype);
+               
             }
             setEmailVerification(response.data.user.is_email_verified);
             setPhoneVerification(true);
+            if(emailVerification){
+                
+                setShowUserType(!showtype);
+            }
+            if(!response.data.questions){
+               
+            }else{
+                navigate('/buyerdashboard') 
+            }
 
         } catch (e) {
             console.error("Error fetching verification data:", e);
@@ -144,108 +159,183 @@ export default function Verification() {
     };
     const handleSelection = (platform) => {
         setSelectedPlatform(platform);
-        
+
     };
+
+
+const answerQuestions=async()=>{
+    try{
+        let data={
+            userType:userType,
+            socialMedia:selectedPlatform,
+            no_of_followers:followersCount
+        }
+
+let headers={
+    headers:{
+        authorization:`Bearer ${token}`
+    }
+}
+
+let response=await axios.post(`${BASE_URL}/answerQuestions`,data,headers)
+navigate('/buyerdashboard')
+    }catch(e){
+if(e?.response?.data?.error){
+    toast.error(e?.response?.data?.error,{containerId:"verificationPage"})
+}else{
+    toast.error("Something went wrong",{containerId:"verificationPage"})
+}
+    }
+}
+
+const answerBuyerQuestion=async(type)=>{
+    try{
+        let data={
+            userType:type,
+        }
+
+let headers={
+    headers:{
+        authorization:`Bearer ${token}`
+    }
+}
+
+let response=await axios.post(`${BASE_URL}/answerQuestions`,data,headers)
+navigate('/buyerdashboard')
+    }catch(e){
+if(e?.response?.data?.error){
+    toast.error(e?.response?.data?.error,{containerId:"verificationPage"})
+}else{
+    toast.error("Something went wrong",{containerId:"verificationPage"})
+}
+    }
+}
+
+
     return (
         <>
             <ToastContainer limit={1} containerId="verificationPage" />
             <div className="relative w-full h-full">
                 <div className="w-full max-w-md mx-auto mt-20 p-6 border rounded-lg shadow-lg">
                     {
-                        showuserType ?
-                            <div>
-                                {
-                                    showtype ?
-                                        <div className="flex flex-col gap-[20px]">
-                                            <h2 className="text-center text-2xl font-semibold mb-4">What Type Of Influencer are you?</h2>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                {platforms.map((platform) => (
-                                                    <div
-                                                        key={platform.name}
-                                                        onClick={() => handleSelection(platform.name)}
-                                                        className={`flex flex-col items-center justify-center gap-2 p-4 cursor-pointer border ${selectedPlatform === platform.name ? 'border-black' : 'border-gray-300'
-                                                            } rounded-[20px] hover:shadow-md transition`}
-                                                    >
-                                                        {platform.icon}
-                                                        <span className="font-medium">{platform.name}</span>
+                        followers ? <div className="flex flex-col gap-[20px]">
+                            <h2 className="text-center text-2xl font-semibold mb-4">How Many Followers/Subscribers You have</h2>
+                            <input
+                            value={followersCount}
+                            onChange={(e)=>{
+                                setFollowersCount(e.target.value)
+                            }}
+                                type="number"
+                                className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                placeholder="Followers/Subscribers"
+                            />
+                            <button
+                                onClick={answerQuestions}
+                                disabled={!selectedPlatform}
+                                className={`mt-4 w-full bg-[#1DBF73] text-white font-bold py-2 px-4 rounded-md ${selectedPlatform ? 'hover:bg-[#17a866]' : 'opacity-50 cursor-not-allowed'
+                                    }`}
+                            >
+                                Continue
+                            </button>
+
+                        </div> : <div>
+                            {
+                                showuserType ?
+                                    <div >
+                                        {
+                                            showtype ?
+                                                <div className="flex flex-col gap-[20px]">
+                                                    <h2 className="text-center text-2xl font-semibold mb-4">What Type Of Issuer are you?</h2>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        {platforms.map((platform) => (
+                                                            <div
+                                                                key={platform.name}
+                                                                onClick={() => handleSelection(platform.name)}
+                                                                className={`flex flex-col items-center justify-center gap-2 p-4 cursor-pointer border ${selectedPlatform === platform.name ? 'border-black' : 'border-gray-300'
+                                                                    } rounded-[20px] hover:shadow-md transition`}
+                                                            >
+                                                                {platform.icon}
+                                                                <span className="font-medium">{platform.name}</span>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                ))}
-                                            </div>
-                                            <button
-                                                onClick={() => navigate('/dashboard')}
-                                                disabled={!selectedPlatform}
-                                                className={`mt-4 w-full bg-[#1DBF73] text-white font-bold py-2 px-4 rounded-md ${selectedPlatform ? 'hover:bg-[#17a866]' : 'opacity-50 cursor-not-allowed'
-                                                    }`}
-                                            >
-                                                Continue
-                                            </button>
-                                        </div>
-                                        :
-                                        <div>
-                                            <h2 className="text-center text-2xl font-semibold mb-4">Are you a Buyer or an Influencer?</h2>
-                                            <div className="flex flex-row justify-between gap-4">
-                                                <div
-                                                    onClick={() => handleUserSelection('Buyer')}
-                                                    className={`flex items-center justify-center px-6 py-4 text-lg font-medium border rounded-md cursor-pointer transition ${userType === 'Buyer' ? 'bg-[#1DBF73] text-white border-transparent' : 'border-gray-300'
-                                                        } hover:bg-[#1DBF73] hover:text-white`}
-                                                >
-                                                    Buyer
-                                                </div>
-                                                <div
-                                                    onClick={() => handleUserSelection('Influencer')}
-                                                    className={`flex items-center justify-center px-6 py-4 text-lg font-medium border rounded-md cursor-pointer transition ${userType === 'Influencer'
-                                                        ? 'bg-[#1DBF73] text-white border-transparent'
-                                                        : 'border-gray-300'
-                                                        } hover:bg-[#1DBF73] hover:text-white`}
-                                                >
-                                                    Influencer
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                }
-                            </div>
-                            :
-                            <div>
-                                <h2 className="text-center text-2xl font-semibold mb-4">Verification</h2>
-
-                                {/* Email Verification */}
-                                <div className="mb-6 flex flex-col gap-[20px] items-center">
-                                    <svg width="68" height="54" viewBox="0 0 68 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M7.33268 53.6654C5.49935 53.6654 3.9299 53.0126 2.62435 51.707C1.31879 50.4015 0.666016 48.832 0.666016 46.9987V6.9987C0.666016 5.16536 1.31879 3.59592 2.62435 2.29036C3.9299 0.984809 5.49935 0.332031 7.33268 0.332031H60.666C62.4993 0.332031 64.0688 0.984809 65.3743 2.29036C66.6799 3.59592 67.3327 5.16536 67.3327 6.9987V46.9987C67.3327 48.832 66.6799 50.4015 65.3743 51.707C64.0688 53.0126 62.4993 53.6654 60.666 53.6654H7.33268ZM33.9993 29.7487C34.2771 29.7487 34.5688 29.707 34.8743 29.6237C35.1799 29.5404 35.4716 29.4154 35.7493 29.2487L59.3327 14.4987C59.7771 14.2209 60.1105 13.8737 60.3327 13.457C60.5549 13.0404 60.666 12.582 60.666 12.082C60.666 10.9709 60.1938 10.1376 59.2493 9.58203C58.3049 9.02647 57.3327 9.05425 56.3327 9.66536L33.9993 23.6654L11.666 9.66536C10.666 9.05425 9.69379 9.04036 8.74935 9.6237C7.8049 10.207 7.33268 11.0265 7.33268 12.082C7.33268 12.6376 7.44379 13.1237 7.66602 13.5404C7.88824 13.957 8.22157 14.2765 8.66602 14.4987L32.2493 29.2487C32.5271 29.4154 32.8188 29.5404 33.1243 29.6237C33.4299 29.707 33.7216 29.7487 33.9993 29.7487Z" fill="#1E1E1E" />
-                                    </svg>
-
-                                    <label htmlFor="email" className="block text-lg font-medium">Verify Your Email</label>
-                                    <p className="text-base text-[#1C1C1CA3]">We’ve send the verification OTP to provided email.</p>
-                                    {emailVerification ? (
-                                        <svg width={50} height={50} fill="#30db24" viewBox="0 0 24 24">
-                                            <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm5.676,8.237-6,5.5a1,1,0,0,1-1.383-.03l-3-3a1,1,0,1,1,1.414-1.414l2.323,2.323,5.294-4.853a1,1,0,1,1,1.352,1.474Z"></path>
-                                        </svg>
-                                    ) : (
-                                        <>
-                                            {!emailSent && (
-                                                <button onClick={handleSendEmailVerification}
-                                                    className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
-                                                    Send Email Verification
-                                                </button>
-                                            )}
-                                            {emailSent && (
-                                                <>
-                                                    <input type="text" name="emailCode" placeholder="Enter email verification code"
-                                                        value={verificationData.emailCode} onChange={handleChange}
-                                                        className="mt-4 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-                                                    <button onClick={handleEmailVerify}
-                                                        className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
-                                                        Verify Email
+                                                    <button
+                                                        onClick={() => { setFollowers(!followers) }}
+                                                        disabled={!selectedPlatform}
+                                                        className={`mt-4 w-full bg-[#1DBF73] text-white font-bold py-2 px-4 rounded-md ${selectedPlatform ? 'hover:bg-[#17a866]' : 'opacity-50 cursor-not-allowed'
+                                                            }`}
+                                                    >
+                                                        Continue
                                                     </button>
+                                                </div>
+                                                :
+                                                <div>
+                                                    <h2 className="text-center text-2xl font-semibold mb-4">Are you a Buyer or an Issuer?</h2>
+                                                    <div className="flex flex-row justify-between gap-4">
+                                                        <div
+                                                            onClick={() =>  answerBuyerQuestion('Buyer')}
+                                                            className={`flex items-center justify-center px-6 py-4 text-lg font-medium border rounded-md cursor-pointer transition ${userType === 'Buyer' ? 'bg-[#1DBF73] text-white border-transparent' : 'border-gray-300'
+                                                                } hover:bg-[#1DBF73] hover:text-white`}
+                                                        >
+                                                            Buyer
+                                                        </div>
+                                                        <div
+                                                            onClick={() => handleUserSelection('Issuer')}
+                                                            className={`flex items-center justify-center px-6 py-4 text-lg font-medium border rounded-md cursor-pointer transition ${userType === 'Issuer'
+                                                                ? 'bg-[#1DBF73] text-white border-transparent'
+                                                                : 'border-gray-300'
+                                                                } hover:bg-[#1DBF73] hover:text-white`}
+                                                        >
+                                                            Issuer
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                        }
+                                    </div>
+                                    :
+                                    <div>
+                                        <h2 className="text-center text-2xl font-semibold mb-4">Verification</h2>
+
+                                        {/* Email Verification */}
+                                        <div className="mb-6 flex flex-col gap-[20px] items-center">
+                                            <svg width="68" height="54" viewBox="0 0 68 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.33268 53.6654C5.49935 53.6654 3.9299 53.0126 2.62435 51.707C1.31879 50.4015 0.666016 48.832 0.666016 46.9987V6.9987C0.666016 5.16536 1.31879 3.59592 2.62435 2.29036C3.9299 0.984809 5.49935 0.332031 7.33268 0.332031H60.666C62.4993 0.332031 64.0688 0.984809 65.3743 2.29036C66.6799 3.59592 67.3327 5.16536 67.3327 6.9987V46.9987C67.3327 48.832 66.6799 50.4015 65.3743 51.707C64.0688 53.0126 62.4993 53.6654 60.666 53.6654H7.33268ZM33.9993 29.7487C34.2771 29.7487 34.5688 29.707 34.8743 29.6237C35.1799 29.5404 35.4716 29.4154 35.7493 29.2487L59.3327 14.4987C59.7771 14.2209 60.1105 13.8737 60.3327 13.457C60.5549 13.0404 60.666 12.582 60.666 12.082C60.666 10.9709 60.1938 10.1376 59.2493 9.58203C58.3049 9.02647 57.3327 9.05425 56.3327 9.66536L33.9993 23.6654L11.666 9.66536C10.666 9.05425 9.69379 9.04036 8.74935 9.6237C7.8049 10.207 7.33268 11.0265 7.33268 12.082C7.33268 12.6376 7.44379 13.1237 7.66602 13.5404C7.88824 13.957 8.22157 14.2765 8.66602 14.4987L32.2493 29.2487C32.5271 29.4154 32.8188 29.5404 33.1243 29.6237C33.4299 29.707 33.7216 29.7487 33.9993 29.7487Z" fill="#1E1E1E" />
+                                            </svg>
+
+                                            <label htmlFor="email" className="block text-lg font-medium">Verify Your Email</label>
+                                            <p className="text-base text-[#1C1C1CA3]">We’ve send the verification OTP to provided email.</p>
+                                            {emailVerification ? (
+                                                <svg width={50} height={50} fill="#30db24" viewBox="0 0 24 24">
+                                                    <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm5.676,8.237-6,5.5a1,1,0,0,1-1.383-.03l-3-3a1,1,0,1,1,1.414-1.414l2.323,2.323,5.294-4.853a1,1,0,1,1,1.352,1.474Z"></path>
+                                                </svg>
+                                            ) : (
+                                                <>
+                                                    {!emailSent && (
+                                                        <button onClick={handleSendEmailVerification}
+                                                            className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
+                                                            Send Email Verification
+                                                        </button>
+                                                    )}
+                                                    {emailSent && (
+                                                        <>
+                                                            <input type="text" name="emailCode" placeholder="Enter email verification code"
+                                                                value={verificationData.emailCode} onChange={handleChange}
+                                                                className="mt-4 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+                                                            <button onClick={handleEmailVerify}
+                                                                className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
+                                                                Verify Email
+                                                            </button>
+                                                        </>
+                                                    )}
                                                 </>
                                             )}
-                                        </>
-                                    )}
-                                    <p onClick={() => getVerificationData(true)} className=" cursor-pointer">Skip</p>
-                                </div>
+                                            {/* <p onClick={() => getVerificationData(true)} className=" cursor-pointer">Skip</p> */}
+                                        </div>
 
-                            </div>
+                                    </div>
+                            }
+                        </div>
                     }
 
                 </div>

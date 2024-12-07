@@ -182,7 +182,7 @@ export default function Billing() {
     return (
         <>
             <ToastContainer containerId="buyerMarket" limit={1} />
-            <div className="bg-white max-h-[700px]  overflow-y-auto p-[20px] rounded-[20px] shadow-md ">
+            <div className="bg-white max-h-[700px] min-h-[400px]   overflow-y-auto p-[20px] rounded-[20px] shadow-md ">
                 <div className="flex justify-between items-center mb-[20px]">
                     <div className='flex flex-col'>
                         <h1 className="text-[24px] font-semibold">Manage Your Billing Details</h1>

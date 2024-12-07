@@ -54,7 +54,7 @@ export default function SignIn() {
                 let response = await axios.post(`${BASE_URL}/login`, formData)
                 console.log(response.data)
                 toast.success(response.data.message, { containerId: "signIn" })
-                if (response.data.user.is_email_verified == false || response.data.user.Is_mobile_number_verified == false) {
+                if (response.data.user.is_email_verified == false) {
                     localStorage.setItem("email", response.data.user.email)
                    
                    
@@ -63,8 +63,8 @@ export default function SignIn() {
                     navigate('/verification')
                 } else {
                     localStorage.setItem("token", response.data.token)
-
-                    localStorage.removeItem("buyerToken")
+                    localStorage.setItem("buyerToken",response.data.buyerToken)
+                    
                     navigate('/dashboard')
                 }
             } catch (e) {
@@ -96,18 +96,20 @@ export default function SignIn() {
             let response = await axios.post(`${BASE_URL}/socialLogin`, { email: profile.getEmail() })
 
             toast.success(response.data.message, { containerId: "signIn" })
-            if (response.data.user.is_email_verified === false || response.data.user.Is_mobile_number_verified === false) {
+            if (response.data.user.is_email_verified === false) {
                 localStorage.setItem("email", response.data.user.email)
                
                 localStorage.removeItem("token")
                 localStorage.removeItem("buyerToken")
+                
                 navigate('/verification')
 
             } else {
 
-                localStorage.removeItem("buyerToken")
+       
                 localStorage.setItem("token", response.data.token)
-                navigate('/dashboard')
+                localStorage.setItem("buyerToken",response.data.buyerToken)
+                navigate('/buyerdashboard')
             }
         } catch (error) {
             if (error?.response?.data?.error) {

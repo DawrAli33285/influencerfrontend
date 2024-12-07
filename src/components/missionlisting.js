@@ -6,14 +6,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useContext } from 'react';
 import { MissionListContext } from '../contextAPI/missionListing';
+import { Link } from 'react-router-dom';
 const MissionListingTable = () => {
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [originalMissionData, setOriginalMissionData] = useState([])
     const [missionpopup, setMissionPopup] = useState(false)
     const [sponsorData, setBondData] = useState([])
-    const [bondIds,setBondIds]=useState([])
-    const [search,setSearch]=useState("")
-    const [selectedPriceRange,setSelectedPriceRange]=useState("default")
+    const [bondIds, setBondIds] = useState([])
+    const [search, setSearch] = useState("")
+    const [selectedPriceRange, setSelectedPriceRange] = useState("default")
     const { missionStateContext: missionData, setMissionStateContext: setMissionData } = useContext(MissionListContext)
 
     const [missionState, setMissionState] = useState({
@@ -28,19 +29,19 @@ const MissionListingTable = () => {
     }, [])
     const filterItems = (value) => {
         setSearch(value);
-        applyFilters(); 
+        applyFilters();
     };
 
-    
+
     const handlePriceRangeChange = (e) => {
         setSelectedPriceRange(e.target.value);
-        applyFilters(); 
+        applyFilters();
     };
-    
-   
+
+
     const applyFilters = () => {
         let filteredData = originalMissionData;
- 
+
         if (selectedMonth && selectedMonth !== "default") {
             const monthIndex = months.indexOf(selectedMonth);
             if (monthIndex !== -1) {
@@ -50,8 +51,8 @@ const MissionListingTable = () => {
                 });
             }
         }
-    
-       
+
+
         if (selectedPriceRange && selectedPriceRange !== "default") {
             const [min, max] = selectedPriceRange.split("-").map((val) => parseFloat(val));
             filteredData = filteredData.filter((bond) => {
@@ -59,36 +60,36 @@ const MissionListingTable = () => {
                 return max ? amount >= min && amount <= max : amount >= min;
             });
         }
-    
-        
+
+
         if (search) {
             const searchValue = search.toLowerCase();
             filteredData = filteredData.filter((bond) => {
                 console.log("BOND")
                 console.log(bond)
                 const titleMatch = bond.task_type.toLowerCase().includes(searchValue);
-                
-                return titleMatch 
+
+                return titleMatch
             });
         }
-    
+
         setMissionData(filteredData);
     };
 
-    
+
 
     useEffect(() => {
         applyFilters();
     }, [selectedMonth, selectedPriceRange, search]);
-    
+
     const fetchAccordingToMonth = (e) => {
         setSelectedMonth(e.target.value);
-        applyFilters(); 
+        applyFilters();
     };
-    
-   
+
+
     const createMission = async () => {
-        
+
         try {
             if (missionState.bond_id.length === 0) {
                 toast.dismiss()
@@ -105,12 +106,12 @@ const MissionListingTable = () => {
             }
             let response = await axios.post(`${BASE_URL}/create-mission`, missionState)
             toast.dismiss();
-            setBondIds((prev)=>{
+            setBondIds((prev) => {
                 let old;
-                if(prev.length==0){
-                    old=[missionState.bond_id]
-                }else{
-                    old=[...prev,missionState.bond_id]
+                if (prev.length == 0) {
+                    old = [missionState.bond_id]
+                } else {
+                    old = [...prev, missionState.bond_id]
                 }
                 return old
             })
@@ -120,12 +121,12 @@ const MissionListingTable = () => {
                 description: '',
                 task_type: ''
             })
-            setMissionData((prev)=>{
+            setMissionData((prev) => {
                 let old;
-                if(prev.length==0){
-                    old=[response.data.getMission]
-                }else{
-                    old=[...prev,response.data.getMission]
+                if (prev.length == 0) {
+                    old = [response.data.getMission]
+                } else {
+                    old = [...prev, response.data.getMission]
                 }
                 return old
             })
@@ -171,7 +172,7 @@ const MissionListingTable = () => {
 
 
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    
+
     useEffect(() => {
         if (originalMissionData?.length <= missionData?.length) {
             setOriginalMissionData(missionData)
@@ -180,7 +181,7 @@ const MissionListingTable = () => {
 
 
 
-    
+
     const fetchBondList = async () => {
         try {
             let token = localStorage.getItem('token')
@@ -226,7 +227,7 @@ const MissionListingTable = () => {
     return (
         <>
             <ToastContainer containerId="containerD" limit={1} />
-            <div className="bg-white max-h-[700px]  overflow-y-auto xl:px-[20px]">
+            <div className="bg-white max-h-[700px]  min-h-[400px]  overflow-y-auto xl:px-[20px]">
                 <div className="flex xl:justify-between xl:flex-row flex-col items-center mb-[20px]">
                     <div className='flex flex-col'>
                         <h1 className="text-[24px] font-semibold">Create Your Promise Mission</h1>
@@ -234,7 +235,7 @@ const MissionListingTable = () => {
                     </div>
                     <div className="grid lg:grid-cols-12 gap-[20px] grid-cols-1 lg:mt-0 mt-[40px]">
 
-                    <select
+                        <select
                             value={selectedMonth}
                             onChange={fetchAccordingToMonth}
                             className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
@@ -250,10 +251,10 @@ const MissionListingTable = () => {
 
                         <div className="flex gap-[10px] xl:flex-row flex-col w-full lg:col-span-6">
                             <div className="w-full bg-[#F6F6F6] rounded-[20px] px-[10px] py-[10px] flex items-center">
-                            <input
+                                <input
                                     type="text"
                                     value={search}
-                                    onChange={(e)=>filterItems(e.target.value)}
+                                    onChange={(e) => filterItems(e.target.value)}
                                     placeholder="Search here..."
                                     className="outline-none border-none bg-transparent w-[90%]"
                                 />
@@ -261,9 +262,9 @@ const MissionListingTable = () => {
                         </div>
 
 
-                        <button onClick={() => { setMissionPopup(!missionpopup) }} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
+                        {/* <button onClick={() => { setMissionPopup(!missionpopup) }} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
                             Create Mission
-                        </button>
+                        </button> */}
                     </div>
 
                 </div>
@@ -287,7 +288,7 @@ const MissionListingTable = () => {
                                 {missionData?.map((mission, index) => (
                                     <tr key={index} className="border-b">
 
-                                        <td className="p-[10px] ">{mission?.task_type}</td>
+                                        <td className="p-[10px] ">{mission?.mission_title}</td>
                                         <td className="p-[10px] text-[#1DBF73]">${mission?.bond_id?.bond_price}/bond</td>
                                         <td className="p-[10px] font-bold "> {new Date(mission?.bond_id?.createdAt).toLocaleDateString('en-GB', {
                                             day: '2-digit',
@@ -297,6 +298,7 @@ const MissionListingTable = () => {
                                         <td className={`p-[10px] ${getStatusClass(mission?.status)}`}>
                                             {mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}
                                         </td>
+                                       
                                     </tr>
                                 ))}
                             </tbody>
@@ -307,7 +309,7 @@ const MissionListingTable = () => {
                                     <div key={mission?._id} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
-                                            <p className="text-[16px] font-semibold">{mission?.task_type}</p>
+                                            <p className="text-[16px] font-semibold">{mission?.mission_title}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
@@ -318,14 +320,19 @@ const MissionListingTable = () => {
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Validity</h1>
                                             <p className="text-[16px] font-semibold">{new Date(mission?.bond_id?.createdAt).toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'long',
-                                            year: 'numeric',
-                                        })}</p>
+                                                day: '2-digit',
+                                                month: 'long',
+                                                year: 'numeric',
+                                            })}</p>
                                         </div>
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Status</h1>
                                             <p className={`text-[16px] font-semibold ${getStatusClass(mission?.status)}`}>  {mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}</p>
+                                        </div>
+
+                                        <div className="flex flex-col gap-[10px]">
+
+                                          
                                         </div>
                                     </div>
                                 ))}
@@ -362,11 +369,11 @@ const MissionListingTable = () => {
                                     >
                                         <option >Select Bond</option>
                                         {sponsorData?.map((bond, i) => {
-                                           if(!bondIds.find(u=>u==bond?._id)){
-                                            return <option key={bond?._id} value={bond?._id}>
-                                            {bond?.title}
-                                        </option>
-                                           }
+                                            if (!bondIds.find(u => u == bond?._id)) {
+                                                return <option key={bond?._id} value={bond?._id}>
+                                                    {bond?.title}
+                                                </option>
+                                            }
                                         })}
                                     </select>
                                 </div>
@@ -409,9 +416,9 @@ const MissionListingTable = () => {
                                 <div onClick={() => setMissionPopup(!missionpopup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#1DBF73] px-[20px] py-[10px] text-[#1DBF73] font-semibold">
                                     Cancel
                                 </div>
-                                <div onClick={createMission} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#1DBF73] px-[20px] py-[10px] text-white font-semibold">
+                                {/* <div onClick={createMission} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#1DBF73] px-[20px] py-[10px] text-white font-semibold">
                                     Create Mission
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

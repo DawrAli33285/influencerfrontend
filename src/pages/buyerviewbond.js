@@ -18,7 +18,13 @@ getSingleBond();
 
 const getSingleBond=async()=>{
    try{
-let response=await axios.get(`${BASE_URL}/getSingleBond/${id}`)
+    let token=localStorage.getItem('token')
+    let headers={
+        headers:{
+            authorization:`Bearer ${token}`
+        }
+    }
+let response=await axios.get(`${BASE_URL}/getSingleBond/${id}`,headers)
 
 setState({
     bond:response.data.bond,
@@ -66,14 +72,14 @@ console.log(response.data)
             </div>
             <div className='flex flex-col mt-[20px]'>
                 <h1 className="text-[18px] font-semibold">Mission</h1>
-                <p className='text-[16px] text-[#74767E]'>{state?.mission?.description?.length>0?state?.mission?.description:`No Mission Found`}</p>
+                <p className="text-[1rem] my-[10px] text-[#74767E] max-h-[150px] overflow-y-auto break-words">{state?.mission?.description?.length>0?state?.mission?.description:`No Mission Found`}</p>
             </div>
             <div className='flex flex-col mt-[20px]'>
                 <h1 className="text-[18px] font-semibold">Validity</h1>
                 <p className='text-[16px] text-[#74767E]'>{state?.bond?.validity_number}</p>
             </div>
             <div className='flex flex-col mt-[20px]'>
-                <h1 className="text-[18px] font-semibold">PRice</h1>
+                <h1 className="text-[18px] font-semibold">Price</h1>
                 <p className='text-[16px] text-[#74767E]'>${state?.bond?.bond_issuerance_amount}</p>
             </div>
            </>}

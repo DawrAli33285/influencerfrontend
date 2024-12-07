@@ -85,7 +85,7 @@ const OfferListingTable = () => {
     return (
         <>
             <ToastContainer containerId="buyerOfferListing" limit={1} />
-            <div className="bg-white p-[20px] max-h-[700px] overflow-y-auto rounded-[20px] shadow-md">
+            <div className="bg-white min-h-[400px]  p-[20px] max-h-[700px] overflow-y-auto rounded-[20px] shadow-md">
                 <div className="flex justify-between items-center mb-[20px]">
                     <h1 className="text-[#1DBF73] text-[24px] font-semibold">Offers</h1>
                     <select

@@ -27,8 +27,16 @@ const IssuerMiddleware = () => {
           },
         };
 
-        await axios.get(`${BASE_URL}/allowIssuerAccess`, headers);
-        
+      let response=await axios.get(`${BASE_URL}/allowIssuerAccess`, headers);
+console.log("RESPONSE ISSUER MIDDLEWARE")
+
+      if(response.data.mobile==false){
+      navigate('/phoneverification')
+        }
+        if(response.data.issuer.user_id.status=="ONE WEEK SUSPENSION" || response.data.issuer.user_id.status=="PERMANENT"){
+       toast.error("User banned",{containerId:"issuerAuthentication"})
+       navigate('/')
+        }
       } catch (e) {
         
         if (e?.response?.data?.error) {

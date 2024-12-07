@@ -4,6 +4,7 @@ import { MoonLoader } from 'react-spinners';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useLocation} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
 const SellerMissionListingTable = () => {
@@ -34,6 +35,7 @@ const SellerMissionListingTable = () => {
 
 
     const [loading, setLoading] = useState(true)
+    const location=useLocation()
     useEffect(() => {
         fetchBondData();
     }, [])
@@ -233,12 +235,24 @@ const SellerMissionListingTable = () => {
         applyFilters();
     }, [selectedMonth, selectedPriceRange, search]);
 
-
+useEffect(()=>{
+let params=new URLSearchParams(location.search)
+let id=params.get('id')
+let total_bonds=params.get('total_bonds')
+setState({
+    ...state,
+    bond_id:id,
+    limit_bonds:total_bonds
+})
+if(id){
+    setPopup(!popup)
+}
+},[])
 
     return (
         <>
             <ToastContainer containerId="buyerMarket" limit={1} />
-            <div className="bg-white max-h-[700px]  overflow-y-auto p-[20px] rounded-[20px] shadow-md ">
+            <div className="bg-white min-h-[400px]  max-h-[700px]  overflow-y-auto p-[20px] rounded-[20px] shadow-md ">
                 <div className="flex justify-between items-center mb-[20px]">
                     <div className='flex flex-col'>
                         <h1 className="text-[24px] font-semibold">Market</h1>
@@ -273,12 +287,7 @@ const SellerMissionListingTable = () => {
                         </div>
 
 
-                        <button className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-2">
-                            Sell Bond
-                        </button>
-                        <button className="p-[10px] bg-black text-white font-semibold rounded-[10px] lg:col-span-2">
-                            History
-                        </button>
+                      
                     </div>
                 </div>
 
@@ -303,7 +312,7 @@ const SellerMissionListingTable = () => {
                                     <tr key={index} className="">
 
                                         <td className="p-[10px] font-bold ">{bond?.issuer_id?.user_id?.username}</td>
-                                        <td className="p-[10px] text-[#7E8183] "> {missions?.find(u => u?.bond_id === bond?._id)?.task_type || 'N/A'}</td>
+                                        <td className="p-[10px] text-[#7E8183] "> {missions?.find(u => u?.bond_id === bond?._id)?.mission_title || 'N/A'}</td>
                                         <td className="p-[10px] text-[#7E8183] "> {bond?.title}</td>
                                         <td className="p-[10px] text-[#1DBF73]"> ${bond?.bond_issuerance_amount}</td>
                                         <td className="p-[10px] font-bold ">{bond?.validity_number + ' months'}</td>
@@ -338,12 +347,12 @@ const SellerMissionListingTable = () => {
                                     <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Issuer</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.title}</p>
+                                            <p className="text-[16px] font-semibold">{bond?.issuer_id?.user_id?.username}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.bond_price}</p>
+                                            <p className="text-[16px] font-semibold">{missions?.find(u => u?.bond_id === bond?._id)?.mission_title || 'N/A'}</p>
                                         </div>
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Bond Title</h1>
@@ -352,7 +361,7 @@ const SellerMissionListingTable = () => {
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.total_bonds} </p>
+                                            <p className="text-[16px] font-semibold">{bond?.bond_issuerance_amount} </p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">

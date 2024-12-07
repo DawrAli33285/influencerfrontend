@@ -43,7 +43,7 @@ const fetchBond=async()=>{
     try{
         let params=new URLSearchParams(location.search)
         let bond_id=params.get("bond_id")
-        let token=localStorage.getItem('buyerToken')
+        let token=localStorage.getItem('token')
         let headers={
             headers:{
                 authorization:`Bearer ${token}`

@@ -91,7 +91,7 @@ const ExchangeRegistration = () => {
         try {
             let params = new URLSearchParams(location.search)
             let bond_id = params.get('id')
-            let token = localStorage.getItem('buyerToken')
+            let token = localStorage.getItem('token')
             let headers = {
                 headers: {
                     authorization: `Bearer ${token}`
@@ -166,8 +166,8 @@ const ExchangeRegistration = () => {
                         >
                             Mission Task: {state?.mission?.task_type}
                         </p>
-                        <p className="text-gray-600">
-                            <span className="font-semibold">Task description:</span> {state?.mission?.description}
+                        <p className="text-[1rem] my-[10px] text-[#74767E] max-h-[150px] overflow-y-auto break-words">
+                            <span className="text-[1rem] my-[10px] text-[#74767E] max-h-[150px] overflow-y-auto break-words">Task description:</span> {state?.mission?.description}
                         </p>
                     </div>
 

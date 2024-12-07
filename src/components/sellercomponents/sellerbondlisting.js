@@ -276,11 +276,43 @@ const filterItems = (value) => {
         applyFilters();
     }, [selectedMonth, selectedPriceRange, search]);
     
+    const requestMission=async(issuer_id,buyer_id,bond_id)=>{
+try{
+let response=await axios.post(`${BASE_URL}/createMissionRequest`,{issuer_id,buyer_id,bond_id})
+setBondData((prev) => {
+    
+    const old = Array.isArray(prev) ? [...prev] : [prev];
+
+
+    const findIndex = old.findIndex((u) => u._id === bond_id);
+
+   
+    if (findIndex !== -1) {
+        old[findIndex] = {
+            ...old[findIndex], 
+            canRequestMission: false, 
+        };
+    }
+
+    return old; 
+});
+
+toast.success("Mission request sent",{containerId:"containerB"})
+}catch(e){
+    if (e?.response?.data?.error) {
+        toast.error(e?.response?.data?.error, { containerId: "containerB" })
+
+        return;
+    } else {
+        toast.error("Client error please try again", { containerId: "containerB" })
+    }
+}
+    }
 
     return (
         <>
             <ToastContainer containerId="buyerbondListing" limit={1} />
-            <div className="bg-white max-h-[700px]  overflow-y-auto">
+            <div className="bg-white max-h-[700px] min-h-[450px]  overflow-y-auto">
                 <div className="flex justify-between lg:flex-row flex-col items-center mb-[20px]">
                     <div className='flex flex-col'>
                         <h1 className="text-[24px] font-semibold">Explore Exciting Opportunities</h1>
@@ -362,8 +394,11 @@ const filterItems = (value) => {
                                         <td className={`text-[#1DBF73] underline`}>
                                             <Link to={`/buyerpromisebonddetail/${bond?._id}`}>View</Link>
                                         </td>
+
                                               <td className={` border-gray-300 p-[10px] flex justify-center py-[10px] `}>
-                       {!bond?.alreadyForExchange?<p onClick={() => {
+                       
+                                             
+                                           {!bond?.alreadyForExchange?<p onClick={() => {
                                                 navigate(`/exchange?id=${bond?._id}`)
                                             }} target="_blank" className='cursor-pointer border-[1px] rounded-[20px] px-[20px] py-[10px] w-fit text-[#1DBF73]'>Register for Exchange</p>:null}
                                             <p onClick={(e) => {
@@ -373,6 +408,10 @@ const filterItems = (value) => {
                                                     bond_id: bond?._id
                                                 })
                                             }} className="cursor-pointer p-[10px] border-l border-gray-300">Cancel</p>
+                                            {bond?.canRequestMission==true?<p onClick={()=>requestMission(bond.issuer_id,bond.buyer_id,bond._id)} className="cursor-pointer p-[10px] border-l border-gray-300">Request mission</p>:null}
+                                            
+                                        
+ 
                                         </td>
                                     </tr>
                                 ))}
@@ -425,6 +464,9 @@ const filterItems = (value) => {
                                                     bond_id: bond?._id
                                                 })
                                             }} className="cursor-pointer p-[10px] border-l border-gray-300">Cancel</p>
+
+{bond?.canRequestMission==true?<p onClick={()=>requestMission(bond.issuer_id,bond.buyer_id,bond._id)} className="cursor-pointer p-[10px] border-l border-gray-300">Request mission</p>:null}
+                                            
                                         </td>
                                         </div>
 

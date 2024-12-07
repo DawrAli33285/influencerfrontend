@@ -37,7 +37,7 @@ export default function ActiveBids({ state, loading }) {
                                 : img} alt="cardimg"  className="rounded-[10px] w-[342px] h-[489px] object-cover" />
                             <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[5px] rounded-[20px] justify-end">
                                 <p className="text-white lg:text-[1.25rem] text-[1rem] font-bold">{val?.issuer_id?.user_id?.username}</p>
-                                <p className="lg:text-[0.94rem] text-[0.75rem]  text-[#FFFFFFBF]">{val?.missions?.length > 0 ? val?.missions[0]?.description : `No mission`}</p>
+                                <p className="lg:text-[0.94rem] text-[0.75rem]  text-[#FFFFFFBF]">{val?.missions?.length > 0 ? val?.missions[0]?.description?.slice(0,50)+'...' : `No mission`}</p>
                                 <span className="lg:text-[1.25rem] text-[1rem] font-bold  text-white">${val?.bond_issuerance_amount}</span>
                             </div>
                         </div>

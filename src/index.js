@@ -54,6 +54,8 @@ import BuyerMiddleware from './middlewares/buyermiddleware';
 import Referrals from './pages/referrals';
 import OfferListingTable from './components/sellercomponents/offerlistingtable';
 import Support from './pages/support';
+import VerifyBond from './pages/verifybond';
+import PhoneVerification from './components/phoneVerification';
 
 
 const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
@@ -104,6 +106,10 @@ const router = createBrowserRouter([
     element: <Verification />,
   },
   {
+    path: "/phoneverification",
+    element: <PhoneVerification />,
+  },
+  {
     path: "/dashboard",
     element: <IssuerMiddleware />,
     children: [
@@ -121,57 +127,57 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
+
   {
     path: "/inbox",
     element:
-     <BuyerMiddleware/>,
-     children:[
+      <BuyerMiddleware />,
+    children: [
       {
-        path:"",
+        path: "",
         element: <SellerAdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <Inbox />
-          </BondListProvider>
-        </MissionListProvider>
-      </SellerAdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <Inbox />
+            </BondListProvider>
+          </MissionListProvider>
+        </SellerAdminHeader>
       }
-     ]
+    ]
   },
   {
     path: "/settings",
     element:
-     <IssuerMiddleware/>,
-     children:[
+      <IssuerMiddleware />,
+    children: [
       {
-        path:"",
-        element:(
+        path: "",
+        element: (
           <AdminHeader>
-          <MissionListProvider>
-            <BondListProvider>
-              <Settings />
-            </BondListProvider>
-          </MissionListProvider>
-        </AdminHeader>
+            <MissionListProvider>
+              <BondListProvider>
+                <Settings />
+              </BondListProvider>
+            </MissionListProvider>
+          </AdminHeader>
         )
       }
-     ]
+    ]
   },
   {
     path: "/billing",
     element:
-    <BuyerMiddleware/>,
-    children:[
+      <BuyerMiddleware />,
+    children: [
       {
-        path:"",
-        element:<SellerAdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <Billing />
-          </BondListProvider>
-        </MissionListProvider>
-      </SellerAdminHeader>
+        path: "",
+        element: <SellerAdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <Billing />
+            </BondListProvider>
+          </MissionListProvider>
+        </SellerAdminHeader>
       }
     ]
   },
@@ -186,6 +192,17 @@ const router = createBrowserRouter([
         </MissionListProvider>
       </AdminHeader>
 
+  },
+  {
+    path: "/promisebondverification/:id",
+    element:
+      <AdminHeader>
+        <MissionListProvider>
+          <BondListProvider>
+            <VerifyBond />
+          </BondListProvider>
+        </MissionListProvider>
+      </AdminHeader>
   },
   {
     path: "/invoice/:id",
@@ -204,7 +221,7 @@ const router = createBrowserRouter([
     element: <IssuerMiddleware />,
     children: [
       {
-        path: "", 
+        path: "",
         element: (
           <BondListProvider>
             <MissionListProvider>
@@ -216,73 +233,73 @@ const router = createBrowserRouter([
         ),
       },
     ],
-  },  
+  },
   {
     path: "/mission",
-    element: <IssuerMiddleware/>,
-    children:[
+    element: <IssuerMiddleware />,
+    children: [
       {
-        path:'',
-        element:(
+        path: '',
+        element: (
           <MissionListProvider>
-      <BondListProvider>
+            <BondListProvider>
 
 
-        <AdminHeader>
-          <Mission />
-        </AdminHeader>
-      </BondListProvider>
-    </MissionListProvider>
+              <AdminHeader>
+                <Mission />
+              </AdminHeader>
+            </BondListProvider>
+          </MissionListProvider>
 
-   
+
         )
       }
     ]
   },
   {
     path: "/buyerdashboard",
-    element: <BuyerMiddleware/>,
-    children:[
+    element: <BuyerMiddleware />,
+    children: [
       {
-        path:"",
-        element:<SellerAdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <SellerDashboard />
-          </BondListProvider>
-        </MissionListProvider>
-      </SellerAdminHeader>
+        path: "",
+        element: <SellerAdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <SellerDashboard />
+            </BondListProvider>
+          </MissionListProvider>
+        </SellerAdminHeader>
       }
     ]
   },
   {
     path: "/referrals",
-    children:[
+    children: [
       {
-        path:"",
-        element:<AdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <Referrals />
-          </BondListProvider>
-        </MissionListProvider>
-      </AdminHeader>
+        path: "",
+        element: <AdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <Referrals />
+            </BondListProvider>
+          </MissionListProvider>
+        </AdminHeader>
       }
     ]
   },
   {
     path: "/market",
-    element: <BuyerMiddleware/>,
-    children:[
+    element: <BuyerMiddleware />,
+    children: [
       {
-        path:"",
-        element:<SellerAdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <Market />
-          </BondListProvider>
-        </MissionListProvider>
-      </SellerAdminHeader>
+        path: "",
+        element: <SellerAdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <Market />
+            </BondListProvider>
+          </MissionListProvider>
+        </SellerAdminHeader>
       }
     ]
   },
@@ -292,34 +309,34 @@ const router = createBrowserRouter([
   },
   {
     path: "/bidoffers",
-    element: <BuyerMiddleware/>,
-    children:[
+    element: <BuyerMiddleware />,
+    children: [
       {
-        path:"",
-        element:<SellerAdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-          <OfferListingTable/>
-          </BondListProvider>
-        </MissionListProvider>
-      </SellerAdminHeader>
+        path: "",
+        element: <SellerAdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <OfferListingTable />
+            </BondListProvider>
+          </MissionListProvider>
+        </SellerAdminHeader>
       }
     ]
   },
 
   {
     path: "/buyersponsorbond",
-    element: <BuyerMiddleware/>,
-    children:[
+    element: <BuyerMiddleware />,
+    children: [
       {
-        path:"",
-        element:<SellerAdminHeader>
-        <MissionListProvider>
-          <BondListProvider>
-            <MyBond />
-          </BondListProvider>
-        </MissionListProvider>
-      </SellerAdminHeader>
+        path: "",
+        element: <SellerAdminHeader>
+          <MissionListProvider>
+            <BondListProvider>
+              <MyBond />
+            </BondListProvider>
+          </MissionListProvider>
+        </SellerAdminHeader>
       }
     ]
   },

@@ -11,21 +11,51 @@ import { useContext } from 'react';
 import { Link } from "react-router-dom"
 import howto from "../howtocreatebond.png"
 const BondListingTable = () => {
-    const [bondstate, setBondState] = useState({
-        quantity: 0,
-        bond_price: 0,
-        validity_number: '',
+    const [mission, setMission] = useState('');
+    const [error, setError] = useState('');
+    const [missionVideo,setMissionVideo]=useState("")
+    const [isAccepted, setIsAccepted] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [currentBondId,setCurrentBondId]=useState("")
+    const handleCheckboxChange = (e) => {
+        setIsAccepted(e.target.checked);
+    };
+   
 
-        title: ''
+      
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setMission(value);
+
+        if (value.length < 1000) {
+            setError(`Mission must be at least 1000 characters. Currently ${value.length} characters.`);
+        } else {
+            setError('');
+        }
+    };
+    const [bondstate, setBondState] = useState({
+        platform:'',
+        channel_name:'',
+        social_id:'',
+        reason:'',
+        followers:'',
+        mission_title:'',
+        description:'',
+        title:'',
+        validity_number:'',
+        quantity:'',
+        bond_price:''
     })
     const [search, setSearch] = useState("")
     const [uploadedImages, setUploadedImages] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [loading, setLoading] = useState(true)
+    const [aggrement, setaggrement] = useState(true)
     const { state: bondData, setState: setBondData } = useContext(BondListContext)
     const [selectedPriceRange, setSelectedPriceRange] = useState("default")
     const [bondpopup, setBondPopup] = useState(false)
     const [originalBondData, setOriginalBondData] = useState([])
+    const [user, setUser] = useState("")
 
     const [links, setLinks] = useState(['']);
     const handleAddLink = () => {
@@ -37,7 +67,16 @@ const BondListingTable = () => {
         setLinks(newLinks);
     };
     const onDrop = (acceptedFiles) => {
-        setUploadedImages((prevImages) => [...prevImages, ...acceptedFiles]);
+        setUploadedImages((prevImages) => {
+            if (prevImages.length + acceptedFiles.length > 4) {
+                return [...prevImages, ...acceptedFiles.slice(0, 4 - prevImages.length)];
+            }
+            return [...prevImages, ...acceptedFiles];
+        });
+    };
+
+    const handleRemoveImage = (index) => {
+        setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
     };
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -51,19 +90,39 @@ const BondListingTable = () => {
             toast.dismiss()
             toast.error("Please select images for verification", { containerId: "containerB" })
             return;
-        } else if (links?.length === 0) {
+        } else if (bondstate.platform.length==0) {
             toast.dismiss()
-            toast.error("Please enter social media links", { containerId: "containerB" })
+            toast.error("Please enter platform", { containerId: "containerB" })
+            return;
+        }else if(bondstate.channel_name.length==0){
+            toast.dismiss()
+            toast.error("Please enter channel name", { containerId: "containerB" })
+            return;
+        } else if(bondstate.social_id.length==0){
+            toast.dismiss()
+            toast.error("Please enter social id", { containerId: "containerB" })
+            return;
+        } else if(bondstate.followers.length==0){
+            toast.dismiss()
+            toast.error("Please enter followers", { containerId: "containerB" })
+            return;
+        }else if(bondstate.mission_title.length==0){
+            toast.dismiss()
+            toast.error("Please enter mission title", { containerId: "containerB" })
+            return;
+        }else if(bondstate.description.length<1000){
+            toast.dismiss()
+            toast.error("Please enter mission description within minimum range", { containerId: "containerB" })
+            return;
+        }else if(bondstate.title.length==0){
+            toast.dismiss()
+            toast.error("Please enter bond title", { containerId: "containerB" })
             return;
         } else if (bondstate.validity_number.length === 0) {
             toast.dismiss()
             toast.error("Please select validty number", { containerId: "containerB" })
             return;
-        } else if (bondstate.title.length === 0) {
-            toast.dismiss()
-            toast.error("Please enter title of bond", { containerId: "containerB" })
-            return;
-        } else if (bondstate.quantity === 0 || bondstate.quantity.length === 0) {
+        }else if (bondstate.quantity === 0 || bondstate.quantity.length === 0) {
             toast.dismiss()
             toast.error("Please enter valid quantity", { containerId: "containerB" })
             return;
@@ -71,15 +130,29 @@ const BondListingTable = () => {
             toast.dismiss()
             toast.error("Please enter valid price", { containerId: "containerB" })
             return;
+        }else if(bondstate.reason.length<500){
+            toast.dismiss()
+            toast.error("Please enter bond reason within minimum range", { containerId: "containerB" })
+            return;
+        }else if(isAccepted==false){
+            toast.dismiss()
+            toast.error("Please accept TOS", { containerId: "containerB" })
+            return;
         }
         try {
 
 
             let formData = new FormData();
-            formData.append('quantity', bondstate.quantity)
-            formData.append('bond_price', bondstate.bond_price)
-            formData.append('title', bondstate.title)
-            formData.append('validity_number', bondstate.validity_number)
+            formData.append("platform", bondstate.platform);
+            formData.append("channel_name", bondstate.channel_name);
+            formData.append("social_id", bondstate.social_id);
+            formData.append("followers", bondstate.followers);
+            formData.append("mission_title", bondstate.mission_title);
+            formData.append("description", bondstate.description);
+            formData.append("title", bondstate.title);
+            formData.append("validity_number", bondstate.validity_number);
+            formData.append("quantity", bondstate.quantity);
+            formData.append("bond_price", bondstate.bond_price);
 
             uploadedImages.forEach((image) => {
                 formData.append('photos', image);
@@ -207,6 +280,7 @@ const BondListingTable = () => {
             console.log(response.data)
             setBondData(response.data.bondsList)
             setOriginalBondData(response.data.bondsList)
+            setUser(response.data.user)
             setLoading(false)
 
         } catch (e) {
@@ -248,11 +322,124 @@ const BondListingTable = () => {
     }, [selectedMonth, selectedPriceRange, search]);
 
 
+    const showBondPopup = () => {
+
+        setBondPopup(!bondpopup)
+        setaggrement(user.tos)
+    }
+
+const acceptTOS=async()=>{
+   
+    try{
+        let token=localStorage.getItem('token')
+let headers={
+    headers:{
+        authorization:`Bearer ${token}`
+    }
+}
+
+setaggrement(true) 
+let response=await axios.get(`${BASE_URL}/acceptTOS`,headers)
+
+
+    }catch(e){
+   
+        console.log(e.message)
+if(e?.response?.data?.error){
+    toast.error(e?.response?.data?.error,{containerId:"containerB"})
+}else{
+    toast.error("Something went wrong please try again",{containerId:"containerB"})
+}
+    }
+}
+const rejectAgain=async(id)=>{
+
+    try{
+        setBondData((prev)=>{
+            let old;
+            if(prev.length>0){
+                old=[...prev]
+            }else{
+                old=[prev]
+            }
+            let findIndex=old.findIndex(u=>u._id==id)
+            old[findIndex]={
+                ...old[findIndex],
+                status:"PENDING"
+            }
+            return old
+        })
+let response=await axios.get(`${BASE_URL}/rejectAgain/${id}`)
+console.log(response)
+console.log('request again')
+toast.success("Request for bond approval sent",{containerId:"containerB"})
+
+    }catch(e){
+        if(e?.response?.data?.error){
+            toast.error(e?.response?.data?.error,{containerId:"containerB"})
+        }else{
+            toast.error("Something went wrong please try again",{containerId:"containerB"})
+        }
+    }
+}
+
+
+const handleCancel = () => {
+    setIsOpen(false);
+    setCurrentBondId("")
+    setMissionVideo("")
+  };
+
+  const handleUpload =async () => {
+
+   
+   try{
+    let token=localStorage.getItem('token')
+    let headers={
+        headers:{
+            authorization:`Bearer ${token}`
+        }
+    }
+    let formdata=new FormData();
+   formdata.append('bond_id',currentBondId)
+   formdata.append('video',missionVideo)
+       let response=await axios.post(`${BASE_URL}/createMissionSubmission`,formdata,headers)
+       toast.success("Mission submitted sucessfully",{containerId:"containerB"})
+   
+       setMissionVideo("")
+       setIsOpen(false);
+       setBondData((prev) => {
+      
+        const old = Array.isArray(prev) ? [...prev] : [];
+    
+       
+        const findIndex = old.findIndex((u) => u._id === currentBondId);
+    
+       
+        if (findIndex !== -1) {
+            old[findIndex] = {
+                ...old[findIndex], 
+                bondRequested: false, 
+            };
+        }
+    
+        return old; 
+    });
+    
+       setCurrentBondId("")
+   }catch(e){
+    if(e?.response?.data?.error){
+        toast.error(e?.response?.data?.error,{containerId:"containerB"})
+    }else{
+        toast.error("Something went wrong please try again",{containerId:"containerB"})
+    }
+   }
+  };
 
     return (
         <>
             <ToastContainer containerId="containerB" limit={1} />
-            <div className="bg-white max-h-[700px]  overflow-y-auto">
+            <div className="bg-white max-h-[700px] min-h-[450px]  overflow-y-auto">
                 <div className="flex justify-between lg:flex-row flex-col items-center mb-[20px]">
                     <div className='flex flex-col'>
                         <h1 className="text-[24px] font-semibold">Explore Exciting Opportunities</h1>
@@ -298,7 +485,7 @@ const BondListingTable = () => {
                         </div>
 
 
-                        <button onClick={() => { setBondPopup(!bondpopup) }} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
+                        <button onClick={showBondPopup} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
                             Create Bond
                         </button>
 
@@ -319,6 +506,7 @@ const BondListingTable = () => {
                                     <th className="p-[10px] text-left border-b border-gray-300">Validity</th>
                                     <th className="p-[10px] text-left border-b border-gray-300">Status</th>
                                     <th className="p-[10px] text-left border-b border-gray-300"></th>
+                                    <th className="p-[10px] text-left border-b border-gray-300"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -326,7 +514,7 @@ const BondListingTable = () => {
                                     <tr key={index}>
                                         <td className="p-[10px] font-bold">{bond?.issuer_id?.user_id?.username}</td>
                                         <td className="p-[10px] font-bold">{bond?.title}</td>
-                                        <td className="p-[10px]">{bond?.missions?.length>0?bond?.missions[0]?.task_type:'No mission'}</td>
+                                        <td className="p-[10px]">{bond?.missions?.length > 0 ? bond?.missions[0]?.mission_title : 'No mission'}</td>
                                         <td className="p-[10px]">{'$' + bond?.bond_issuerance_amount}</td>
                                         <td className="p-[10px] font-bold">{bond?.validity_number + ' months'}</td>
                                         <td className="p-[10px] font-bold"> {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}</td>
@@ -336,8 +524,29 @@ const BondListingTable = () => {
                                         <td className={`text-[#1DBF73] underline`}>
                                             <Link to={`/promisebonddetail/${bond?._id}`}>View</Link>
                                         </td>
+                                        {bond?.
+bondVerificationCode
+? <td className={`text-[#1DBF73] underline`}>
+<Link to={`/promisebondverification/${bond?._id}`}>Verify</Link>
+</td>:null}
+                                       
+{bond?.rejectedTimes>0 && bond?.status=="REJECTED"? <td onClick={()=>{
+    rejectAgain(bond._id)
+}} className={`text-[#1DBF73] underline cursor-pointer`}>
+                                            Request Again
+                                        </td>:null}
+                                        {bond?.bondRequested==true?<td onClick={()=>{
+                                            setIsOpen(!isOpen)
+                                            setCurrentBondId(bond._id)
+                                        }} className='cursor-pointer'>
+                 Upload Mission Video
+                                     </td>:null}
+                                      
                                     </tr>
+                                    
                                 ))}
+                               
+                                 
                             </tbody>
                         </table>
                         <div className='w-full xl:hidden block'>
@@ -356,7 +565,7 @@ const BondListingTable = () => {
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.missions?.length>0?bond?.missions[0]?.task_type:'No mission'}</p>
+                                            <p className="text-[16px] font-semibold">{bond?.missions?.length > 0 ? bond?.missions[0]?.mission_title : 'No mission'}</p>
                                         </div>
 
                                         <div className="flex flex-col gap-[10px]">
@@ -376,8 +585,26 @@ const BondListingTable = () => {
                                         <div className="flex flex-col gap-[10px]">
 
                                             <p className="text-[16px] text-[#1DBF73] underline font-semibold">
-                                            <Link to={`/promisebonddetail/${bond?._id}`}>View</Link>
+                                                <Link to={`/promisebonddetail/${bond?._id}`}>View</Link>
                                             </p>
+                                            {bond?.
+bondVerificationCode
+?<p className="text-[16px] text-[#1DBF73] underline font-semibold">
+                                                <Link to={`/promisebondverification/${bond?._id}`}>Verify</Link>
+                                            </p>:null}
+                                            {bond?.rejectedTimes>0 && bond?.status=="REJECTED"? <td onClick={()=>{
+                                                rejectAgain(bond._id)
+                                            }} className={`text-[#1DBF73] underline cursor-pointer`}>
+                                            Request Again
+                                        </td>:null}
+                                        {bond?.bondRequested==true?<p onClick={()=>{setIsOpen(!isOpen)
+
+
+                        setCurrentBondId(bond._id)
+
+                                        }} className='cursor-pointer'>
+                 Upload Mission Video
+                                     </p>:null}
                                         </div>
 
 
@@ -406,56 +633,163 @@ const BondListingTable = () => {
                             <h1 className="text-[18px]">Upload Image</h1>
                             <div
                                 {...getRootProps()}
-                                className="border-2 border-dashed border-gray-300 p-[20px] text-center rounded-[10px] cursor-pointer"
+                                className={`border-2 border-dashed border-gray-300 p-[20px] text-center rounded-[10px] cursor-pointer ${uploadedImages.length >= 4 ? 'opacity-50 cursor-not-allowed' : ''
+                                    }`}
                             >
                                 <div className="flex justify-center w-full">
+                                    {/* SVG Icon */}
                                     <svg width="80" height="66" viewBox="0 0 80 66" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M41.1612 28.0748C41.0947 27.9859 41.0096 27.9141 40.9125 27.8647C40.8154 27.8152 40.7089 27.7896 40.6009 27.7896C40.4929 27.7896 40.3863 27.8152 40.2892 27.8647C40.1921 27.9141 40.1071 27.9859 40.0405 28.0748L30.0787 41.2433C29.9966 41.3529 29.9456 41.4844 29.9316 41.6228C29.9177 41.7612 29.9413 41.9009 29.9997 42.026C30.0582 42.1511 30.1491 42.2564 30.2622 42.33C30.3752 42.4036 30.5058 42.4425 30.639 42.4422H37.2121V64.969C37.2121 65.3779 37.5323 65.7124 37.9236 65.7124H43.2603C43.6517 65.7124 43.9719 65.3779 43.9719 64.969V42.4514H50.5627C51.1586 42.4514 51.4877 41.7359 51.1231 41.2526L41.1612 28.0748Z" fill="#667085" />
-                                        <path d="M66.497 19.497C62.4233 8.27074 52.0434 0.287842 39.8847 0.287842C27.7259 0.287842 17.346 8.26144 13.2723 19.4877C5.64975 21.5787 0.0195312 28.8367 0.0195312 37.4608C0.0195312 47.7298 7.9801 56.0473 17.7996 56.0473H21.3663C21.7577 56.0473 22.0779 55.7127 22.0779 55.3038V49.7279C22.0779 49.319 21.7577 48.9844 21.3663 48.9844H17.7996C14.8022 48.9844 11.9826 47.7391 9.88353 45.4809C7.79332 43.2319 6.68151 40.2023 6.77935 37.0612C6.8594 34.6078 7.6599 32.3031 9.10971 30.3608C10.5951 28.3813 12.6764 26.9409 14.989 26.2996L18.36 25.3796L19.5963 21.9783C20.3612 19.8594 21.4286 17.8799 22.7717 16.0864C24.0976 14.3086 25.6682 12.7459 27.4324 11.449C31.088 8.76328 35.3929 7.34141 39.8847 7.34141C44.3764 7.34141 48.6813 8.76328 52.337 11.449C54.107 12.7501 55.6724 14.3113 56.9977 16.0864C58.3407 17.8799 59.4081 19.8687 60.173 21.9783L61.4004 25.3703L64.7626 26.2996C69.5834 27.6564 72.9544 32.238 72.9544 37.4608C72.9544 40.5369 71.807 43.4364 69.7257 45.611C68.705 46.6837 67.4908 47.5342 66.1534 48.1132C64.8159 48.6923 63.3818 48.9884 61.9341 48.9844H58.3674C57.9761 48.9844 57.6559 49.319 57.6559 49.7279V55.3038C57.6559 55.7127 57.9761 56.0473 58.3674 56.0473H61.9341C71.7536 56.0473 79.7142 47.7298 79.7142 37.4608C79.7142 28.846 74.1018 21.5972 66.497 19.497Z" fill="#667085" />
+                                        {/* SVG paths */}
                                     </svg>
                                 </div>
-                                <input {...getInputProps()} />
-                                <p className="text-[16px] text-[#667085] my-[10px]">Drag and Drop Here</p>
+                                <input {...getInputProps()} disabled={uploadedImages.length >= 4} />
+                                <p className="text-[16px] text-[#667085] my-[10px]">
+                                    Drag and Drop Here
+                                </p>
                                 <p className="text-[16px] text-[#667085] my-[10px]">or</p>
-                                <div className="bg-[#F1EBFE] text-[#1DBF73] text-[16px] font-semibold px-[20px] py-[10px] w-fit rounded-[20px] mx-auto">Browse Images</div>
+                                <div className="bg-[#F1EBFE] text-[#1DBF73] text-[16px] font-semibold px-[20px] py-[10px] w-fit rounded-[20px] mx-auto">
+                                    Browse Images
+                                </div>
                             </div>
+
                             <div className="flex flex-wrap gap-[10px] my-[10px]">
-                                {uploadedImages.length > 0 &&
-                                    uploadedImages.map((file, index) => (
-                                        <div key={index} className="w-[100px] h-[100px] bg-gray-200 p-[5px] rounded-[10px]">
-                                            <img
-                                                src={URL.createObjectURL(file)}
-                                                alt="uploaded"
-                                                className="w-full h-full object-cover rounded-[10px]"
-                                            />
-                                        </div>
-                                    ))}
-                            </div>
-                            <div>
-                                <label htmlFor="socialLink" className="block text-xl  font-semibold text-[#272226]">Social Media Link</label>
-                                {links.map((link, index) => (
-                                    <div key={index} className="mt-4">
-                                        <input
-                                            type="text"
-                                            name={`socialLink-${index}`}
-                                            value={link}
-                                            onChange={(e) => handleLinkChange(index, e.target.value)}
-                                            className="mt-1 block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-                                            placeholder={`Link ${index + 1}`}
+                                {uploadedImages.map((file, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative w-[100px] h-[100px] bg-gray-200 p-[5px] rounded-[10px]"
+                                    >
+                                        <img
+                                            src={URL.createObjectURL(file)}
+                                            alt="uploaded"
+                                            className="w-full h-full object-cover rounded-[10px]"
                                         />
+                                        <button
+                                            type="button"
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-[20px] h-[20px] flex items-center justify-center"
+                                            onClick={() => handleRemoveImage(index)}
+                                        >
+                                            ×
+                                        </button>
                                     </div>
                                 ))}
-                                <button
-                                    type="button"
-                                    onClick={handleAddLink}
-                                    className="mt-4 px-6 py-2 bg-[#1DBF73] text-white font-semibold rounded-[20px]"
-                                >
-                                    Add More Links
-                                </button>
+                            </div>
 
+                            <div>
+                                <label htmlFor="socialMedia" className="block text-xl font-semibold text-[#272226]">
+                                    Social Media Information
+                                </label>
+                                {links.map((link, index) => (
+                                    <div key={index} className="mt-4">
+                                        <div className="flex flex-col md:flex-row gap-4">
+                                            {/* Social Media Platform Selection */}
+                                            <select
+                                                name={`platform-${index}`}
+                                                value={bondstate.platform}
+                                                onChange={(e) => {
+                                                    setBondState({
+                                                        ...bondstate,
+                                                        platform:e.target.value
+                                                    })
+                                                }}
+                                                className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                            >
+                                                <option value="">Select Platform</option>
+                                                <option value="Facebook">Facebook</option>
+                                                <option value="Twitter">Twitter</option>
+                                                <option value="Instagram">Instagram</option>
+                                                <option value="LinkedIn">LinkedIn</option>
+                                                <option value="YouTube">YouTube</option>
+                                            </select>
+
+                                            {/* Channel Name Input */}
+                                            <input
+                                                type="text"
+                                                name={`channelName-${index}`}
+                                                value={bondstate.channel_name}
+                                                onChange={(e) => {
+                                                    setBondState({
+                                                        ...bondstate,
+                                                        channel_name:e.target.value
+                                                    })
+                                                }}
+                                                className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                                placeholder="Channel Name"
+                                            />
+
+                                            {/* Social ID Input */}
+                                            <input
+                                                type="text"
+                                                name={`socialId-${index}`}
+                                                value={bondstate.social_id}
+                                                onChange={(e) => setBondState({
+                                                    ...bondstate,
+                                                    social_id:e.target.value
+                                                })}
+                                                className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                                placeholder="Social ID"
+                                            />
+
+                                            {/* Followers/Subscribers Input */}
+                                            <input
+                                                type="number"
+                                                name={`followers-${index}`}
+                                                value={bondstate.followers}
+                                                onChange={(e) => {
+                                                    setBondState({
+                                                        ...bondstate,
+                                                        followers:e.target.value
+                                                    })
+                                                }}
+                                                className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                                placeholder="Followers/Subscribers"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                               
                             </div>
                             <div className="mt-[10px]">
-                                <label htmlFor="title" className="block text-xl  font-semibold text-[#272226]">Title</label>
+                                <label htmlFor="title" className="block text-xl  font-semibold text-[#272226]">Mission Title</label>
+                                <input
+                                   
+                                    type="text"
+                                    name="title"
+                                    placeholder="Enter Title"
+                                    className="mt-4 bg-[#1C1C1C14] block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    value={bondstate.mission_title}
+                                    onChange={(e)=>{
+                                        setBondState({
+                                            ...bondstate,
+                                            mission_title:e.target.value
+                                        })
+                                    }}
+                                />
+
+                            </div>
+                            <div className='mt-[10px]'>
+                                <label htmlFor="mission" className="text-lg font-semibold text-gray-800 mb-2">
+                                    Mission
+                                </label>
+                                <textarea
+                                    id="mission"
+                                    value={bondstate.description}
+                                    onChange={(e)=>{
+                                        setBondState({
+                                            ...bondstate,
+                                            description:e.target.value
+                                        })
+                                    }}
+                                    className="w-full bg-[#1C1C1C14] p-4 border rounded-lg border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    placeholder="Write your mission statement here..."
+                                    rows={10}
+                                ></textarea>
+                                {error && <p className="text-red-500 mt-2">{error}</p>}
+                                <p className="text-sm text-gray-600 mt-1">
+                                    {bondstate.description.length} / 1000 characters minimum
+                                </p>
+                            </div>
+                            <div className="mt-[10px]">
+                                <label htmlFor="title" className="block text-xl  font-semibold text-[#272226]">Bond Title</label>
                                 <input
                                     value={bondstate.title}
                                     type="text"
@@ -549,11 +883,49 @@ const BondListingTable = () => {
 
 
                             </div>
+                            <div className='mt-[10px]'>
+                                <label htmlFor="reasonbond" className="text-lg font-semibold text-gray-800 mb-2">
+                                    Reason For Bond Issuance
+                                </label>
+                                <textarea
+                                    id="reasonbond"
+                                    value={bondstate.reason}
+                                    onChange={(e)=>{
+                                        setBondState({
+                                            ...bondstate,
+                                            reason:e.target.value
+                                        })
+                                    }}
+                                    className="w-full bg-[#1C1C1C14] p-4 border rounded-lg border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                                    placeholder="Write your bond issuance reason"
+                                    rows={10}
+                                ></textarea>
+                                   <p className="text-sm text-gray-600 mt-1">
+                                    {bondstate.reason.length} / 500 characters minimum
+                                </p>
+
+                            </div>
+                            <div className="mt-4">
+                                <label className="flex items-center space-x-3">
+                                    <input
+                                        type="checkbox"
+                                        checked={isAccepted}
+                                        onChange={handleCheckboxChange}
+                                        className="form-checkbox h-5 w-5 text-[#1DBF73]"
+                                    />
+                                    <span className="text-gray-700 text-sm">
+                                        I agree to the{' '}
+                                        <a href="/terms" className="text-[#1DBF73] underline">
+                                            Terms and Conditions
+                                        </a>.
+                                    </span>
+                                </label>
+                            </div>
                             <div className="hover:cursor-pointer flex flex-col justify-between mt-4 gap-[10px] xl:flex-row">
                                 <div onClick={() => setBondPopup(!bondpopup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#1DBF73] px-[20px] py-[10px] text-[#1DBF73] font-semibold">
                                     Cancel
                                 </div>
-                                <div onClick={createBond} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#1DBF73] px-[20px] py-[10px] text-white font-semibold">
+                                <div onClick={createBond} disabled={!!error || !isAccepted} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#1DBF73] px-[20px] py-[10px] text-white font-semibold">
                                     Create Bond
                                 </div>
                             </div>
@@ -561,6 +933,66 @@ const BondListingTable = () => {
                     </div>
                 )
             }
+            {
+                aggrement===false && (
+                    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center px-[20px] bg-[#00000085]">
+                        <div className="bg-white flex h-[400px] overflow-auto flex-col gap-[10px] rounded-[20px] p-[20px] max-w-[400px] w-full">
+                            <h1 className="text-[24px] font-semibold">Create New Bond</h1>
+                            <h2 className="text-[18px] font-medium">Important Notice</h2>
+                            <p className="text-[16px] leading-[1.5]">
+                                By proceeding, you are informed that engaging in illegal activities such as fraud, phishing, or criminal conspiracy will result in the permanent suspension of your account. Additionally, judicial authorities will be notified of such actions.
+                            </p>
+                            <div className="flex justify-center gap-[10px] mt-[20px]">
+                                <button onClick={acceptTOS} className="bg-[#1DBF73] text-white px-[20px] py-[10px] rounded-[10px] text-[16px] font-medium hover:bg-[#17a766] transition">
+                                    Agree
+                                </button>
+                                <button onClick={() => {
+                                    setaggrement(!aggrement)
+                                    setBondPopup(!bondpopup);
+
+                                }} className="border border-[#1DBF73] text-[#1DBF73] px-[20px] py-[10px] rounded-[10px] text-[16px] font-medium hover:bg-[#1DBF73] hover:text-white transition">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+
+
+            }
+            {isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+              Upload Mission
+            </h2>
+
+            <input
+           
+           onChange={(e)=>{
+            setMissionVideo(e.target.files[0])
+           }}
+              type="file"
+              className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4"
+            />
+
+            <div className="flex justify-between mt-6">
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                onClick={handleUpload}
+              >
+                Upload Mission
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
         </>
     );
 };

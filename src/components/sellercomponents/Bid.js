@@ -36,7 +36,7 @@ const Bid = () => {
             try {
                 setIsForSale(true);
                 setStatus("Seller");
-                alert("Bond submitted for sale!");
+                alert("Bid placed");
                 let token = localStorage.getItem("buyerToken")
                 let headers = {
                     headers: {
@@ -166,8 +166,8 @@ const Bid = () => {
                         >
                             Mission Task: {state?.mission?.task_type}
                         </p>
-                        <p className="text-gray-600">
-                            <span className="font-semibold">Task description:</span> {state?.mission?.description}
+                        <p className="text-[1rem] my-[10px] text-[#74767E] max-h-[150px] overflow-y-auto break-words">
+                            <span className="text-[1rem] my-[10px] text-[#74767E] max-h-[150px] overflow-y-auto break-words">Task description:</span> {state?.mission?.description}
                         </p>
                     </div>
 
