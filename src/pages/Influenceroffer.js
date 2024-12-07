@@ -34,6 +34,12 @@ const InfluencerOffer = () => {
       console.log(response.data)
       setBondData(response.data.bond)
       setOfferData(response.data.offer)
+      if(!response.data.offer){
+toast.error("Offer was rejected",{containerId:"influenceroffer"})
+setTimeout(()=>{
+  navigate('/dashboard')
+},1000)
+      }
       setMissionData(response.data.mission)
     } catch (e) {
       console.log(e)

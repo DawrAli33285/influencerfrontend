@@ -165,6 +165,10 @@ export default function Verification() {
 
 const answerQuestions=async()=>{
     try{
+        if(followersCount.length==0 || followersCount==0){
+toast.error("Please enter valid followers counts",{containerId:"verificationPage"})
+return;
+        }
         let data={
             userType:userType,
             socialMedia:selectedPlatform,
