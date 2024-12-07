@@ -50,7 +50,7 @@ const BondListingTable = () => {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [loading, setLoading] = useState(true)
-    const [aggrement, setaggrement] = useState(true)
+    const [aggrement, setaggrement] = useState(null)
     const { state: bondData, setState: setBondData } = useContext(BondListContext)
     const [selectedPriceRange, setSelectedPriceRange] = useState("default")
     const [bondpopup, setBondPopup] = useState(false)
@@ -325,7 +325,14 @@ const BondListingTable = () => {
     const showBondPopup = () => {
 
         setBondPopup(!bondpopup)
-        setaggrement(user.tos)
+        setaggrement((prev)=>{
+            let old=prev;
+            if(old==true){
+                return true
+            }else{
+               return user.tos
+            }
+        })
     }
 
 const acceptTOS=async()=>{
@@ -485,7 +492,7 @@ const handleCancel = () => {
                         </div>
 
 
-                        <button onClick={showBondPopup} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
+                        <button disabled={loading} onClick={showBondPopup} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
                             Create Bond
                         </button>
 
@@ -947,8 +954,8 @@ bondVerificationCode
                                     Agree
                                 </button>
                                 <button onClick={() => {
-                                    setaggrement(!aggrement)
-                                    setBondPopup(!bondpopup);
+                                    setaggrement(null)
+                                    setBondPopup(false);
 
                                 }} className="border border-[#1DBF73] text-[#1DBF73] px-[20px] py-[10px] rounded-[10px] text-[16px] font-medium hover:bg-[#1DBF73] hover:text-white transition">
                                     Decline
