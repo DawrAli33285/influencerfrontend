@@ -332,7 +332,7 @@ if(id){
                                             }
 
 
-                                            {bond?.status == "APPROVED" && bond?.issuer_id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
+                                            {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
                                             {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='text-[#5E2DC8] cursor-pointer'>Bid offer</a> : ''}
                                             </button>
                                         </td>
@@ -384,7 +384,7 @@ if(id){
                                             }
 
 
-                                            {bond?.status == "APPROVED" && bond?.issuer_id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
+                                            {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
                                             {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='text-[#5E2DC8] cursor-pointer'>Bid offer</a> : ''}
                                         </button>
 
