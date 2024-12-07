@@ -65,7 +65,7 @@ export default function SignIn() {
                     localStorage.setItem("token", response.data.token)
                     localStorage.setItem("buyerToken",response.data.buyerToken)
                     
-                    navigate('/dashboard')
+                    navigate('/buyerdashboard')
                 }
             } catch (e) {
                 console.log(e.message)
