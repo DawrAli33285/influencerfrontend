@@ -151,6 +151,8 @@ const SellerMissionListingTable = () => {
         if (!buyer_id) buyer_id = ''
         setState({
             ...state,
+            price:'',
+            number_of_bonds:'',
             bond_id: bondid,
             oldbuyer_id: buyer_id,
             limit_bonds: total_bonds
