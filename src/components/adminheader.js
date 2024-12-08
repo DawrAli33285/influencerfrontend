@@ -262,7 +262,7 @@ export default function AdminHeader({ children }) {
 
                             <div className="flex items-center" onClick={handleSwitchChange}>
                                 <label htmlFor="account-switch" className="mr-2 text-sm font-medium">
-                                    Switch to buyer account
+                                    Switch to buyer
                                 </label>
                                 <div className="relative">
                                     <input
