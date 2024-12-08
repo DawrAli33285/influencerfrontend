@@ -323,7 +323,7 @@ export default function SellerAdminHeader({ children }) {
 
                             <div className="flex items-center" onClick={handleSwitchChange}>
                                 <label htmlFor="account-switch" className="mr-2 text-sm font-medium">
-                                    Switch to influencer account
+                                    Switch to Issuer account
                                 </label>
                                 <div className="relative">
                                     <input
