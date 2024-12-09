@@ -296,7 +296,7 @@ const router = createBrowserRouter([
         element: <SellerAdminHeader>
           <MissionListProvider>
             <BondListProvider>
-              <Market />
+            <MyBond />
             </BondListProvider>
           </MissionListProvider>
         </SellerAdminHeader>
@@ -333,7 +333,8 @@ const router = createBrowserRouter([
         element: <SellerAdminHeader>
           <MissionListProvider>
             <BondListProvider>
-              <MyBond />
+            <Market />
+            
             </BondListProvider>
           </MissionListProvider>
         </SellerAdminHeader>
