@@ -16,6 +16,7 @@ const SellerMissionListingTable = () => {
     const [selectedPriceRange,setSelectedPriceRange]=useState("default")
     const [cancelledpopup, setCancelledPopup] = useState(false)
     const [bids, setBids] = useState([])
+    const [locationId,setLocationId]=useState()
     const [missions,setMissions]=useState([])
     const [disableOffer,setDisableOffer]=useState(true)
     const [currentIssuerId, setCurrentIssuerId] = useState()
@@ -123,6 +124,9 @@ const SellerMissionListingTable = () => {
                 return;
             }
             let response = await axios.post(`${BASE_URL}/create-offer`, state, headers)
+            if(locationId==state.bond_id){
+                navigate(location.pathname, { replace: true });
+            }
             toast.success(response.data.message, { containerId: 'buyerMarket' })
             setBondData((prev) => {
                 let old = [...prev]
@@ -242,6 +246,7 @@ const SellerMissionListingTable = () => {
 useEffect(()=>{
 let params=new URLSearchParams(location.search)
 let id=params.get('id')
+setLocationId(id)
 let total_bonds=params.get('total_bonds')
 setState({
     ...state,
@@ -337,7 +342,7 @@ if(id){
                                             }
 
 
-                                            {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
+                                            {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
                                             {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='text-[#5E2DC8] cursor-pointer'>Bid offer</a> : ''}
                                             </button>
                                         </td>
