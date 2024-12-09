@@ -178,7 +178,7 @@ const ExchangeRegistration = () => {
                                 <label className="block text-gray-700 font-semibold mb-2">
                                     <p className="text-[#1DBF73] font-semibold">${desiredSalePrice}</p>
                                     <div className="flex items-center mt-1">
-                                        {/* Decrease button */}
+                                       
                                         <button
                                             type="button"
                                             onClick={() => setDesiredSalePrice((prev) => Math.max(0, prev - 100))}
@@ -187,7 +187,7 @@ const ExchangeRegistration = () => {
                                             -
                                         </button>
 
-                                        {/* Input field */}
+                                    
                                         <input
                                             type="number"
                                             value={desiredSalePrice}
@@ -209,7 +209,7 @@ const ExchangeRegistration = () => {
                                         />
 
 
-                                        {/* Increase button */}
+                                       
                                         <button
                                             type="button"
                                             onClick={() => setDesiredSalePrice((prev) => prev + 100)}

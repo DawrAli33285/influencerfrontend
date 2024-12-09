@@ -64,8 +64,14 @@ export default function SignIn() {
                 } else {
                     localStorage.setItem("token", response.data.token)
                     localStorage.setItem("buyerToken",response.data.buyerToken)
-                    
-                    navigate('/buyerdashboard')
+                    let prevPath=localStorage.getItem("pathName")
+                    localStorage.removeItem('pathName')
+                    if(prevPath){
+                    navigate(prevPath)
+                    }else{
+
+                        navigate('/buyerdashboard')
+                    }
                 }
             } catch (e) {
                 console.log(e.message)
@@ -109,7 +115,15 @@ export default function SignIn() {
        
                 localStorage.setItem("token", response.data.token)
                 localStorage.setItem("buyerToken",response.data.buyerToken)
-                navigate('/buyerdashboard')
+               let prevPath=localStorage.getItem("pathName")
+               localStorage.removeItem('pathName')
+               if(prevPath){
+               
+          navigate(prevPath)
+               }else{
+
+                   navigate('/buyerdashboard')
+               }
             }
         } catch (error) {
             if (error?.response?.data?.error) {

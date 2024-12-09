@@ -36,7 +36,7 @@ const SellerBondAnalyticsChart = ({state,loading}) => {
       ;
     });
   
-    // Convert the groupedData object to an array
+   
     return Object.values(groupedData);
   }
   const data = groupBondsByMonth(state?.bondList);

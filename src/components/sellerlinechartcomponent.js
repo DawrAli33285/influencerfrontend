@@ -14,7 +14,7 @@ const data = [
 const SellerLineChartComponent = () => {
   return (
     <div className="w-full p-6">
-      {/* Chart Header */}
+      
       <div className="flex justify-between items-center mb-6">
         <div>
           <h2 className="text-black text-2xl font-semibold mb-1">Total Earnings to Date</h2>
@@ -23,7 +23,7 @@ const SellerLineChartComponent = () => {
        
       </div>
 
-      {/* Line Chart */}
+    
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />

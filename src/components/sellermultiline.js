@@ -21,14 +21,14 @@ const SellerMissionStatsChart = ({state}) => {
    data = state?.monthlyBonds
   return (
     <div className="w-full p-6 h-[80%]">
-      {/* Chart Header */}
+
       <div className="flex flex-col items-center mb-6">
         <h2 className="text-black text-2xl font-semibold mb-1">Mission Stats</h2>
         <p className="text-[#1C1C1CA3]">Your mission progress and stats</p>
       </div>
 
     {state?.monthlyBonds?.length>0?<>
-      {/* Multiple Line Chart */}
+     
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -36,7 +36,7 @@ const SellerMissionStatsChart = ({state}) => {
           <YAxis />
           <Tooltip />
           
-          {/* Line for Completed Missions */}
+         
           <Line
             type="monotone"
             dataKey="completed"
@@ -44,8 +44,7 @@ const SellerMissionStatsChart = ({state}) => {
             strokeWidth={2}
             dot={{ fill: colors.completed, r: 4 }}
           />
-          
-          {/* Line for Pending Missions */}
+     
           <Line
             type="monotone"
             dataKey="pending"
@@ -54,7 +53,7 @@ const SellerMissionStatsChart = ({state}) => {
             dot={{ fill: colors.pending, r: 4 }}
           />
           
-          {/* Line for Average Fulfillment Time */}
+          
           <Line
             type="monotone"
             dataKey="avgTime"
@@ -63,7 +62,7 @@ const SellerMissionStatsChart = ({state}) => {
             dot={{ fill: colors.avgTime, r: 4 }}
           />
           
-          {/* Line for Mission Success Rate */}
+         
           <Line
             type="monotone"
             dataKey="successRate"
@@ -72,7 +71,7 @@ const SellerMissionStatsChart = ({state}) => {
             dot={{ fill: colors.successRate, r: 4 }}
           />
 
-          {/* Legend */}
+        
           <Legend verticalAlign="top" align="right" />
         </LineChart>
       </ResponsiveContainer>
@@ -80,27 +79,27 @@ const SellerMissionStatsChart = ({state}) => {
     <p>No Record Found</p>
     </div>}
 
-      {/* Color Legend (Dots) */}
+      
       <div className="flex justify-center mt-4 space-x-4">
-        {/* Completed Missions */}
+        
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3" style={{ backgroundColor: colors.completed }}></div>
           <p className="text-sm text-gray-700">Completed Missions</p>
         </div>
 
-        {/* Pending Missions */}
+       
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3" style={{ backgroundColor: colors.pending }}></div>
           <p className="text-sm text-gray-700">Pending Missions</p>
         </div>
 
-        {/* Average Fulfillment Time */}
+       
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3" style={{ backgroundColor: colors.avgTime }}></div>
           <p className="text-sm text-gray-700">Avg Fulfillment Time</p>
         </div>
 
-        {/* Mission Success Rate */}
+    
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3" style={{ backgroundColor: colors.successRate }}></div>
           <p className="text-sm text-gray-700">Mission Success Rate</p>

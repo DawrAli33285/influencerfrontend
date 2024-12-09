@@ -9,6 +9,7 @@ export default function PhoneVerification() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [mobileSent, setMobileSent] = useState(false);
+  const [rememberPhoneNumber,setRememberPhoneNumber]=useState("")
   const [verificationData, setVerificationData] = useState({
     email: state?.email || "",
     mobile: "",
@@ -78,6 +79,37 @@ headers:{
     }
   };
 
+
+const sendCodeAgain=async()=>{
+  if(rememberPhoneNumber.length===0){
+    toast.error("Please enter mobile number",{containerId:"verificationPageMobile"})
+return;
+}
+const mobileRegex = /^\+[1-9]\d{1,14}$/;
+
+if (!mobileRegex.test(rememberPhoneNumber)) {
+    toast.error("Please enter a valid mobile number with '+' and country code", { containerId: "verificationPageMobile" });
+    return;
+}
+
+try {
+  let phoneNumber = rememberPhoneNumber;
+  let token=localStorage.getItem('token')
+  let headers={
+headers:{
+authorization:`Bearer ${token}`
+}
+  }
+  let response = await axios.post(`${BASE_URL}/mobile-otp`, { phoneNumber},headers);
+  toast.success(response.data.message, { containerId: "verificationPageMobile" });
+  setMobileSent(true);
+} catch (e) {
+  toast.error(e?.response?.data?.error || "Client error, please try again", {
+    containerId: "verificationPageMobile",
+  });
+}
+}
+
   return (
     <>
       <ToastContainer limit={1} containerId="verificationPageMobile" />
@@ -115,7 +147,12 @@ headers:{
                       id="mobile"
                       name="mobile"
                       value={verificationData.mobile}
-                      onChange={handleChange}
+                      onChange={(e)=>{
+                        handleChange(e);
+                        setRememberPhoneNumber(e.target.value)
+                      }
+                       
+                      }
                       placeholder="+ Enter your mobile number"
                       className="block w-full pl-4 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 placeholder-gray-400"
                       pattern="\+[0-9]{1,15}"
@@ -148,6 +185,12 @@ headers:{
                   </button>
                 </div>
               )}
+                                <button
+                    onClick={sendCodeAgain}
+                    className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 mt-4 rounded-full font-medium"
+                  >
+                    Send Code Again
+                  </button>
             </div>
           </div>
         </div>

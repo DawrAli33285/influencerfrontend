@@ -225,7 +225,7 @@ export default function Settings() {
                         </div>
                         <div className="flex items-center gap-[5px] mt-[20px]">
                             <h1 className="text-[20px] text-[#344054] font-semibold">Phone Number:</h1>
-                            <h2 className="text-[18px]">{state?.user_id?.country_code_id?.country_code + state?.user_id?.mobile_number}</h2>
+                            <h2 className="text-[18px]">{state?.user_id?.mobile_number?state?.user_id?.country_code_id?.country_code + state?.user_id?.mobile_number:'No mobile number'}</h2>
                         </div>
                         {state?.user_id?.location ? <div className="flex items-center gap-[5px] mt-[20px]">
                             <h1 className="text-[20px] text-[#344054] font-semibold">Location:</h1>
@@ -259,7 +259,7 @@ export default function Settings() {
                             </div>
                         </div>
 
-                        {/* Tab content */}
+                       
                         {isOpen && (
                             <div className="mt-[10px] p-4 bg-[#F2F2F2] flex flex-col gap-[20px] rounded-[8px]">
                                 <div className="flex justify-between lg:flex-row flex-col gap-[10px]">

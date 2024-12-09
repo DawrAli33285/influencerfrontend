@@ -562,10 +562,10 @@ export default function DashboardHeader({ children }) {
                                     <label htmlFor="validitynumber" className="block text-xl  font-semibold text-[#272226]">Select bond</label>
                                     <div className="mt-4">
                                         {sponsorData.length === 0 ? (
-                                            // Message when no bonds are available
+                                         
                                             <p className="text-red-500">No bond available without a mission</p>
                                         ) : (
-                                            // Render select dropdown if bonds are available
+                                            
                                             <select
                                                 onChange={(e) => {
                                                     setMissionState({

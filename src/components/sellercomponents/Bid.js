@@ -177,7 +177,7 @@ const Bid = () => {
                                 <label className="block text-gray-700 font-semibold mb-2">
                                     <p className="text-[#1DBF73] font-semibold">${desiredSalePrice}</p>
                                     <div className="flex items-center mt-1">
-                                        {/* Decrease button */}
+                                        
                                         <button
                                             type="button"
                                             onClick={() => setDesiredSalePrice((prev) => Math.max(0, prev - 100))}
@@ -186,7 +186,7 @@ const Bid = () => {
                                             -
                                         </button>
 
-                                        {/* Input field */}
+                                    
                                         <input
                                             type="number"
                                             value={desiredSalePrice}
@@ -208,7 +208,7 @@ const Bid = () => {
                                         />
 
 
-                                        {/* Increase button */}
+                                        
                                         <button
                                             type="button"
                                             onClick={() => setDesiredSalePrice((prev) => prev + 100)}
@@ -223,7 +223,7 @@ const Bid = () => {
                                     onClick={handleSubmitForSale}
                                     className=" bg-[#1DBF73] text-white font-semibold py-[6px] px-[10px] text-[14px] rounded-[10px]"
                                 >
-                                    Submit for Sale
+                                    Submit for Bid
                                 </button>
                             </div>
                         ) : (

@@ -50,9 +50,9 @@ export default function Terms() {
             <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[30px]">
 
 
-                {/* Content Section */}
+           
                 <div className="flex flex-col lg:flex-row gap-[20px]">
-                    {/* Left-side Options */}
+                  
                     <div className="flex flex-col gap-[10px] w-full lg:w-[30%] border-r-[1px] border-[#E9E9E9]">
                         {options.map((option, index) => (
                             <div
@@ -68,7 +68,7 @@ export default function Terms() {
                         ))}
                     </div>
 
-                    {/* Right-side Content */}
+              
                     <div className="flex flex-col gap-[20px] w-full lg:w-[70%]">
                         {terms.map((term, index) => (
                             <div

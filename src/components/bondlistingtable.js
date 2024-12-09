@@ -17,6 +17,7 @@ const BondListingTable = () => {
     const [isAccepted, setIsAccepted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [currentBondId,setCurrentBondId]=useState("")
+    const [disablecreateBond,setDisableCreateBond]=useState(false)
     const handleCheckboxChange = (e) => {
         setIsAccepted(e.target.checked);
     };
@@ -136,12 +137,12 @@ const BondListingTable = () => {
             return;
         }else if(isAccepted==false){
             toast.dismiss()
-            toast.error("Please accept TOS", { containerId: "containerB" })
+            toast.error("Please accept terms and conditions", { containerId: "containerB" })
             return;
         }
         try {
 
-
+setDisableCreateBond(true)
             let formData = new FormData();
             formData.append("platform", bondstate.platform);
             formData.append("channel_name", bondstate.channel_name);
@@ -189,6 +190,7 @@ const BondListingTable = () => {
             // })
 
         } catch (e) {
+            setDisableCreateBond(false)
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "containerB" })
 
@@ -634,9 +636,14 @@ bondVerificationCode
                 bondpopup && (
                     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center px-[20px] bg-[#00000085]">
                         <div className="bg-white flex h-[90%] overflow-auto flex-col gap-[10px] rounded-[20px] p-[20px] max-w-[800px] w-full">
+                            <div className='flex flex-row justify-between'>
                             <h1 className="text-[24px] font-semibold">
                                 Create New Bond
                             </h1>
+                            <svg onClick={()=>{
+                                setBondPopup(false)
+                            }} className='cursor-pointer' width={35} height={35} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#0F0F0F"></path> </g></svg>
+                            </div>
                             <h1 className="text-[18px]">Upload Image</h1>
                             <div
                                 {...getRootProps()}
@@ -786,13 +793,14 @@ bondVerificationCode
                                             description:e.target.value
                                         })
                                     }}
+                                    maxLength={1200}
                                     className="w-full bg-[#1C1C1C14] p-4 border rounded-lg border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
                                     placeholder="Write your mission statement here..."
                                     rows={10}
                                 ></textarea>
                                 {error && <p className="text-red-500 mt-2">{error}</p>}
                                 <p className="text-sm text-gray-600 mt-1">
-                                    {bondstate.description.length} / 1000 characters minimum
+                                    {bondstate.description.length} / 1000 characters required
                                 </p>
                             </div>
                             <div className="mt-[10px]">
@@ -897,6 +905,7 @@ bondVerificationCode
                                 <textarea
                                     id="reasonbond"
                                     value={bondstate.reason}
+                                    maxLength={520}
                                     onChange={(e)=>{
                                         setBondState({
                                             ...bondstate,
@@ -908,7 +917,7 @@ bondVerificationCode
                                     rows={10}
                                 ></textarea>
                                    <p className="text-sm text-gray-600 mt-1">
-                                    {bondstate.reason.length} / 500 characters minimum
+                                    {bondstate.reason.length} / 500 characters required
                                 </p>
 
                             </div>
@@ -932,9 +941,14 @@ bondVerificationCode
                                 <div onClick={() => setBondPopup(!bondpopup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#1DBF73] px-[20px] py-[10px] text-[#1DBF73] font-semibold">
                                     Cancel
                                 </div>
-                                <div onClick={createBond} disabled={!!error || !isAccepted} className="hover:cursor-pointer border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] bg-[#1DBF73] px-[20px] py-[10px] text-white font-semibold">
-                                    Create Bond
-                                </div>
+                                <div 
+    onClick={!disablecreateBond ? createBond : null} 
+    className={`border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] px-[20px] py-[10px] font-semibold 
+        ${disablecreateBond ? 'bg-gray-400 text-gray-300 cursor-not-allowed' : 'bg-[#1DBF73] text-white hover:cursor-pointer'}`}
+>
+    Create Bond
+</div>
+
                             </div>
                         </div>
                     </div>

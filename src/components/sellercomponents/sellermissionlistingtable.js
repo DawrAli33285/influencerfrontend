@@ -11,6 +11,7 @@ const SellerMissionListingTable = () => {
     const [selectedMonth, setSelectedMonth] = useState('default');
     const [originalBondData, setOriginalBondData] = useState([])
     const [popup, setPopup] = useState(false)
+    const [disableSendOffer,setDisableSendOffer]=useState(false)
     const [search,setSearch]=useState("")
     const [selectedPriceRange,setSelectedPriceRange]=useState("default")
     const [cancelledpopup, setCancelledPopup] = useState(false)
@@ -58,6 +59,7 @@ const SellerMissionListingTable = () => {
             setMissions(response.data.missions)
             setDisableOffer(response.data.disableOffer)
             setLoading(false)
+            setDisableSendOffer(false)
             console.log(response.data)
         } catch (e) {
             if (e?.response?.data?.error) {
@@ -246,6 +248,7 @@ setState({
     bond_id:id,
     limit_bonds:total_bonds
 })
+setDisableSendOffer(true)
 if(id){
     setPopup(!popup)
 }
@@ -305,6 +308,7 @@ if(id){
                                     <th className="p-[10px] text-left  border-b border-gray-300">Mission</th>
                                     <th className="p-[10px] text-left  border-b border-gray-300">Bond Title</th>
                                     <th className="p-[10px] text-left  border-b border-gray-300">Price</th>
+                                    <th className="p-[10px] text-left  border-b border-gray-300">Bonds</th>
                                     <th className="p-[10px] text-left  border-b  border-gray-300">Validity</th>
                                     <th className="p-[10px] text-left  border-b  border-gray-300"></th>
                                 </tr>
@@ -317,6 +321,7 @@ if(id){
                                         <td className="p-[10px] text-[#7E8183] "> {missions?.find(u => u?.bond_id === bond?._id)?.mission_title || 'N/A'}</td>
                                         <td className="p-[10px] text-[#7E8183] "> {bond?.title}</td>
                                         <td className="p-[10px] text-[#1DBF73]"> ${bond?.bond_issuerance_amount}</td>
+                                        <td className="p-[10px] text-[#1DBF73]">{bond?.total_bonds}</td>
                                         <td className="p-[10px] font-bold ">{bond?.validity_number + ' months'}</td>
                                         <td>
                                             <button className="p-[10px] text-[#1DBF73] underline  font-semibold rounded-[10px] lg:col-span-2">
@@ -365,6 +370,11 @@ if(id){
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
                                             <p className="text-[16px] font-semibold">{bond?.bond_issuerance_amount} </p>
                                         </div>
+                                        <div className="flex flex-col gap-[10px]">
+                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Bonds</h1>
+                                            <p className="text-[16px] font-semibold">{bond?.total_bonds} </p>
+                                        </div>
+                                      
 
                                         <div className="flex flex-col gap-[10px]">
                                             <h1 className="text-[18px] font-semibold text-[#7E8183]">Validity</h1>

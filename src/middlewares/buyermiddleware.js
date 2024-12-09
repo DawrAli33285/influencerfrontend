@@ -2,22 +2,28 @@ import axios from "axios";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { BASE_URL } from "../baseURL";
+import { useLocation } from "react-router-dom";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 
 const BuyerMiddleware = () => {
   const navigate = useNavigate();
+  const location=useLocation();
+  
+ 
 
   useEffect(() => {
     let isMounted = true;
 
     const checkForAuth = async () => {
+     
       try {
         const token = localStorage.getItem("buyerToken");
         if (!token) {
           toast.error("Please login to access the website", {
             containerId: "buyerAuthentication",
           });
-          navigate("/dashboard", { replace: true }); 
+          localStorage.setItem('pathName',location.pathname)
+          navigate("/signin", { replace: true }); 
           return;
         }
 
@@ -53,7 +59,9 @@ const BuyerMiddleware = () => {
             containerId: "buyerAuthentication",
           });
         }
-        if (isMounted) navigate("/dashboard", { replace: true });
+        if (isMounted) {navigate("/signin", { replace: true })
+          localStorage.setItem('pathName',location.pathname)
+        };
       }
     };
 

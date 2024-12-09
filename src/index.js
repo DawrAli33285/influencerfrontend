@@ -183,14 +183,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/promisebonddetail/:id",
-    element:
-      <AdminHeader>
+    element:<BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<AdminHeader>
         <MissionListProvider>
           <BondListProvider>
             <ViewBond />
           </BondListProvider>
         </MissionListProvider>
       </AdminHeader>
+      }
+    ]
 
   },
   {
@@ -305,7 +310,13 @@ const router = createBrowserRouter([
   },
   {
     path: `/influenceroffer`,
-    element: <InfluencerOffer />
+    element: <BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<InfluencerOffer />
+      }
+    ]
   },
   {
     path: "/bidoffers",
@@ -330,11 +341,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <SellerAdminHeader>
+        element:<SellerAdminHeader>
           <MissionListProvider>
             <BondListProvider>
             <Market />
-            
             </BondListProvider>
           </MissionListProvider>
         </SellerAdminHeader>
@@ -343,14 +353,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/buyerpromisebonddetail/:id",
-    element:
-      <SellerAdminHeader>
+    element:<BuyerMiddleware/>,
+    children:[
+      {
+        path:"",
+        element:<SellerAdminHeader>
         <MissionListProvider>
           <BondListProvider>
             <BuyerViewBond />
           </BondListProvider>
         </MissionListProvider>
       </SellerAdminHeader>
+      }
+    ]
 
   },
   {

@@ -119,13 +119,13 @@ setTimeout(()=>{
   {missionData?.description}
 </p>
 
-          {/* Bond Title */}
+        
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-600">Bond Title</h3>
             <p className="text-xl text-gray-900 font-medium">{bondData?.title}</p>
           </div>
 
-          {/* Offer Details */}
+        
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
               <h4 className="text-lg font-semibold text-gray-600">Quantity Offered</h4>
@@ -143,7 +143,7 @@ setTimeout(()=>{
             </div>
           </div>
 
-          {/* Action Buttons */}
+      
           <div className="flex  lg:flex-row flex-col gap-[10px] justify-between mt-6">
             
             <div className="flex lg:w-1/2 w-full px-[20px]">

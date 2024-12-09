@@ -19,7 +19,7 @@ const reviewsData = [
     avatar: "https://via.placeholder.com/80",
     review: "The innovative solutions offered by YourBank have greatly improved my productivity. The intuitive design and powerful tools are exactly what I needed to stay ahead in my career.",
   },
-  // Add more users if needed
+
 ];
 
 export default function Reviews() {
@@ -27,7 +27,7 @@ export default function Reviews() {
 
   return (
     <div className="flex flex-col gap-[40px] w-full px-[20px] py-[40px] xl:px-[40px]">
-      {/* Selected Review Section */}
+     
       <div className="w-full text-center justify-center items-center flex flex-col gap-[1px] lg:gap-[2rem]">
         <p className="font-bold xl:text-[2.38rem] text-[1.50rem]">
           Real <span className="font-normal text-[#1DBF73] ">Stories</span>,
@@ -47,7 +47,7 @@ export default function Reviews() {
 
       </div>
 
-      {/* Users Section */}
+     
       <div className="flex lg:flex-row flex-col w-full justify-start items-center gap-[20px] overflow-x-auto px-[10px] scrollbar-none md:justify-center">
         {reviewsData.map((user, index) => (
           <div
