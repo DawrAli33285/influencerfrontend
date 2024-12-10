@@ -6,7 +6,7 @@ import { BASE_URL } from "../baseURL";
 import { useNavigate } from "react-router-dom";
 import { gapi } from "gapi-script";
 
-const CLIENT_ID = "";
+const CLIENT_ID = "18819315923-dgjfpoa60vhgf4c1ftba93aj6otb6sl3.apps.googleusercontent.com";
 
 
 export default function SignIn() {

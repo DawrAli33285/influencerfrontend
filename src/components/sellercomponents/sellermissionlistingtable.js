@@ -150,14 +150,14 @@ const SellerMissionListingTable = () => {
         }
     }
 
-    const handleOfferClick = (bondid, buyer_id, total_bonds) => {
+    const handleOfferClick = (bondid, buyer_id, total_bonds,price) => {
 
 
         setPopup(!popup)
         if (!buyer_id) buyer_id = ''
         setState({
             ...state,
-            price:'',
+            price:price,
             number_of_bonds:'',
             bond_id: bondid,
             oldbuyer_id: buyer_id,
@@ -248,9 +248,11 @@ let params=new URLSearchParams(location.search)
 let id=params.get('id')
 setLocationId(id)
 let total_bonds=params.get('total_bonds')
+let price=params.get('key')
 setState({
     ...state,
     bond_id:id,
+    price,
     limit_bonds:total_bonds
 })
 setDisableSendOffer(true)
@@ -343,7 +345,7 @@ if(id){
                                             }
 
 
-                                            {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
+                                            {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer==false? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds,bond?.bond_issuerance_amount)} className='text-[#5E2DC8] cursor-pointer'>Send Offer</a> : ''}
                                             {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='text-[#5E2DC8] cursor-pointer'>Bid offer</a> : ''}
                                             </button>
                                         </td>
@@ -423,6 +425,7 @@ if(id){
                             <label htmlFor="price" className="block text-xl font-semibold text-[#272226]">Price</label>
                             <div className="mt-4">
                             <input
+                            disabled
     value={state.price}
     onChange={(e) => {
        
@@ -443,7 +446,7 @@ if(id){
 
                             </div>
                         </div>
-                        {!state?.oldbuyer_id?.length > 0 && (
+                        
                             <div>
                                 <label htmlFor="bonds" className="block text-xl font-semibold text-[#272226]">Number of Bonds</label>
                                 <div className="mt-4">
@@ -471,7 +474,7 @@ if(id){
                                 </div>
 
                             </div>
-                        )}
+                 
                         <div className="hover:cursor-pointer flex flex-col justify-between mt-4 gap-[10px] xl:flex-row">
                             <div onClick={() => setPopup(!popup)} className="border-[1px] rounded-[10px] w-full xl:w-1/2 text-center text-[20px] border-[#1DBF73] px-[20px] py-[10px] text-[#1DBF73] font-semibold">
                                 Cancel
