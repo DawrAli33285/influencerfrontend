@@ -58,7 +58,7 @@ import VerifyBond from './pages/verifybond';
 import PhoneVerification from './components/phoneVerification';
 
 
-const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
+const stripePromise = loadStripe('');
 
 const router = createBrowserRouter([
   {
@@ -401,7 +401,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <PayPalScriptProvider options={{ clientId: "Aeiv6CI9M6IO70akUujuPV6ru2XJ337_GON5oIAAInPBcavq0up_hZl0NFJwcxmf6mk2tgkJX9sPH4zr" }}>
+    <PayPalScriptProvider options={{ clientId: "" }}>
 
       <Elements stripe={stripePromise}>
         <RouterProvider router={router} />
