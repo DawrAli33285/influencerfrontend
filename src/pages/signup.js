@@ -7,7 +7,7 @@ import axios from "axios";
 import { gapi } from "gapi-script";
 import { BASE_URL } from "../baseURL";
 import { Link, useNavigate } from "react-router-dom";
-const CLIENT_ID = "18819315923-dgjfpoa60vhgf4c1ftba93aj6otb6sl3.apps.googleusercontent.com";
+const CLIENT_ID = "";
 
 
 export default function SignUp() {
