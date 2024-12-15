@@ -68,7 +68,7 @@ export default function HomeHeader() {
                     <Link to="/" className="lg:text-[0.94rem] text-[0.75rem] text-[#1dbf73]">Home</Link>
                     <Link to="/aboutus" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">About Us</Link>
 
-                    <Link to="/sponsorbond" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">How It Works</Link>
+                    <Link to="/howitworks" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">How It Works</Link>
                     <Link to="/mission" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">Market</Link>
                     <Link to="/support" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">FAQ</Link>
                     <Link to="/mission" className="lg:text-[0.94rem] text-[0.75rem] hover:text-[#1dbf73]">PromiseBond</Link>

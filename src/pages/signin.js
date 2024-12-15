@@ -254,7 +254,7 @@ export default function SignIn() {
                 </div>
 
             </div>
-            <div className="md:mt-[15rem]">
+            <div className="md:mt-[15rem] mt-[25%]">
   <HomeFooter />
 </div>
 

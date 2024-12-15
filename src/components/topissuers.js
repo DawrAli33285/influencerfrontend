@@ -102,7 +102,7 @@ export default function TopIssuers({ loading, state, setState }) {
                                                 : img
                                         }
                                         alt="cardimg"
-                                        className="rounded-tl-[20px] items-center justify-center rounded-tr-[20px] w-full h-[250px] object-fill"
+                                        className="rounded-tl-[20px] items-center justify-center rounded-tr-[20px] w-full h-[250px] object-none"
 
                                     />
                             </div>
