@@ -117,7 +117,7 @@ export default function Search() {
         <>
             <ToastContainer containerId={"searchToast"} />
 
-            <div className="w-full">
+            <div className="w-full h-[500px]">
                 <HomeHeader />
                 {loading ? <div className="w-full h-full flex justify-center items-center">
 

@@ -2,7 +2,7 @@ import whychoose from "../whychoose.png"
 import bigball from "../bigball.png"
 export default function WhyChooseUs() {
     return (
-        <div className="w-full bg-white px-[20px] py-[40px] xl:px-[40px] flex flex-col gap-[20px]">
+        <div className="w-full bg-[#1DBF730D] px-[20px] py-[40px] xl:px-[40px] flex flex-col gap-[20px]">
 
             <div className="lg:grid flex flex-col lg:grid-cols-2 w-full mt-[40px] gap-[40px]">
                 <div className="w-full flex flex-col justify-between gap-[20px]">
@@ -17,7 +17,7 @@ export default function WhyChooseUs() {
                             </svg>
                         </div>
                         <div className="flex flex-col justify-between">
-                            <p className="font-bold  lg:text-[1.25rem] text-[1rem]">
+                            <p className="lg:font-bold font-medium  lg:text-[1.25rem] text-[1rem]">
                                 Secure Transactions
                             </p>
                             <p className="lg:text-[0.94rem] text-[0.75rem]">
@@ -44,7 +44,7 @@ export default function WhyChooseUs() {
 
                         </div>
                         <div className="flex flex-col justify-between">
-                            <p className="font-bold  lg:text-[1.25rem] text-[1rem]">
+                            <p className="lg:font-bold font-medium  lg:text-[1.25rem] text-[1rem]">
                                 Social Media Ready
                             </p>
                             <p className="lg:text-[0.94rem] text-[0.75rem]">
@@ -61,7 +61,7 @@ export default function WhyChooseUs() {
 
                         </div>
                         <div className="flex flex-col justify-between">
-                            <p className="font-bold  lg:text-[1.25rem] text-[1rem]">
+                            <p className="lg:font-bold font-medium  lg:text-[1.25rem] text-[1rem]">
                                 Market Opportunities
                             </p>
                             <p className="lg:text-[0.94rem] text-[0.75rem]">
@@ -77,7 +77,7 @@ export default function WhyChooseUs() {
 
                         </div>
                         <div className="flex flex-col justify-between">
-                            <p className="font-bold  lg:text-[1.25rem] text-[1rem]">
+                            <p className="lg:font-bold font-medium lg:text-[1.25rem] text-[1rem]">
                                 Performance Evaluation
                             </p>
                             <p className="lg:text-[0.94rem] text-[0.75rem]">
@@ -93,7 +93,7 @@ export default function WhyChooseUs() {
 
                         </div>
                         <div className="flex flex-col justify-between">
-                            <p className="font-bold  lg:text-[1.25rem] text-[1rem]">
+                            <p className="lg:font-bold font-medium lg:text-[1.25rem] text-[1rem]">
                                 Grow Your Reach
                             </p>
                             <p className="lg:text-[0.94rem] text-[0.75rem]">
@@ -101,8 +101,12 @@ export default function WhyChooseUs() {
                             </p>
                         </div>
                     </div>
-                    <button class="bg-[#1DBF73] px-[20px] py-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white font-bold rounded-[.63rem] w-fit  lg:mx-0 mx-auto">
+                    <button class="bg-black px-[20px] py-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] flex gap-[12px] items-center text-white font-bold rounded-[3.75rem] w-fit  lg:mx-0 mx-auto">
                         Discover All Features
+                        <svg className="md:w-[16px] md:h-[17px] w-[11px] h-[11px]"viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.5553 0.101562H5.77756C5.53189 0.101562 5.3331 0.300354 5.3331 0.546021C5.3331 0.791687 5.53189 0.990479 5.77756 0.990479H14.4824L0.129975 15.3429C-0.0436504 15.5165 -0.0436504 15.7978 0.129975 15.9714C0.216766 16.0581 0.330516 16.1016 0.444225 16.1016C0.557933 16.1016 0.671641 16.0581 0.758475 15.9714L15.1109 1.61894V10.3238C15.1109 10.5695 15.3097 10.7683 15.5553 10.7683C15.801 10.7683 15.9998 10.5695 15.9998 10.3238V0.546021C15.9998 0.300354 15.801 0.101562 15.5553 0.101562Z" fill="white" />
+                        </svg>
+
                     </button>
                 </div>
                 <div className="w-full">

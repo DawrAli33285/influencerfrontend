@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import banner from "../faqbanner.png"
 
 export default function FAQ() {
     const faqs = [
@@ -62,7 +63,15 @@ export default function FAQ() {
     return (
         <div className="w-full">
             <HomeHeader />
-            <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[30px]">
+        
+            <div className="relative w-full h-[300px]">
+                <img src={banner} className="w-full h-full object-cover" alt="img" />
+                <div className="absolute left-0 top-0 w-full h-full flex flex-col justify-center">
+                    <h1 className="lg:text-[2.38rem] text-white font-bold">Find answers to common questions and get helpful information.</h1>
+                    <p className="lg:text-[0.94rem] text-white">Fostering growth, forging relationships, and unlocking potential.</p>
+                </div>
+            </div>
+            {/* <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[30px]">
                 <div className="w-full bg-[#1DBF73] py-[40px]">
                     <h2 className="lg:text-[2.2rem] text-center text-[1.6rem] text-white font-semibold">
                         How can we help?
@@ -89,8 +98,8 @@ export default function FAQ() {
                         </button>
                     </div>
                 </div>
-            </div>
-            <div className="slider w-full py-[40px]">
+            </div> */}
+            {/* <div className="slider w-full py-[40px]">
                 <Swiper
                     spaceBetween={30}
                     slidesPerView={1.5}
@@ -135,7 +144,7 @@ export default function FAQ() {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>
+            </div> */}
             <div className="w-full py-[40px] px-[30px]">
                 {faqs.map((faq, index) => (
                     <div

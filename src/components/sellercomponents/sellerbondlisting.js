@@ -398,9 +398,9 @@ toast.success("Mission request sent",{containerId:"containerB"})
                                               <td className={` border-gray-300 p-[10px] flex justify-center py-[10px] `}>
                        
                                              
-                                           {!bond?.alreadyForExchange?<p onClick={() => {
+                                           <p onClick={() => {
                                                 navigate(`/exchange?id=${bond?._id}`)
-                                            }} target="_blank" className='cursor-pointer border-[1px] rounded-[20px] px-[20px] py-[10px] w-fit text-[#1DBF73]'>Register for Exchange</p>:null}
+                                            }} target="_blank" className='cursor-pointer border-[1px] rounded-[20px] px-[20px] py-[10px] w-fit text-[#1DBF73]'>Register for Exchange</p>
                                             <p onClick={(e) => {
                                                 setCancelledPopup(!cancelledpopup)
                                                 setCancellationState({

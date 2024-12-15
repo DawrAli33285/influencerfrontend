@@ -193,11 +193,11 @@ export default function AdminHeader({ children }) {
                             Dashboard
                         </Link>
                         <Link
-                            to="/sponsorbond"
-                            className={`flex gap-[10px] rounded-[10px] items-center py-[10px] px-[20px] text-[18px] ${location.pathname === '/sponsorbond' ? 'bg-[#f6f6f6] text-[#1DBF73]' : 'text-[#74767E]'}`}
+                            to="/promisebond"
+                            className={`flex gap-[10px] rounded-[10px] items-center py-[10px] px-[20px] text-[18px] ${location.pathname === '/promisebond' ? 'bg-[#f6f6f6] text-[#1DBF73]' : 'text-[#74767E]'}`}
                         >
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.10102 3C10.3636 1.76281 12.0927 1 14 1C17.866 1 21 4.13401 21 8C21 9.90734 20.2372 11.6365 18.9999 12.899M6.5 12L8 11V16.5M6.5 16.5H9.5M15 14C15 17.866 11.866 21 8 21C4.13401 21 1 17.866 1 14C1 10.134 4.13401 7 8 7C11.866 7 15 10.134 15 14Z" stroke={`${location.pathname === '/sponsorbond' ? '#1DBF73' : '#74767E'}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M9.10102 3C10.3636 1.76281 12.0927 1 14 1C17.866 1 21 4.13401 21 8C21 9.90734 20.2372 11.6365 18.9999 12.899M6.5 12L8 11V16.5M6.5 16.5H9.5M15 14C15 17.866 11.866 21 8 21C4.13401 21 1 17.866 1 14C1 10.134 4.13401 7 8 7C11.866 7 15 10.134 15 14Z" stroke={`${location.pathname === '/promisebond' ? '#1DBF73' : '#74767E'}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
                             Promise Bond
@@ -471,12 +471,12 @@ export default function AdminHeader({ children }) {
                                     Dashboard
                                 </Link>
                                 <Link
-                                    to="/sponsorbond"
+                                    to="/promisebond"
                                     onClick={() => setMenuPopup(!menupopup)}
-                                    className={`flex gap-[10px] rounded-[10px] items-center py-[10px] px-[20px] text-[18px] ${location.pathname === '/sponsorbond' ? 'bg-[#f6f6f6] text-[#1DBF73]' : 'text-[#74767E]'}`}
+                                    className={`flex gap-[10px] rounded-[10px] items-center py-[10px] px-[20px] text-[18px] ${location.pathname === '/promisebond' ? 'bg-[#f6f6f6] text-[#1DBF73]' : 'text-[#74767E]'}`}
                                 >
                                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9.10102 3C10.3636 1.76281 12.0927 1 14 1C17.866 1 21 4.13401 21 8C21 9.90734 20.2372 11.6365 18.9999 12.899M6.5 12L8 11V16.5M6.5 16.5H9.5M15 14C15 17.866 11.866 21 8 21C4.13401 21 1 17.866 1 14C1 10.134 4.13401 7 8 7C11.866 7 15 10.134 15 14Z" stroke={`${location.pathname === '/sponsorbond' ? '#1DBF73' : '#74767E'}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.10102 3C10.3636 1.76281 12.0927 1 14 1C17.866 1 21 4.13401 21 8C21 9.90734 20.2372 11.6365 18.9999 12.899M6.5 12L8 11V16.5M6.5 16.5H9.5M15 14C15 17.866 11.866 21 8 21C4.13401 21 1 17.866 1 14C1 10.134 4.13401 7 8 7C11.866 7 15 10.134 15 14Z" stroke={`${location.pathname === '/promisebond' ? '#1DBF73' : '#74767E'}`} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
 
                                    Promise Bond

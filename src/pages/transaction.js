@@ -261,6 +261,8 @@ toast.error("Client error please try again",{containerId:"transaction"})
                 }}
                 onApprove={async (data, actions) => {
                     return actions.order.capture().then(async (details) => {
+                        const saleId = details?.purchase_units?.[0]?.payments?.captures?.[0]?.id;
+                    
                        try{
                         console.log("Transaction details:", details);
                         let params=new URLSearchParams(location.search)
@@ -270,6 +272,7 @@ toast.error("Client error please try again",{containerId:"transaction"})
                         amount:details.purchase_units[0].amount.value,
                         number_of_bonds:state?.offer?.number_of_bonds,
                         paypal:details?.payer?.email_address,
+                        saleId,
                         bond_id,
                         offer_id:state?.offer?._id
                      }

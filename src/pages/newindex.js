@@ -56,30 +56,42 @@ export default function NewIndex() {
                 <div className="max-w-[1440px] mx-auto">
                     <HowDoesItWork />
                     <WhyChooseUs />
-                    <ExploreBond loading={loading} state={state} setState={setState} />
                     <TopIssuers loading={loading} state={state} setState={setState} />
-                    <ActiveBids loading={loading} state={state} setState={setState} />
-                    <Reviews />
+                    <ExploreBond loading={loading} state={state} setState={setState} />
+                    <div className="w-full bg-[#1dbf7321] lg:px-[6rem]  mx-auto lg:mt-[4rem] pt-[30px] px-[30px] lg:h-[300px]">
+                        <div className="flex lg:flex-row flex-col lg:gap-[40px] gap-[20px]  mx-auto h-full">
+                            <div className="flex lg:w-[50%] justify-center w-full flex-col gap-[20px] h-full">
+                                <div>
+                                    <h2 className="lg:text-[2rem] text-[1.50rem] font-medium  lg:text-left text-center lg:font-bold">Fullfill your promises, share</h2>
+                                    <h2 className="lg:text-[2rem] text-[1.50rem] font-medium  lg:text-left text-center lg:font-bold">your progress, and level up</h2>
 
-                </div>
-                <div className="w-full bg-[#1dbf735e] lg:p-[40px]  mx-auto lg:mt-[9rem] px-[20px] pt-[20px]">
-                    <div className="flex lg:flex-row flex-col lg:gap-[40px] gap-[20px] max-w-[980px] mx-auto">
-                        <div className="flex lg:w-[50%] justify-center w-full flex-col gap-[20px]">
-                            <div>
-                                <h2 className="lg:text-[2.38rem] text-[1.50rem]  font-bold">Fullfill your promises, share</h2>
-                                <h2 className="lg:text-[2.38rem] text-[1.50rem]  font-bold">your progress, and level up</h2>
-                                <p className="lg:text-[0.94rem] text-[0.75rem] mt-[10px]">Learn more about promise bonds</p>
-
+                                </div>
+                                <div className="flex gap-[10px] justify-center flex-row">
+                                    <Link to="/search?filter=bond&search=" className="bg-black border border-black px-[20px] py-[10px] xl:py-[11px] lg:text-[0.94rem] text-[0.75rem] flex gap-[12px] items-center text-white font-bold rounded-[3.75rem] w-fit">
+                                        Find Bonds
+                                        <svg className="md:w-[16px] md:h-[17px] w-[11px] h-[11px]" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15.5553 0.101562H5.77756C5.53189 0.101562 5.3331 0.300354 5.3331 0.546021C5.3331 0.791687 5.53189 0.990479 5.77756 0.990479H14.4824L0.129975 15.3429C-0.0436504 15.5165 -0.0436504 15.7978 0.129975 15.9714C0.216766 16.0581 0.330516 16.1016 0.444225 16.1016C0.557933 16.1016 0.671641 16.0581 0.758475 15.9714L15.1109 1.61894V10.3238C15.1109 10.5695 15.3097 10.7683 15.5553 10.7683C15.801 10.7683 15.9998 10.5695 15.9998 10.3238V0.546021C15.9998 0.300354 15.801 0.101562 15.5553 0.101562Z" fill="white" />
+                                        </svg>
+                                    </Link>
+                                    <Link to="/signup" className="bg-white border border-black px-[20px] py-[10px] xl:py-[11px] lg:text-[0.94rem] text-[0.75rem] flex gap-[12px] items-center text-black font-bold rounded-[3.75rem] w-fit">
+                                        Find Talent
+                                        <svg className="md:w-[16px] md:h-[17px] w-[11px] h-[11px]" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15.5553 0.101562H5.77756C5.53189 0.101562 5.3331 0.300354 5.3331 0.546021C5.3331 0.791687 5.53189 0.990479 5.77756 0.990479H14.4824L0.129975 15.3429C-0.0436504 15.5165 -0.0436504 15.7978 0.129975 15.9714C0.216766 16.0581 0.330516 16.1016 0.444225 16.1016C0.557933 16.1016 0.671641 16.0581 0.758475 15.9714L15.1109 1.61894V10.3238C15.1109 10.5695 15.3097 10.7683 15.5553 10.7683C15.801 10.7683 15.9998 10.5695 15.9998 10.3238V0.546021C15.9998 0.300354 15.801 0.101562 15.5553 0.101562Z" fill="black" />
+                                        </svg>
+                                    </Link>
+                                </div>
                             </div>
-                            <Link to="/signup" class="bg-[#1DBF73] px-[20px] py-[10px] xl:py-[10px] lg:text-[0.94rem] text-[0.75rem] text-white font-bold  w-fit ">
-                                Get Started
-                            </Link>
-                        </div>
-                        <div className="lg:w-[50%] w-full lg:mt-[-11rem]">
-                            <img src={bsns} className="w-full" />
+                            <div className="lg:w-[50%] w-full h-full">
+                                <img src={bsns} className="w-full lg:max-w-[292px] h-full object-cover" />
+                            </div>
                         </div>
                     </div>
+                    <ActiveBids loading={loading} state={state} setState={setState} />
+
+
+
                 </div>
+                <Reviews />
                 <HomeFooter />
             </div>
         </>

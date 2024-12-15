@@ -4,6 +4,10 @@ import { BASE_URL } from "../baseURL";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import banner from "../faqbanner.png"
+import mblbanner from "../faqbannermbl.png"
+import HomeHeader from "../components/homeheader";
+import HomeFooter from "../components/homefooter";
 
 export default function Verification() {
     const { state } = useLocation();
@@ -15,9 +19,9 @@ export default function Verification() {
     const [userType, setUserType] = useState(null);
     const [followers, setFollowers] = useState(false)
     const [emailVerification, setEmailVerification] = useState(false);
-    const [followersCount,setFollowersCount]=useState(0)
-    const [token,setToken]=useState("")
-    
+    const [followersCount, setFollowersCount] = useState(0)
+    const [token, setToken] = useState("")
+
     const handleUserSelection = (type) => {
         setUserType(type);
         setShowType(true);
@@ -64,14 +68,18 @@ export default function Verification() {
     });
     const [emailSent, setEmailSent] = useState(false);
     const [mobileSent, setMobileSent] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const handleChange = (e, index) => {
+        const { value } = e.target;
+    
+        const updatedCode = verificationData.emailCode.split("");
+        updatedCode[index] = value.slice(-1); 
+    
         setVerificationData({
-            ...verificationData,
-            [name]: value,
+          ...verificationData,
+          emailCode: updatedCode.join(""),
         });
-    };
+       
+      };
 
     const handleSendEmailVerification = async () => {
         setEmailSent(true);
@@ -138,25 +146,25 @@ export default function Verification() {
 
             console.log(response.data)
             console.log("RESPONSE")
-           
+
             if (response.data.token) {
 
                 localStorage.setItem('token', response.data.token)
-                localStorage.setItem("buyerToken",response.data.buyertoken)
+                localStorage.setItem("buyerToken", response.data.buyertoken)
                 setToken(response.data.token)
                 // navigate('/dashboard')
-               
+
             }
             setEmailVerification(response.data.user.is_email_verified);
             setPhoneVerification(true);
-            if(emailVerification){
-                
+            if (emailVerification) {
+
                 setShowUserType(!showtype);
             }
-            if(!response.data.questions){
-               
-            }else{
-                navigate('/buyerdashboard') 
+            if (!response.data.questions) {
+
+            } else {
+                navigate('/buyerdashboard')
             }
 
         } catch (e) {
@@ -169,72 +177,82 @@ export default function Verification() {
     };
 
 
-const answerQuestions=async()=>{
-    try{
-        if(followersCount.length==0 || followersCount==0){
-toast.error("Please enter valid followers counts",{containerId:"verificationPage"})
-return;
+    const answerQuestions = async () => {
+        try {
+            if (followersCount.length == 0 || followersCount == 0) {
+                toast.error("Please enter valid followers counts", { containerId: "verificationPage" })
+                return;
+            }
+            let data = {
+                userType: userType,
+                socialMedia: selectedPlatform,
+                no_of_followers: followersCount
+            }
+
+            let headers = {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            }
+
+            let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
+            navigate('/buyerdashboard')
+        } catch (e) {
+            if (e?.response?.data?.error) {
+                toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
+            } else {
+                toast.error("Something went wrong", { containerId: "verificationPage" })
+            }
         }
-        let data={
-            userType:userType,
-            socialMedia:selectedPlatform,
-            no_of_followers:followersCount
+    }
+
+    const answerBuyerQuestion = async (type) => {
+        try {
+            let data = {
+                userType: type,
+            }
+
+            let headers = {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            }
+
+            let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
+            navigate('/buyerdashboard')
+        } catch (e) {
+            if (e?.response?.data?.error) {
+                toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
+            } else {
+                toast.error("Something went wrong", { containerId: "verificationPage" })
+            }
         }
-
-let headers={
-    headers:{
-        authorization:`Bearer ${token}`
     }
-}
-
-let response=await axios.post(`${BASE_URL}/answerQuestions`,data,headers)
-navigate('/buyerdashboard')
-    }catch(e){
-if(e?.response?.data?.error){
-    toast.error(e?.response?.data?.error,{containerId:"verificationPage"})
-}else{
-    toast.error("Something went wrong",{containerId:"verificationPage"})
-}
-    }
-}
-
-const answerBuyerQuestion=async(type)=>{
-    try{
-        let data={
-            userType:type,
-        }
-
-let headers={
-    headers:{
-        authorization:`Bearer ${token}`
-    }
-}
-
-let response=await axios.post(`${BASE_URL}/answerQuestions`,data,headers)
-navigate('/buyerdashboard')
-    }catch(e){
-if(e?.response?.data?.error){
-    toast.error(e?.response?.data?.error,{containerId:"verificationPage"})
-}else{
-    toast.error("Something went wrong",{containerId:"verificationPage"})
-}
-    }
-}
 
 
     return (
         <>
+            <HomeHeader />
             <ToastContainer limit={1} containerId="verificationPage" />
+            <div className="relative flex items-center justify-center w-full h-[300px]">
+  <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
+  <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
+  <div className="absolute lg:px-0 px-[1rem] gap-[20px] left-0 lg:pl-[10rem] top-0 w-full h-full flex flex-col lg:items-start items-center justify-center">
+                    <h1 className="lg:text-[2.38rem] text-[1.9rem] md:text-start text-center text-white font-bold">Verify your email to secure your account and complete setup.</h1>
+                    <p className="lg:text-[0.94rem] text-[.75rem] text-white">Fostering growth, forging relationships, and unlocking potential.</p>
+                </div>
+</div>
+           
             <div className="relative w-full h-full">
-                <div className="w-full max-w-md mx-auto mt-20 p-6 border rounded-lg shadow-lg">
+                <div className="w-full max-w-[700px] mx-auto mt-20 p-6 border border-[#E9E9E9] rounded-lg shadow-lg">
                     {
                         followers ? <div className="flex flex-col gap-[20px]">
                             <h2 className="text-center text-2xl font-semibold mb-4">How Many Followers/Subscribers You have</h2>
                             <input
-                            value={followersCount}
-                            onChange={(e)=>{
-                                setFollowersCount(e.target.value)
-                            }}
+                                value={followersCount}
+                                onChange={(e) => {
+                                    setFollowersCount(e.target.value)
+                                }}
                                 type="number"
                                 className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
                                 placeholder="Followers/Subscribers"
@@ -283,7 +301,7 @@ if(e?.response?.data?.error){
                                                     <h2 className="text-center text-2xl font-semibold mb-4">Are you a Buyer or an Issuer?</h2>
                                                     <div className="flex flex-row justify-between gap-4">
                                                         <div
-                                                            onClick={() =>  answerBuyerQuestion('Buyer')}
+                                                            onClick={() => answerBuyerQuestion('Buyer')}
                                                             className={`flex items-center justify-center px-6 py-4 text-lg font-medium border rounded-md cursor-pointer transition ${userType === 'Buyer' ? 'bg-[#1DBF73] text-white border-transparent' : 'border-gray-300'
                                                                 } hover:bg-[#1DBF73] hover:text-white`}
                                                         >
@@ -305,16 +323,17 @@ if(e?.response?.data?.error){
                                     </div>
                                     :
                                     <div>
-                                        <h2 className="text-center text-2xl font-semibold mb-4">Verification</h2>
+                                        <h2 className="text-center lg:text-[2.4rem] text-[1.5rem] font-semibold ">Verify Your Email Address</h2>
+                                        <p className="lg:text-[.975rem] text-[.75rem] mb-[4rem] text-center mt-[20px]">We’ve send the verification OTP to provided email.</p>
 
-                                      
+
                                         <div className="mb-6 flex flex-col gap-[20px] items-center">
-                                            <svg width="68" height="54" viewBox="0 0 68 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.33268 53.6654C5.49935 53.6654 3.9299 53.0126 2.62435 51.707C1.31879 50.4015 0.666016 48.832 0.666016 46.9987V6.9987C0.666016 5.16536 1.31879 3.59592 2.62435 2.29036C3.9299 0.984809 5.49935 0.332031 7.33268 0.332031H60.666C62.4993 0.332031 64.0688 0.984809 65.3743 2.29036C66.6799 3.59592 67.3327 5.16536 67.3327 6.9987V46.9987C67.3327 48.832 66.6799 50.4015 65.3743 51.707C64.0688 53.0126 62.4993 53.6654 60.666 53.6654H7.33268ZM33.9993 29.7487C34.2771 29.7487 34.5688 29.707 34.8743 29.6237C35.1799 29.5404 35.4716 29.4154 35.7493 29.2487L59.3327 14.4987C59.7771 14.2209 60.1105 13.8737 60.3327 13.457C60.5549 13.0404 60.666 12.582 60.666 12.082C60.666 10.9709 60.1938 10.1376 59.2493 9.58203C58.3049 9.02647 57.3327 9.05425 56.3327 9.66536L33.9993 23.6654L11.666 9.66536C10.666 9.05425 9.69379 9.04036 8.74935 9.6237C7.8049 10.207 7.33268 11.0265 7.33268 12.082C7.33268 12.6376 7.44379 13.1237 7.66602 13.5404C7.88824 13.957 8.22157 14.2765 8.66602 14.4987L32.2493 29.2487C32.5271 29.4154 32.8188 29.5404 33.1243 29.6237C33.4299 29.707 33.7216 29.7487 33.9993 29.7487Z" fill="#1E1E1E" />
+                                            <svg className="w-[110px] h-[75px] md:w-[146px] md:h-[100px]" width="147" height="100" viewBox="0 0 147 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M121.101 19.4375L73.5024 61.3815L25.8933 19.4369C23.9976 17.7668 21.108 17.9503 19.4385 19.8448C17.7696 21.7399 17.9513 24.6295 19.847 26.2996L70.4799 70.9082C71.3439 71.6692 72.4238 72.0496 73.5031 72.0496C74.5823 72.0496 75.6628 71.6692 76.5268 70.9076L127.149 26.299C129.044 24.6295 129.226 21.7393 127.557 19.8442C125.886 17.9509 122.997 17.768 121.101 19.4375Z" fill="#1DBF73" />
+                                                <path d="M133.267 0H13.7193C6.1548 0 0 6.15419 0 13.7193V86.2807C0 93.8458 6.1548 100 13.7193 100H133.267C140.832 100 146.987 93.8458 146.987 86.2807V13.7193C146.987 6.1548 140.832 0 133.267 0ZM137.84 86.2807C137.84 88.802 135.789 90.8538 133.267 90.8538H13.7193C11.1974 90.8538 9.14623 88.802 9.14623 86.2807V13.7193C9.14623 11.198 11.1974 9.14623 13.7193 9.14623H133.267C135.789 9.14623 137.84 11.198 137.84 13.7193V86.2807Z" fill="#1DBF73" />
                                             </svg>
 
-                                            <label htmlFor="email" className="block text-lg font-medium">Verify Your Email</label>
-                                            <p className="text-base text-[#1C1C1CA3]">We’ve send the verification OTP to provided email.</p>
+
                                             {emailVerification ? (
                                                 <svg width={50} height={50} fill="#30db24" viewBox="0 0 24 24">
                                                     <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm5.676,8.237-6,5.5a1,1,0,0,1-1.383-.03l-3-3a1,1,0,1,1,1.414-1.414l2.323,2.323,5.294-4.853a1,1,0,1,1,1.352,1.474Z"></path>
@@ -322,25 +341,52 @@ if(e?.response?.data?.error){
                                             ) : (
                                                 <>
                                                     {!emailSent && (
-                                                        <button onClick={handleSendEmailVerification}
-                                                            className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
+                                                      <>
+<p >
+Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
+    
+    Resend
+    </a>
+</p>
+                                                      <button onClick={handleSendEmailVerification}
+                                                            className="w-full md:h-[60px] bg-black rounded-[20px] lg:text-[.975rem] text-[.75rem] text-white font-bold py-[10px] px-4  mt-2">
                                                             Send Email Verification
                                                         </button>
+                                                        
+                                                                </>
                                                     )}
                                                     {emailSent && (
                                                         <>
-                                                            <input type="text" name="emailCode" placeholder="Enter email verification code"
-                                                                value={verificationData.emailCode} onChange={handleChange}
-                                                                className="mt-4 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+ <div className="flex justify-center gap-2 mt-4">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <input
+          key={index}
+          type="text"
+          maxLength={1}
+          className="md:w-[100px] md:h-[45px] w-[40px] h-[30px] text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1DBF73] focus:border-[#1DBF73]"
+          value={verificationData.emailCode[index] || ""}
+          onChange={(e) => handleChange(e, index)}
+        />
+      ))}
+    </div>
+
+
+                                                           <p >
+Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
+    
+    Resend
+    </a>
+</p>
                                                             <button onClick={handleEmailVerify}
-                                                                className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
+                                                                className="w-full md:h-[60px] bg-black rounded-[20px] lg:text-[.975rem] text-[.75rem] text-white font-bold py-[10px] px-4  mt-2">
                                                                 Verify Email
                                                             </button>
+                                                            
                                                         </>
                                                     )}
-                                                    <button onClick={handleSendEmailVerification} className="w-full bg-[#1DBF73] rounded-[20px] text-white font-bold py-2 px-4  mt-2 hover:bg-[#1DBF73]">
-                                                                Send Code Again
-                                                            </button>
+                                                    {/* <button onClick={handleSendEmailVerification} className="w-full bg-black lg:text-[.975rem] text-[.75rem] rounded-[20px] text-white font-bold py-[10px] px-4  mt-2 ">
+                                                        Send Code Again
+                                                    </button> */}
                                                 </>
                                             )}
                                             {/* <p onClick={() => getVerificationData(true)} className=" cursor-pointer">Skip</p> */}
@@ -353,6 +399,7 @@ if(e?.response?.data?.error){
 
                 </div>
             </div>
+            <HomeFooter />
         </>
     );
 }

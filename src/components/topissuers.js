@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import img from "../explore4.png";
 import scnd from "../imagerst.png"
-import { Swiper, SwiperSlide } from 'swiper/react';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -13,10 +13,10 @@ import { useState } from "react";
 export default function TopIssuers({ loading, state, setState }) {
     const [selectedIssuer, setSelectedIssuer] = useState("default");
 
-    const issuers = state.issuers.map((val,i)=>{
-return val.user_id.username
-    })   
- 
+    const issuers = state.issuers.map((val, i) => {
+        return val.user_id.username
+    })
+
 
     const handleIssuerChange = (event) => {
         setSelectedIssuer(event.target.value);
@@ -59,13 +59,24 @@ return val.user_id.username
     const filteredIssuers = filterIssuers();
 
     return (
-        <div className="w-full flex flex-col gap-[40px] px-[20px] py-[40px] xl:px-[40px]">
-            <div className="flex items-center gap-[10px] flex-col">
-                <p className="font-bold xl:text-[2.38rem] text-[1.50rem]">
-                    Meet Our  <span className="font-normal text-[#1DBF73]">Top Issuers.</span>
-                </p>
-                <p className="lg:text-[0.94rem] text-[0.75rem] text-center lg:w-[70%] mx-auto">Discover the trusted issuers that power our platform, offering unmatched reliability and experties.Explore their unique features and benefits to find the perfect fit for your need</p>
-                
+        <div className="w-full flex flex-col gap-[45px] px-[20px] py-[40px] xl:px-[40px]">
+            <div className="flex justify-between items-center">
+                <div className="flex  flex-col">
+                    <p className="font-bold xl:text-[2.38rem] text-[1.50rem]">
+                        Meet Our  <span className=" text-[#1DBF73]">Top Issuers.</span>
+                    </p>
+                    <p className="lg:text-[0.94rem] text-[0.75rem] ">Get some Inspirations from 1800+ skills</p>
+
+                </div>
+                <div className="lg:block hidden">
+                    <Link to="/search?filter=issuer&search=" className="bg-white border border-black px-[20px] py-[10px] xl:py-[11px] lg:text-[0.94rem] text-[0.75rem] flex gap-[12px] items-center text-black font-bold rounded-[3.75rem] w-fit  lg:mx-0 mx-auto">
+                        View All Issuers
+                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.5553 0.101562H5.77756C5.53189 0.101562 5.3331 0.300354 5.3331 0.546021C5.3331 0.791687 5.53189 0.990479 5.77756 0.990479H14.4824L0.129975 15.3429C-0.0436504 15.5165 -0.0436504 15.7978 0.129975 15.9714C0.216766 16.0581 0.330516 16.1016 0.444225 16.1016C0.557933 16.1016 0.671641 16.0581 0.758475 15.9714L15.1109 1.61894V10.3238C15.1109 10.5695 15.3097 10.7683 15.5553 10.7683C15.801 10.7683 15.9998 10.5695 15.9998 10.3238V0.546021C15.9998 0.300354 15.801 0.101562 15.5553 0.101562Z" fill="black" />
+                        </svg>
+
+                    </Link>
+                </div>
             </div>
             <div>
                 {loading ? (
@@ -77,71 +88,54 @@ return val.user_id.username
                         <p>No record found</p>
                     </div>
                 ) : (
-                    <div className="relative">
-                        <Swiper
-                            navigation={{
-                                nextEl: ".custom-next",
-                                prevEl: ".custom-prev",
-                            }}
+                    <div className="relative grid xl:grid-cols-4 gap-[10px] lg:grid-cols-3 grid-cols-1">
 
-                            modules={[Navigation]}
-                            className="mySwiper"
-                            
-                            spaceBetween={20}
-                            breakpoints={{
-                                1024: {
-                                    slidesPerView: 4,
-                                },
-                               
-                                640: {
-                                    slidesPerView: 1,
-                                },
-                            }}
-                        >
-                            {filteredIssuers?.map((val) => (
-                                <SwiperSlide>
-                                    <div key={val?._id} className="p-2">
-                                        <div className="bg-white flex flex-col gap-[20px]  rounded-[20px] relative">
-                                            <img
-                                                src={
-                                                    val?.user_id?.avatar
-                                                        ? val.user_id.avatar.replace("http://localhost:5000", BASE_URL)
-                                                        : img
-                                                }
-                                                alt="cardimg"
-                                                className="rounded-[10px] w-[342px] h-[489px] object-cover" 
-                                                
-                                            />
-                                            <div className="absolute bg-[#0000003d] p-[20px] w-full h-full flex flex-col gap-[20px] rounded-[20px] justify-end">
-                                                <p className="text-white lg:text-[1.25rem] text-[1rem] font-bold">{val?.user_id?.username}</p>
-                                                <p className="lg:text-[0.94rem] text-[0.75rem] font-bold text-[#74767E]">
-                                                    {val?.bonds[0]?.missions[0]?.task_type}
-                                                </p>
-                                                <span className="lg:text-[1.25rem] text-[1rem] font-bold text-base text-white">
-                                                    {val?.bonds?.length} Bonds Issued | Level 13
-                                                </span>
-                                            </div>
-                                        </div>
+                        {filteredIssuers?.map((val) => (
+
+                            <div key={val?._id} className="p-2">
+                                <div className="bg-[#00D5FF12] flex flex-col gap-[20px] h-[405px]  rounded-[20px] relative">
+                         <div className="w-full flex justify-center items-center">
+                         <img
+                                        src={
+                                            val?.user_id?.avatar
+                                                ? val.user_id.avatar.replace("http://localhost:5000", BASE_URL)
+                                                : img
+                                        }
+                                        alt="cardimg"
+                                        className="rounded-tl-[20px] items-center justify-center rounded-tr-[20px] w-full h-[250px] object-fill"
+
+                                    />
+                            </div>
+                                    <div className="px-[30px] shadow-lg w-full h-full pb-[20px] flex flex-col gap-[10px] rounded-bl-[20px] rounded-br-[20px] lg:justify-end">
+                                        <p className="text-black lg:text-[1.063rem] text-[1.063rem] font-semibold">{val?.user_id?.username}</p>
+                                        <p className="lg:text-[0.88rem] text-[0.88rem] font-[400] text-[#74767E] overflow-hidden text-ellipsis whitespace-nowrap lg:whitespace-normal lg:line-clamp-2"
+                                        >
+                                            {val?.bonds[0]?.missions[0]?.task_type}
+                                            Helping small businesses grow with my expertise in design.
+
+                                        </p>
+                                        <span className="lg:text-[1.13rem] text-[1.063rem] font-[500] text-base text-black">
+                                            {val?.bonds?.length} Bonds Issued | Level 13
+                                        </span>
                                     </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                        <div className="absolute top-1/2 -left-6 transform -translate-y-1/2 bg-white text-black rounded-full w-10 h-10 flex items-center justify-center shadow cursor-pointer custom-prev z-10">
-                            <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0.818725 8.00232L7.17851 14.3445C7.38688 14.5522 7.72424 14.5518 7.93226 14.3434C8.14012 14.1351 8.13958 13.7975 7.93118 13.5897L1.94995 7.62498L7.9314 1.6603C8.13977 1.45244 8.14031 1.11511 7.93247 0.906712C7.82819 0.802244 7.69158 0.75001 7.55497 0.75001C7.4187 0.75001 7.28263 0.801895 7.17854 0.905638L0.818725 7.24766C0.718367 7.34751 0.662051 7.4834 0.662051 7.62498C0.662051 7.76656 0.718528 7.90229 0.818725 8.00232Z" fill="#051036" />
-                            </svg>
+                                </div>
+                            </div>
 
-                        </div>
-                        <div className="absolute top-1/2 -right-6 transform -translate-y-1/2 bg-white text-black rounded-full w-10 h-10 flex items-center justify-center shadow cursor-pointer custom-next z-10">
-                            <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.18128 7.24768L1.82149 0.90549C1.61312 0.697817 1.27576 0.698166 1.06774 0.906564C0.859882 1.11493 0.860419 1.45248 1.06882 1.66031L7.05005 7.62502L1.0686 13.5897C0.860231 13.7976 0.859694 14.1349 1.06753 14.3433C1.17181 14.4478 1.30842 14.5 1.44503 14.5C1.5813 14.5 1.71737 14.4481 1.82147 14.3444L8.18128 8.00234C8.28163 7.90249 8.33795 7.7666 8.33795 7.62502C8.33795 7.48344 8.28147 7.34771 8.18128 7.24768Z" fill="#051036" />
-                            </svg>
+                        ))}
 
-                        </div>
+
                     </div>
                 )}
             </div>
-            <Link to="/search?filter=issuer&search=" className="text-[#1DBF73] border-[#1DBF73] bg-[#1dbf7327] border rounded-[8px] w-fit px-[20px] py-[10px] mx-auto font-bold lg:text-[0.94rem] text-[0.75rem]">View All Issuers</Link>
+            <div className="w-full mx-auto lg:hidden block">
+                <Link to="/search?filter=issuer&search=" className="bg-white border border-black px-[20px] py-[10px] xl:py-[11px] lg:text-[0.94rem] text-[0.75rem] flex gap-[12px] items-center text-black font-bold rounded-[3.75rem] w-fit  lg:mx-0 mx-auto">
+                    View All Issuers
+                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.5553 0.101562H5.77756C5.53189 0.101562 5.3331 0.300354 5.3331 0.546021C5.3331 0.791687 5.53189 0.990479 5.77756 0.990479H14.4824L0.129975 15.3429C-0.0436504 15.5165 -0.0436504 15.7978 0.129975 15.9714C0.216766 16.0581 0.330516 16.1016 0.444225 16.1016C0.557933 16.1016 0.671641 16.0581 0.758475 15.9714L15.1109 1.61894V10.3238C15.1109 10.5695 15.3097 10.7683 15.5553 10.7683C15.801 10.7683 15.9998 10.5695 15.9998 10.3238V0.546021C15.9998 0.300354 15.801 0.101562 15.5553 0.101562Z" fill="black" />
+                    </svg>
+
+                </Link>
+            </div>
 
         </div>
     )
