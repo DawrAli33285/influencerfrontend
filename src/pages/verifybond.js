@@ -65,7 +65,7 @@ export default function VerifyBond() {
             let response=await axios.post(`${BASE_URL}/verifyBond`,codeVerificationData,headers)
             toast.success("Bond verified sucessfully",{containerId:"bondVerificationPage"})
             setTimeout(()=>{
-                navigate('/sponsorbond')
+                navigate('/promisebond')
             },500)
 
         }catch(e){

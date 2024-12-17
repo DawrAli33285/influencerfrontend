@@ -307,8 +307,8 @@ export default function SellerAdminHeader({ children }) {
                         </Link>
                     </div>
                 </div>
-                <div className="xl:w-[80%] w-full gap-[20px] px-[20px] py-[40px] flex flex-col">
-                    <div className="w-full rounded-[10px] px-[20px] py-[20px] flex justify-between items-center bg-white">
+                <div className="xl:w-[80%] bg-[#f2f2f2]  w-full gap-[20px] px-[20px] py-[40px] flex flex-col">
+                    <div className="w-full  rounded-[10px] px-[20px] py-[20px] flex justify-between items-center bg-white">
                         <div className="xl:hidden block hover:cursor-pointer" onClick={() => setMenuPopup(!menupopup)}>
                             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 12H20" stroke="#2563EB" stroke-width="2" stroke-linecap="round"></path> <path d="M5 17H20" stroke="#2563EB" stroke-width="2" stroke-linecap="round"></path> <path d="M5 7H20" stroke="#2563EB" stroke-width="2" stroke-linecap="round"></path> </g></svg>
                         </div>

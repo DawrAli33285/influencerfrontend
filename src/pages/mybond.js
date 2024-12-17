@@ -3,8 +3,8 @@ import SellerBondListingTable from "../components/sellercomponents/sellerbondlis
 
 export default function MyBond() {
     return (
-        <div className="h-[130vh] ">
-            <div className="w-full max-h-[900px]  overflow-y-auto overflow-x-auto bg-white rounded-[20px] mt-[20px] px-[20px] py-[40px]">
+        <div className="h-[100vh] ">
+            <div className="w-full  overflow-x-auto bg-[#f2f2f2] rounded-[20px] mt-[20px] px-[20px] lg:py-[40px]">
                 <SellerBondListingTable />
             </div>
         </div>
