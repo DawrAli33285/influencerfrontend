@@ -4,38 +4,38 @@ export default function Referrals() {
     const[promopopup,setPromoPopup] = useState(false)
     return (
         <div className="w-full flex flex-col gap-[20px]">
-            <div className="px-[30px] py-[40px]">
-                <div className="bg-[#1DBF73] flex flex-col lg:flex-row lg:justify-between rounded-[20px] px-[20px] py-[30px]">
+            <div className="lg:px-[30px] ">
+                <div className="flex flex-col lg:flex-row gap-[20px] lg:justify-between rounded-[20px] px-[20px] py-[30px]">
                     <div className="flex flex-col">
-                        <h2 className="text-white text-[1rem] font-bold">Referrals</h2>
-                        <p className="text-white text-[.8rem]">Share the referral code and invite new user, This will also increaser your account level.</p>
+                        <h2 className="lg:text-[2rem] text-[1.5rem] font-bold">Referrals</h2>
+                        <p className="lg:text-[0.94rem] text-[0.75rem]">Share the referral code and invite new user, This will also increaser your account level.</p>
                     </div>
-                    <div className="flex flex-col lg:flex-row gap-[20px] items-center">
-                        <h2 className="text-white text-[1rem] font-bold">Current Level: 2</h2>
-                        <button onClick={()=>{setPromoPopup(!promopopup)}} class="bg-black px-[20px] py-[10px] xl:text-[1rem] text-[.8rem] text-white font-bold rounded-[1.4rem]">
+                    <div className="flex flex-col w-full lg:w-fit lg:flex-row lg:gap-[20px] gap-[10px] items-center">
+                        <h2 className="text-white lg:text-[0.94rem] text-[0.75rem]  px-[20px] py-[10px] bg-[#1DBF73] text-center font-medium rounded-[60px] w-full lg:w-fit ">Current Level: 2</h2>
+                        <button onClick={()=>{setPromoPopup(!promopopup)}} class="bg-black px-[20px] py-[10px] lg:text-[0.94rem] text-[0.75rem] w-full lg:w-fit text-white font-medium rounded-[60px]">
                             Refer New User
                         </button>
                     </div>
                 </div>
             </div>
-            <div className="px-[30px] py-[40px]">
-                <div className="flex justify-between items-center pb-[20px] border-b border-b-[#1C1C1C52]">
-                    <h1 className="font-bold text-[1rem]">Name</h1>
-                    <h1 className="font-bold text-[1rem]">Date</h1>
+            <div className="lg:px-[30px] bg-white ">
+                <div className="flex justify-between bg-[#1DBF7314] items-center py-[20px] px-[30px] border-b border-b-[#1C1C1C52]">
+                    <h1 className="font-medium text-[1.064rem]">Name</h1>
+                    <h1 className="font-medium text-[1.064rem]">Date</h1>
                 </div>
-                <div className="flex flex-col gap-[20px] mt-[20px]">
-                    <div className="flex justify-between  items-center">
+                <div className="flex flex-col gap-[20px] px-[30px] mt-[20px]">
+                    <div className="flex justify-between  items-center border-b border-[#E9E9E9] py-[20px]">
                         <div className="flex  items-center  gap-[6px]">
-                            <div className="rounded-[100%] w-[80px] h-[80px]">
+                            <div className="rounded-[100%] w-[32px] h-[32px]">
                                 <img src={avatar} alt="img" className="w-full h-full object-cover rounded-[100%]" />
                             </div>
                             <div className="flex items-center">
 
-                                <h1 className="text-[20px] flex items-center font-semibold">Daniels</h1>
+                                <h1 className="lg:text-[0.94rem] text-[0.75rem] flex items-center">Daniels</h1>
 
                             </div>
                         </div>
-                        <h1 className="font-bold text-[1rem] flex items-center">24/11/2024</h1>
+                        <h1 className="lg:text-[0.94rem] text-[0.75rem]  flex items-center">24/11/2024</h1>
                     </div>
                 </div>
             </div>

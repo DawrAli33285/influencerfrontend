@@ -304,11 +304,11 @@ const BondListingTable = () => {
 
     const getStatusClass = (status) => {
         switch (status) {
-            case 'PENDING':
+            case 'pending':
                 return 'text-orange-500';
-            case 'LIVE':
+            case 'in progress':
                 return 'text-red-500';
-            case 'COMPLETED':
+            case 'completed':
                 return 'text-green-500';
             default:
                 return '';
@@ -513,9 +513,9 @@ const BondListingTable = () => {
                         </div> */}
 
 
-                        <button disabled={loading} onClick={showBondPopup} className="p-[10px] lg:max-w-[140px] w-full bg-black text-white font-medium text-[.88rem] rounded-[2rem] ">
+                        <Link to="/promisebondcreate"  className="p-[10px] lg:max-w-[140px] w-full bg-black text-white font-medium text-[.88rem] rounded-[2rem] ">
                             Create Bond
-                        </button>
+                        </Link>
 
                     </div>
                 </div>
@@ -560,7 +560,7 @@ const BondListingTable = () => {
                                     <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Price</th>
                                     <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Validity</th>
                                     <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Status</th>
-                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium lg:pr-[30px] text-left lg:py-[30px] border-b border-gray-300"></th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium lg:pr-[30px] text-left lg:py-[30px] border-b border-gray-300">Action</th>
 
                                 </tr>
                             </thead>

@@ -9,6 +9,8 @@ import mblbanner from "../faqbannermbl.png"
 import { gapi } from "gapi-script";
 import HomeHeader from "../components/homeheader";
 import HomeFooter from "../components/homefooter";
+import { HeaderComponent } from '../components/header/header.component'
+import { FooterComponent } from "../components/footer/footer.component";
 
 const CLIENT_ID = "18819315923-dgjfpoa60vhgf4c1ftba93aj6otb6sl3.apps.googleusercontent.com";
 
@@ -166,7 +168,7 @@ export default function SignIn() {
 
     return (
         <>
-            <HomeHeader />
+            <HeaderComponent />
             <ToastContainer containerId="signIn" />
             <div className="relative flex items-center justify-center w-full h-[300px]">
   <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
@@ -255,7 +257,7 @@ export default function SignIn() {
 
             </div>
             <div className="md:mt-[15rem] mt-[25%]">
-  <HomeFooter />
+  <FooterComponent/>
 </div>
 
         </>

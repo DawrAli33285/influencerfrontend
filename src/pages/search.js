@@ -7,10 +7,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { MoonLoader } from "react-spinners";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../baseURL";
+import { HeaderComponent } from "../components/header/header.component";
+import { FooterComponent } from "../components/footer/footer.component";
 
 export default function Search() {
     const [loading, setLoading] = useState(true)
     const [filter, setFilter] = useState("")
+    const [search,setSearch]=useState("")
     const [originalState, setOriginalState] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 7;
@@ -67,6 +70,7 @@ export default function Search() {
             let search = params.get("search")
             let response = await axios.post(`${BASE_URL}/searchItems`, { filter, search });
             console.log("searchItems")
+            setSearch(search)
             console.log(response.data)
             setState(response.data.data)
             setOriginalState(response.data.data)
@@ -136,8 +140,8 @@ export default function Search() {
         <>
             <ToastContainer containerId={"searchToast"} />
 
-            <div className="w-full h-[500px]">
-                <HomeHeader />
+            <div className="w-full h-[700px] ">
+                <HeaderComponent/>
                 {loading ? <div className="w-full h-full flex justify-center items-center">
 
                     <MoonLoader color="#6B33E3" size={100} />
@@ -145,9 +149,9 @@ export default function Search() {
 
 
                     <div className="flex flex-col bg-[#0000000D] lg:gap-[60px] lg:px-[3rem] lg:py-[40px] px-[2rem] py-[40px]">
-                        <div>
-                            <h2 className="lg:text-[2rem] text-[1.5rem] font-bold">“Vocal Training” Searched</h2>
-                            <p className="lg:text-[0.94rem] text-[0.75rem] lg:mb-0 mb-[25px]">Total 34,000 Results</p>
+                        <div >
+                            <h2 className="lg:text-[2rem] text-[1.5rem] font-bold">“{search?.length>0?search:"All "+filter+'s'}” Searched</h2>
+                            <p className="lg:text-[0.94rem] text-[0.75rem] lg:mb-0 mb-[25px]">Total {state?.length} Results</p>
                         </div>
                         {/* <svg onClick={() => {
                             navigate(-1)
@@ -188,7 +192,7 @@ export default function Search() {
                                                 <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-300">Mission</th>
                                                 <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-300">Price</th>
                                                 <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-300">Validity</th>
-                                                <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium lg:pr-[30px] text-left lg:py-[30px] border-b border-gray-300"></th>
+                                                <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium lg:pr-[30px] text-left lg:py-[30px] border-b border-gray-300">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -404,14 +408,14 @@ export default function Search() {
                                     </div>
                                 </div>
                             </>}
-                        </> : <div className="flex justify-center items-center text-center">
+                        </> : <div  className="flex justify-center items-center text-center w-full h-[300px] ">
                             <p>No Record Found</p>
                         </div>}
 
                     </div>
 
                 </>}
-                <HomeFooter />
+                <FooterComponent/>
             </div>
         </>
     );

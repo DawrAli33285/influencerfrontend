@@ -2,7 +2,9 @@ import { useState } from "react";
 import HomeFooter from "../components/homefooter";
 import HomeHeader from "../components/homeheader";
 import banner from "../faqbanner.png"
+import { HeaderComponent } from '../components/header/header.component'
 import mblbanner from "../faqbannermbl.png"
+import { FooterComponent } from "../components/footer/footer.component";
 export default function Terms() {
     const [activeOption, setActiveOption] = useState("Terms of Use");
 
@@ -39,7 +41,7 @@ export default function Terms() {
 
     return (
         <div className="w-full">
-            <HomeHeader />
+            <HeaderComponent />
             <div className="relative flex items-center justify-center w-full h-[300px]">
   <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
   <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
@@ -111,7 +113,7 @@ export default function Terms() {
                     </button>
                 </div>
             </div>
-            <HomeFooter />
+            <FooterComponent />
         </div>
     );
 }

@@ -103,11 +103,11 @@ const SellerBondListingTable = () => {
 
     const getStatusClass = (status) => {
         switch (status) {
-            case 'Pending':
+            case 'pending':
                 return 'text-orange-500';
-            case 'Sold':
+            case 'In progress':
                 return 'text-red-500';
-            case 'ForSale':
+            case 'active':
                 return 'text-green-500';
             default:
                 return '';
@@ -419,7 +419,7 @@ const SellerBondListingTable = () => {
                                     <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300">Total Bonds</th>
                                     <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300">Validity</th>
                                     <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300">Status</th>
-                                    <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300"></th>
+                                    <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300">Action</th>
                                     <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300"></th>
                                 </tr>
                             </thead>
@@ -431,7 +431,7 @@ const SellerBondListingTable = () => {
                                         <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]">{bond?.total_bonds
                                         }</td>
                                         <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]">{bond?.validity_number + ' months'}</td>
-                                        <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]"> {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}</td>
+                                        <td className={`p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px] ${getStatusClass(bond?.status)}`}> {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)}</td>
 
 
 

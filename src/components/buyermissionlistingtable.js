@@ -126,18 +126,18 @@ const BuyerMissionListingTable = () => {
     return (
         <>
             <ToastContainer containerId="containerD" limit={1} />
-            <div className="bg-white max-h-[700px]  overflow-y-auto xl:px-[20px]">
-                <div className="flex xl:justify-between xl:flex-row flex-col items-center mb-[20px]">
+            <div className="bg-[#f2f2f2] min-h-[600px]    p-[20px] rounded-[20px]">
+                <div className="flex justify-between lg:flex-row flex-col gap-[20px] items-center mb-[20px]">
                     <div className='flex flex-col'>
-                        <h1 className="text-[24px] font-semibold">Create Your Promise Mission</h1>
-                        <p className='text-[18px]'>Define and manage your bond's mission for your buyers</p>
+                        <h1 className="lg:text-[2rem] text-black  text-[1.50rem] font-medium  lg:text-left text-center lg:font-bold">Your Promise Mission</h1>
+                        <p className='lg:text-[0.94rem] text-black text-[0.75rem] lg:text-left text-center lg:mb-0 mb-[25px]'>Define and manage your bond's mission for your buyers</p>
                     </div>
-                    <div className="grid lg:grid-cols-12 gap-[20px] grid-cols-1 lg:mt-0 mt-[40px]">
+                    <div className="flex w-full lg:w-fit  gap-[18px] lg:flex-row flex-col lg:mt-0 mt-[40px]">
 
                         <select
                             value={selectedMonth}
                             onChange={fetchAccordingToMonth}
-                            className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none lg:col-span-2"
+                            className="p-[8px] lg:max-w-[140px] w-full bg-white font-medium text-[.88rem] text-black rounded-[2rem] shadow-md outline-none"
                         >
                             <option value="default">Status</option>
                             {months.map((month) => (
@@ -148,8 +148,8 @@ const BuyerMissionListingTable = () => {
                         </select>
 
 
-                        <div className="flex gap-[10px] xl:flex-row flex-col w-full lg:col-span-6">
-                            <div className="w-full bg-[#F6F6F6] rounded-[20px] px-[10px] py-[10px] flex items-center">
+                        <div className="flex gap-[10px] xl:flex-row flex-col lg:w-[340px]   w-full">
+                            <div className="w-full border bg-white border-[#E9E9E9] rounded-[20px] px-[10px] py-[10px] flex items-center">
                                 <input
                                     type="text"
                                     placeholder="Search here..."
@@ -159,9 +159,9 @@ const BuyerMissionListingTable = () => {
                         </div>
 
 
-                        <button onClick={() => { setMissionPopup(!missionpopup) }} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
+                        {/* <button onClick={() => { setMissionPopup(!missionpopup) }} className="p-[10px] bg-[#1DBF73] text-white font-semibold rounded-[10px] lg:col-span-4">
                             Create Mission
-                        </button>
+                        </button> */}
                     </div>
 
                 </div>
@@ -169,30 +169,40 @@ const BuyerMissionListingTable = () => {
                 {loading ? <div className='flex justify-center items-center'>
                     <MoonLoader color="#6B33E3" size={100} />
                 </div> : missionData?.length > 0 ?
-                    <div>
+                    <div className='lg:p-[30px] lg:bg-white'>
                         <table className="min-w-full table-auto xl:table hidden border-collapse">
                             <thead>
                                 <tr className="bg-[#FDFBFD]">
 
-                                    <th className="p-[10px] border-gray-300 border-b text-left">Mission</th>
-                                    <th className="p-[10px] border-gray-300 border-b text-left">Price</th>
-                                    <th className="p-[10px] border-gray-300 border-b text-left  ">Validity</th>
-                                    <th className="p-[10px] border-gray-300 border-b text-left  ">Status</th>
-                                    <th className="p-[10px] border-gray-300 border-b text-left  "></th>
+                                    <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300">Mission</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Price</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30  ">Validity</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30  ">Status</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {missionData?.map((mission, index) => (
                                     <tr key={index} className="border-b">
 
-                                        <td className="p-[10px] ">{mission?.task_type}</td>
-                                        <td className="p-[10px] text-[#1DBF73]">${mission?.bond_id?.bond_price}/bond</td>
-                                        <td className="p-[10px] font-bold "> {new Date(mission?.bond_id?.createdAt).toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'long',
-                                            year: 'numeric',
-                                        })}</td>
-                                        <td className={`p-[10px] ${getStatusClass(mission?.status)}`}>
+                                        <td className="p-[10px] lg:pl-[30px] text-[0.94rem] border-b border-b-[#E9E9E9]  font-normal pt-[30px] ">{mission?.mission_title}</td>
+                                        <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]  text-[#1DBF73]">${mission?.bond_id?.bond_price}/bond</td>
+                                        <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]"> {(() => {
+    const createdAt = mission?.bond_id?.createdAt;
+    const validityNumber = mission?.bond_id?.validity_number || 0;
+
+    if (!createdAt) return "Invalid Date";
+
+    const createdDate = new Date(createdAt);
+    createdDate.setMonth(createdDate.getMonth() + validityNumber);
+
+    return createdDate.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+  })()}</td>
+                                        <td className={`p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px] ${getStatusClass(mission?.status)}`}>
                                             {mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}
                                         </td>
                                     </tr>
@@ -200,30 +210,45 @@ const BuyerMissionListingTable = () => {
                             </tbody>
                         </table>
                         <div className='w-full xl:hidden block'>
-                            <div className="xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
+                            <div className="flex bg-[#f2f2f2] flex-col gap-[20px]">
                                 {missionData?.map((mission, index) => (
-                                    <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Mission</h1>
-                                            <p className="text-[16px] font-semibold">{mission?.bond_id?.title}</p>
-                                        </div>
+                                    <div key={index} className="p-[20px] bg-white flex flex-col gap-[20px] border-b border-gray-300 py-4">
+                                        <div className='flex flex-col gap-[20px]'>
+                                            <div className="flex flex-col gap-[10px]">
 
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
-                                            <p className="text-[16px] font-semibold">{mission?.buyer_id?.user_id?.username?.length > 0 ? mission?.buyer_id?.username : 'none'}</p>
-                                        </div>
+                                                <p className="text-[14px] font-semibold">{mission?.mission_title}</p>
+                                            </div>
+                                            <div className="flex items-center  gap-[10px]">
+                                                <h1 className="text-[0.75rem]">Validity:</h1>
+                                                <p className="text-[0.75rem]">
+  {(() => {
+    const createdAt = mission?.bond_id?.createdAt;
+    const validityNumber = mission?.bond_id?.validity_number || 0; 
 
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Availability</h1>
-                                            <p className="text-[16px] font-semibold">{new Date(mission?.bond_id?.createdAt).toLocaleDateString('en-GB', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric',
-                                            })}</p>
+    if (!createdAt) return "Invalid Date";
+
+    const createdDate = new Date(createdAt);
+    createdDate.setMonth(createdDate.getMonth() + validityNumber);
+
+    return createdDate.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+  })()}
+</p>
+
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <p className={`text-[14px] font-semibold ${getStatusClass(mission?.status)}`}>{mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}</p>
+                                            </div>
+
                                         </div>
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Status</h1>
-                                            <p className={`text-[16px] font-semibold ${getStatusClass(mission?.status)}`}> {mission?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + mission?.status?.toLocaleLowerCase()?.slice(1)}</p>
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex flex-col gap-[10px]">
+                                                <p className="text-[0.75rem] text-[#1DBF73]">${mission?.bond_id?.bond_price}/bond </p>
+                                            </div>
+                                         
                                         </div>
                                     </div>
                                 ))}

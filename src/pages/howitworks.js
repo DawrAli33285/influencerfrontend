@@ -5,14 +5,16 @@ import img2 from "../Vector2.png";
 import img3 from "../vector3.png";
 import bsns from "../bussinessmen.png";
 import banner from "../faqbanner.png"
+import { HeaderComponent } from '../components/header/header.component'
 import mblbanner from "../faqbannermbl.png"
 import overlay from "../overlayimg.png"
 
 import { Link } from "react-router-dom";
+import { FooterComponent } from "../components/footer/footer.component";
 export default function HowItWorks() {
     return (
         <div className="w-full">
-            <HomeHeader />
+          <HeaderComponent />
             <div className="relative w-full mb-[2.5rem]  lg:mb-[7.5rem] h-[400px]">
             <div className="relative flex items-center justify-center w-full h-[300px]">
   <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
@@ -401,7 +403,7 @@ export default function HowItWorks() {
                     </div>
                 </div>
             </div>
-            <HomeFooter />
+            <FooterComponent />
         </div>
     )
 }

@@ -3,6 +3,8 @@ import HomeFooter from "../components/homefooter";
 import HomeHeader from "../components/homeheader";
 import banner from "../faqbanner.png"
 import mblbanner from "../faqbannermbl.png"
+import { FooterComponent } from "../components/footer/footer.component";
+import { HeaderComponent } from "../components/header/header.component";
 export default function Support() {
     const [openTabs, setOpenTabs] = useState([]);
 
@@ -78,16 +80,16 @@ export default function Support() {
         });
     return (
         <div className="w-full">
-            <HomeHeader />
+            <HeaderComponent />
             <div className="relative flex items-center justify-center w-full h-[300px]">
-  <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
-  <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
-  <div className="absolute lg:px-0 px-[1rem] gap-[20px] left-0 lg:pl-[10rem] top-0 w-full h-full flex flex-col lg:items-start items-center justify-center">
+                <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
+                <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
+                <div className="absolute lg:px-0 px-[1rem] gap-[20px] left-0 lg:pl-[10rem] top-0 w-full h-full flex flex-col lg:items-start items-center justify-center">
                     <h1 className="lg:text-[2.38rem] text-[1.9rem] text-center md:text-start text-white font-bold">Find answers to common questions and get helpful information.</h1>
                     <p className="lg:text-[0.94rem] text-[.75rem] text-white">Fostering growth, forging relationships, and unlocking potential.</p>
                 </div>
-</div>
-            
+            </div>
+
             <div className="lg:px-[30px] px-[15px] md:py-[5rem] py-[2rem]">
                 <h2 className="xl:text-[2.38rem] text-[1.50rem] text-center  font-semibold">
                     How Can We Help You?
@@ -122,11 +124,11 @@ export default function Support() {
                 <div className="flex bg-white shadow-lg rounded-[3.8rem] lg:w-[600px] w-[90%] mx-auto py-[10px] px-[10px] justify-between">
                     <input type="email" placeholder="Your email address" className="outline-none lg:text-[0.94rem] px-[1rem] text-[0.75rem] border-none lg:w-[80%] w-[60%]" />
                     <button className="bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[10px] lg:text-[0.94rem] text-[0.75rem] text-white font-bold md:w-[108px] md:h-[60px] w-[90px] h-[50px]  ">
-                            Send
+                        Send
                     </button>
                 </div>
             </div>
-            <HomeFooter />
+            <FooterComponent />
         </div>
     )
 }

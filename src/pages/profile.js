@@ -10,6 +10,8 @@ import { ToastContainer,toast } from "react-toastify";
 import { MoonLoader } from "react-spinners";
 import { BASE_URL } from "../baseURL";
 import axios from "axios";
+import { FooterComponent } from "../components/footer/footer.component";
+import { HeaderComponent } from "../components/header/header.component";
 export default function Profile() {
     const [state,setState]=useState({
         issuer:'',
@@ -84,7 +86,7 @@ const navigate=useNavigate();
         <>
         <ToastContainer containerId={"profileToast"}/>
         <div className="w-full flex flex-col gap-[20px]">
-            <HomeHeader />
+            <HeaderComponent />
            {loading?<div className="w-full flex justify-center items-center">
             <MoonLoader color="#6B33E3" size={100} />
             
@@ -224,7 +226,7 @@ const navigate=useNavigate();
                 </div>
             </div>
            </>}
-            <HomeFooter />
+            <FooterComponent/>
         </div>
         </>
     )

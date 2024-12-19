@@ -8,6 +8,8 @@ import banner from "../faqbanner.png"
 import mblbanner from "../faqbannermbl.png"
 import HomeHeader from "../components/homeheader";
 import HomeFooter from "../components/homefooter";
+import { HeaderComponent } from "../components/header/header.component";
+import { FooterComponent } from "../components/footer/footer.component";
 
 export default function Verification() {
     const { state } = useLocation();
@@ -70,16 +72,16 @@ export default function Verification() {
     const [mobileSent, setMobileSent] = useState(false);
     const handleChange = (e, index) => {
         const { value } = e.target;
-    
+
         const updatedCode = verificationData.emailCode.split("");
-        updatedCode[index] = value.slice(-1); 
-    
+        updatedCode[index] = value.slice(-1);
+
         setVerificationData({
-          ...verificationData,
-          emailCode: updatedCode.join(""),
+            ...verificationData,
+            emailCode: updatedCode.join(""),
         });
-       
-      };
+
+    };
 
     const handleSendEmailVerification = async () => {
         setEmailSent(true);
@@ -232,17 +234,17 @@ export default function Verification() {
 
     return (
         <>
-            <HomeHeader />
+            <HeaderComponent />
             <ToastContainer limit={1} containerId="verificationPage" />
             <div className="relative flex items-center justify-center w-full h-[300px]">
-  <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
-  <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
-  <div className="absolute lg:px-0 px-[1rem] gap-[20px] left-0 lg:pl-[10rem] top-0 w-full h-full flex flex-col lg:items-start items-center justify-center">
+                <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
+                <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
+                <div className="absolute lg:px-0 px-[1rem] gap-[20px] left-0 lg:pl-[10rem] top-0 w-full h-full flex flex-col lg:items-start items-center justify-center">
                     <h1 className="lg:text-[2.38rem] text-[1.9rem] md:text-start text-center text-white font-bold">Verify your email to secure your account and complete setup.</h1>
                     <p className="lg:text-[0.94rem] text-[.75rem] text-white">Fostering growth, forging relationships, and unlocking potential.</p>
                 </div>
-</div>
-           
+            </div>
+
             <div className="relative w-full h-full">
                 <div className="w-full max-w-[700px] mx-auto mt-20 p-6 border border-[#E9E9E9] rounded-lg shadow-lg">
                     {
@@ -341,47 +343,47 @@ export default function Verification() {
                                             ) : (
                                                 <>
                                                     {!emailSent && (
-                                                      <>
-<p >
-Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
-    
-    Resend
-    </a>
-</p>
-                                                      <button onClick={handleSendEmailVerification}
-                                                            className="w-full md:h-[60px] bg-black rounded-[20px] lg:text-[.975rem] text-[.75rem] text-white font-bold py-[10px] px-4  mt-2">
-                                                            Send Email Verification
-                                                        </button>
-                                                        
-                                                                </>
+                                                        <>
+                                                            <p >
+                                                                Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
+
+                                                                    Resend
+                                                                </a>
+                                                            </p>
+                                                            <button onClick={handleSendEmailVerification}
+                                                                className="w-full md:h-[60px] bg-black rounded-[20px] lg:text-[.975rem] text-[.75rem] text-white font-bold py-[10px] px-4  mt-2">
+                                                                Send Email Verification
+                                                            </button>
+
+                                                        </>
                                                     )}
                                                     {emailSent && (
                                                         <>
- <div className="flex justify-center gap-2 mt-4">
-      {Array.from({ length: 6 }).map((_, index) => (
-        <input
-          key={index}
-          type="text"
-          maxLength={1}
-          className="md:w-[100px] md:h-[45px] w-[40px] h-[30px] text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1DBF73] focus:border-[#1DBF73]"
-          value={verificationData.emailCode[index] || ""}
-          onChange={(e) => handleChange(e, index)}
-        />
-      ))}
-    </div>
+                                                            <div className="flex justify-center gap-2 mt-4">
+                                                                {Array.from({ length: 6 }).map((_, index) => (
+                                                                    <input
+                                                                        key={index}
+                                                                        type="text"
+                                                                        maxLength={1}
+                                                                        className="md:w-[100px] md:h-[45px] w-[40px] h-[30px] text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1DBF73] focus:border-[#1DBF73]"
+                                                                        value={verificationData.emailCode[index] || ""}
+                                                                        onChange={(e) => handleChange(e, index)}
+                                                                    />
+                                                                ))}
+                                                            </div>
 
 
-                                                           <p >
-Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
-    
-    Resend
-    </a>
-</p>
+                                                            <p >
+                                                                Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
+
+                                                                    Resend
+                                                                </a>
+                                                            </p>
                                                             <button onClick={handleEmailVerify}
                                                                 className="w-full md:h-[60px] bg-black rounded-[20px] lg:text-[.975rem] text-[.75rem] text-white font-bold py-[10px] px-4  mt-2">
                                                                 Verify Email
                                                             </button>
-                                                            
+
                                                         </>
                                                     )}
                                                     {/* <button onClick={handleSendEmailVerification} className="w-full bg-black lg:text-[.975rem] text-[.75rem] rounded-[20px] text-white font-bold py-[10px] px-4  mt-2 ">
@@ -399,7 +401,7 @@ Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className
 
                 </div>
             </div>
-            <HomeFooter />
+            <FooterComponent />
         </>
     );
 }

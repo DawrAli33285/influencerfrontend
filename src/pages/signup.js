@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import axios from "axios";
+import { HeaderComponent } from '../components/header/header.component'
 import { gapi } from "gapi-script";
 import { BASE_URL } from "../baseURL";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import HomeHeader from "../components/homeheader";
 import banner from "../faqbanner.png"
 import mblbanner from "../faqbannermbl.png"
 import HomeFooter from "../components/homefooter";
+import { FooterComponent } from "../components/footer/footer.component";
 const CLIENT_ID = "18819315923-dgjfpoa60vhgf4c1ftba93aj6otb6sl3.apps.googleusercontent.com";
 
 
@@ -187,7 +189,7 @@ export default function SignUp() {
 
     return (
         <>
-            <HomeHeader />
+            <HeaderComponent/>
             <div className="relative flex items-center justify-center w-full h-[300px]">
   <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
   <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
@@ -352,7 +354,7 @@ Continue With Email
 
                 </div>
             </div>
-            <HomeFooter />
+            <FooterComponent />
         </>
     )
 }

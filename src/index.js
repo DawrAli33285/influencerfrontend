@@ -56,6 +56,7 @@ import OfferListingTable from './components/sellercomponents/offerlistingtable';
 import Support from './pages/support';
 import VerifyBond from './pages/verifybond';
 import PhoneVerification from './components/phoneVerification';
+import CreateBond from './pages/createbond';
 
 
 const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
@@ -240,6 +241,24 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/promisebondcreate",
+    element: <IssuerMiddleware />,
+    children: [
+      {
+        path: "",
+        element: (
+          <BondListProvider>
+            <MissionListProvider>
+              <AdminHeader>
+                <CreateBond />
+              </AdminHeader>
+            </MissionListProvider>
+          </BondListProvider>
+        ),
+      },
+    ],
+  },
+  {
     path: "/mission",
     element: <IssuerMiddleware />,
     children: [
@@ -336,7 +355,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/buyersponsorbond",
+    path: "/buyerpromisebond",
     element: <BuyerMiddleware />,
     children: [
       {
