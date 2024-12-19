@@ -33,7 +33,7 @@ export const menu_itmes = [
     },
     {
         "label": "Settings",
-        "link": "/settings",
+        "link": "/buyersettings",
         "icon": base_path_icon + "/icon8.svg"
     },
     {

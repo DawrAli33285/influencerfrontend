@@ -57,6 +57,7 @@ import Support from './pages/support';
 import VerifyBond from './pages/verifybond';
 import PhoneVerification from './components/phoneVerification';
 import CreateBond from './pages/createbond';
+import Buyersettings from './pages/buyersettings';
 
 
 const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
@@ -143,6 +144,25 @@ const router = createBrowserRouter([
             </BondListProvider>
           </MissionListProvider>
         </SellerAdminHeader>
+      }
+    ]
+  },
+  {
+    path: "/buyersettings",
+    element:
+      <BuyerMiddleware />,
+    children: [
+      {
+        path: "",
+        element: (
+          <SellerAdminHeader>
+            <MissionListProvider>
+              <BondListProvider>
+                <Buyersettings/>
+              </BondListProvider>
+            </MissionListProvider>
+          </SellerAdminHeader>
+        )
       }
     ]
   },
