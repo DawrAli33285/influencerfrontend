@@ -1,4 +1,24 @@
+import axios from "axios"
+import { BASE_URL } from "../../baseURL"
+
 const base_path_icon = "/assets/images/icons"
+const getCurrentIssuerId=async()=>{
+    let token=localStorage.getItem('token')
+    if(token){
+        let headers={
+            headers:{
+                authorization:`Bearer ${token}`
+            }
+        }
+    let response=await axios.get(`${BASE_URL}/getHeaderCurrentIssuer`,headers)
+    
+    return response.data.issuer._id
+    }else{
+        return ''
+    }
+}
+let issuerId=await Promise.all([getCurrentIssuerId()])
+
 export const menu_itmes = [
     {
         "label": "Dashboard",
@@ -11,8 +31,14 @@ export const menu_itmes = [
         "icon": base_path_icon + "/icon2.svg"
     },
     {
-        "label": "Mission",
-        "link": "/buyermission",
+        "label": "Market",
+        "link": "/market",
+        "icon": base_path_icon + "/icon3.svg"
+    },
+    {
+        
+        "label": "Bid offers",
+        "link": "/bidoffers",
         "icon": base_path_icon + "/icon3.svg"
     },
     {
@@ -59,12 +85,12 @@ export const menu_itmes = [
     },
     {
         "label": "My Profile",
-        "link": "/tt",
+        "link": `/profile?id=${issuerId}`,
         "icon": base_path_icon + "/icon12.svg"
     },
     {
         "label": "Logout",
-        "link": "/tt",
+        "link": "/logout",
         "icon": base_path_icon + "/icon13.svg"
     },
 ]

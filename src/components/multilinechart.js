@@ -388,123 +388,55 @@
 // };
 
 // export default SellerMissionStatsChart;
-
-
-
 import React from "react";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, CategoryScale, Tooltip, Legend } from "chart.js";
-import { NavLink } from "react-router-dom";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-// Register Chart.js components
-ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
-
-const SellerMissionStatsChart = () => {
-  // Chart Data
-  const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May"],
-    datasets: [
-      {
-        label: "Completed Missions",
-        data: [12, 14, 10, 11, 9],
-        borderColor: "#fdba74",
-        backgroundColor: "transparent",
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: "#fdba74",
-        tension: 0.4,
-      },
-      {
-        label: "Pending Missions",
-        data: [15, 13, 12, 11, 13],
-        borderColor: "#93c5fd",
-        backgroundColor: "transparent",
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: "#93c5fd",
-        tension: 0.4,
-      },
-      {
-        label: "Average Fulfillment Time",
-        data: [10, 10, 12, 14, 15],
-        borderColor: "#86efac",
-        backgroundColor: "transparent",
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: "#86efac",
-        tension: 0.4,
-      },
-      {
-        label: "Mission Success Rate",
-        data: [16, 11, 13, 15, 9],
-        borderColor: "#f9a8d4",
-        backgroundColor: "transparent",
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: "#f9a8d4",
-        tension: 0.4,
-      },
-    ],
-  };
-
-  // Chart Options
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-    },
-    scales: {
-      x: {
-        grid: { display: false },
-        ticks: { color: "#6b7280" },
-      },
-      y: {
-        beginAtZero: true,
-        grid: { color: "#e5e7eb" },
-        ticks: { color: "#6b7280", stepSize: 5 },
-      },
-    },
-    elements: {
-      line: { tension: 0.4 },
-    },
-  };
+const SellerMissionStatsChart = ({ state }) => {
+  // Preprocess the data to flatten the nested structure
+  const data = (state?.missionGraph || []).map((item) => ({
+    ...item,
+    completedMissions: item.stats?.[0]?.count || 0, // Add completed missions count
+    pendingMissions: item.stats?.[1]?.count || 0,   // Add pending missions count
+  }));
 
   return (
     <div className="bg-white p-6 w-full max-w-5xl mx-auto">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-gray-800 text-xl font-semibold">Mission Stats</h2>
-        <NavLink to='/' className="text-purple-600 text-sm font-medium hover:underline">
-          View All
-        </NavLink>
-      </div>
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4 lg:gap-0">
+        <h2 className="text-primary-dark text-[17px] font-medium mb-1 lg:mb-0">Mission Stats</h2>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 mb-6">
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-orange-400 rounded-full"></span>
-          <p className="text-gray-600 text-sm">Completed Missions</p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-blue-400 rounded-full"></span>
-          <p className="text-gray-600 text-sm">Pending Missions</p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-green-400 rounded-full"></span>
-          <p className="text-gray-600 text-sm">Average Fulfillment Time</p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="w-3 h-3 bg-pink-400 rounded-full"></span>
-          <p className="text-gray-600 text-sm">Mission Success Rate</p>
+        <div className="flex flex-wrap items-start lg:items-center gap-4 lg:gap-6">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#F2CCB3] rounded-full"></div>
+            <span className="text-[10px] lg:text-[12px]">Completed Missions</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#B1CADB] rounded-full"></div>
+            <span className="text-[10px] lg:text-[12px]">Pending Missions</span>
+          </div>
         </div>
       </div>
 
-      {/* Line Chart */}
-      <Line data={data} options={options} />
+      {data.length > 0 ? (
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend verticalAlign="top" align="right" />
+
+            {/* Use the preprocessed keys */}
+            <Line type="monotone" dataKey="completedMissions" stroke="#F2CCB3" strokeWidth={2} dot={{ fill: "#F2CCB3", r: 4 }} />
+            <Line type="monotone" dataKey="pendingMissions" stroke="#B1CADB" strokeWidth={2} dot={{ fill: "#B1CADB", r: 4 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      ) : (
+        <div className="h-full flex justify-center items-center">
+          <p>No Record Found</p>
+        </div>
+      )}
     </div>
   );
 };
 
 export default SellerMissionStatsChart;
-
-

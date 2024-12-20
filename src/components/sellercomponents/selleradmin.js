@@ -200,14 +200,19 @@ export default function SellerAdminHeader({ children }) {
     return (
         <>
             <ToastContainer containerId="buyeradmin" limit={1} />
-            <div className="w-full rounded-[10px] p-[20px] flex justify-between items-center bg-white">
+            <div className="w-full rounded-[10px] p-[20px] z-10 flex justify-between items-center bg-white">
                 <div className={`lg:hidden block hover:cursor-pointer lg:pr-10`} onClick={() => setToggleSidebar(!toggleSidebar)}>
                     <img src={`${base_path_icon}/sidebar-control.svg`} alt="icon" />
                 </div>
                 <div className={`flex items-center`}>
-                    <NavLink to='/' aria-current="page" className="active">
+                <div className="flex items-center " onClick={handleSwitchChange}>
+                                    <div className="bg-primary-green cursor-pointer text-white rounded text-base font-medium text-center h-10 leading-10 w-[131px] lg:hidden block">
+                                        Switch to Issuer
+                                    </div>
+                                </div>
+                    {/* <NavLink to='/' aria-current="page" className="active">
                         <img src="/assets/images/icons/logo-lg.svg" alt="logo" />
-                    </NavLink>
+                    </NavLink> */}
                 </div>
                 <div className="lg:flex-1 flex items-center lg:pl-[116px] lg:justify-between lg:gap-x-[30px]">
                     <div className="flex-1 lg:flex items-center justify-between hidden">
@@ -246,7 +251,7 @@ export default function SellerAdminHeader({ children }) {
                     </div>
                 </div>
             </div>
-            <div className="flex bg-[#0000000D]">
+            <div className="flex z-10 bg-[#0000000D]">
                 <aside
                     className={`absolute lg:relative bg-white flex flex-col lg:w-auto w-full justify-between transition-transform duration-500 ease-in-out ${toggleSidebar ? 'lg:-translate-x-full -translate-x-0' : 'lg:translate-x-0 -translate-x-full'
                         }`}

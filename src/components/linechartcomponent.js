@@ -58,39 +58,24 @@
 // export default SellerLineChartComponent;
 
 
-
-
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import "tailwindcss/tailwind.css";
 
-const SellerLineChartComponent = () => {
+const SellerLineChartComponent = ({ lineGraphData }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
 
-    // Chart data
-    const data = {
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+    // Default data in case lineGraphData is empty
+    const defaultData = {
+      labels: ["Jan"], // Default label
       datasets: [
         {
           label: "Total Earnings",
-          data: [14, 11, 21, 15, 16, 14, 18, 15, 12, 19, 17, 24],
+          data: [0], // Default earnings value
           backgroundColor: "rgba(34, 197, 94, 0.1)", // Light green
           borderColor: "#22c55e", // Tailwind green-500
           borderWidth: 2,
@@ -101,6 +86,26 @@ const SellerLineChartComponent = () => {
         },
       ],
     };
+
+    // Check if lineGraphData is empty and set default data if so
+    const data = lineGraphData && lineGraphData.labels.length > 0 && lineGraphData.data.length > 0
+      ? {
+          labels: lineGraphData.labels,
+          datasets: [
+            {
+              label: "Total Earnings",
+              data: lineGraphData.data,
+              backgroundColor: "rgba(34, 197, 94, 0.1)", // Light green
+              borderColor: "#22c55e", // Tailwind green-500
+              borderWidth: 2,
+              pointRadius: 4,
+              pointBackgroundColor: "#22c55e",
+              tension: 0.4, // Smooth curve
+              fill: true,
+            },
+          ],
+        }
+      : defaultData; // Use default data if empty
 
     // Chart configuration
     const config = {
@@ -145,7 +150,7 @@ const SellerLineChartComponent = () => {
         chartInstance.current.destroy();
       }
     };
-  }, []);
+  }, [lineGraphData]); // Re-render when lineGraphData changes
 
   return (
     <div className="flex items-center justify-center">

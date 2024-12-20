@@ -13,8 +13,35 @@ export default function Settings() {
     const [loading, setLoading] = useState(true)
     const [locationState, setLocationState] = useState("")
     const onDrop = (acceptedFiles) => {
-        console.log('Uploaded files:', acceptedFiles);
+        if (acceptedFiles.length > 0) {
+            const file = acceptedFiles[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const fileUrl = reader.result;
+                setUser((prevUser) => ({
+                    ...prevUser,
+                    avatar: file,
+                    avatarLink: fileUrl,
+                }));
+            };
+
+            reader.readAsDataURL(file);
+
+            console.log('Uploaded file:', file);
+        }
     };
+    const [user, setUser] = useState({
+        username: '',
+        email: '',
+        mobile_number: '',
+        avatarLink: '',
+        bio: '',
+        oldEmail: '',
+        language: '',
+        gender: '',
+        avatar: ''
+    })
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
@@ -62,6 +89,17 @@ export default function Settings() {
             }
             let response = await axios.get(`${BASE_URL}/get-currentIssuer`, headers)
             console.log(response.data)
+            setUser({
+                username: response.data.issuer.user_id.username,
+                email: response.data.issuer.user_id.email,
+                mobile_number: response.data.issuer.user_id.country_code_id.country_code + response.data.issuer.user_id.mobile_number,
+                bio: response.data.issuer.user_id.bio,
+                language: response.data.issuer.user_id.language,
+                oldEmail: response.data.issuer.user_id.email,
+                gender: response.data.issuer.user_id.gender,
+                avatar: response.data.issuer.user_id.avatar,
+                avatarLink: response.data.issuer.user_id.avatar
+            })
             setState(response.data.issuer)
             setNotificationState(response.data.notificationsData)
             setLocationState(response.data.issuer.user_id.location)
@@ -232,29 +270,57 @@ export default function Settings() {
         }
     }
 
+    const saveUser = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('username', user.username);
+            formData.append('email', user.email);
+            const [countryCode, ...numberParts] = user.mobile_number.startsWith('+')
+                ? user.mobile_number.split(' ')
+                : ['', user.mobile_number];
+
+            const mobileNumberWithoutCode = numberParts.join(' ');
+            formData.append('country_code', countryCode);
+            formData.append('mobile_number', mobileNumberWithoutCode);
+            formData.append('avatarLink', user.avatarLink);
+            formData.append('bio', user.bio);
+            formData.append('oldEmail', user.oldEmail);
+            formData.append('language', user.language);
+            formData.append('gender', user.gender);
+            formData.append('avatar', user.avatar);
+
+            let response = await axios.patch(`${BASE_URL}/admin/editUser/${user.oldEmail}`, formData)
+            toast.success("User updated sucessfully", { containerId: "settingsPageToast" })
+        } catch (e) {
+            if (e?.response?.data?.error) {
+                toast.error(e?.response?.data?.error, { containerId: "settingsPageToast" })
+            } else {
+                toast.error("Client error please try again", { containerId: "settingsPageToast" })
+            }
+        }
+    }
+
 
     return (
         <>
             <ToastContainer containerId={"settingsPageToast"} />
 
-            <div className="w-full flex flex-col px-[30px] py-[40px]">
+            <div className="w-full flex flex-col lg:px-[30px] lg:py-[40px]">
                 {loading ? <div className="w-full flex justify-center items-center">
                     <MoonLoader color="#6B33E3" size={100} />
 
                 </div> : <>
 
-                    <div className="w-full flex flex-col gap-[20px] p-[20px]">
+                    <div className="w-full flex flex-col gap-[20px] lg:p-[20px]">
                         <div className="flex flex-col p-[20px] gap[20px] bg-white">
                             <div className="py-[20px] border-b border-[#E9E9E9]">
                                 <h2 className="lg:text-[1.25rem] text-black  text-[1.25rem] font-medium  lg:text-left text-center lg:font-bold">Personal Information</h2>
                             </div>
-                            <div className="flex items-center gap-6 my-[20px]">
+                            <div className="flex items-center flex-col lg:flex-row gap-6 my-[20px]">
                                 <div className="rounded-[100%] w-[80px] h-[80px]">
                                     <img
                                         src={
-                                            state?.user_id?.avatar?.length > 0
-                                                ? state.user_id.avatar.replace('http://localhost:5000', BASE_URL)
-                                                : avatar
+                                            user.avatarLink
                                         }
                                         alt="img"
                                         className="w-full h-full object-cover rounded-[100%]"
@@ -262,7 +328,13 @@ export default function Settings() {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <div className="flex items-center gap-[10px]">
-                                        <button className="bg-[#FFEDE8] flex items-center justify-center w-[40px] h-[40px] rounded-[4px]">
+                                        <button onClick={() => {
+                                            setUser({
+                                                ...user,
+                                                avatarLink: '',
+                                                avatar: ''
+                                            })
+                                        }} className="bg-[#FFEDE8] flex items-center justify-center w-[40px] h-[40px] rounded-[4px]">
                                             <svg
                                                 width="16"
                                                 height="16"
@@ -287,10 +359,18 @@ export default function Settings() {
                                                 </defs>
                                             </svg>
                                         </button>
-                                        <div {...getRootProps()} className="bg-[#1DBF730D] text-[#1F4B3F] text-[15px] font-medium px-4 py-2 rounded-[4px] cursor-pointer">
+                                        <div
+                                            {...getRootProps()}
+                                            className="bg-[#1DBF730D] text-[#1F4B3F] text-[15px] font-medium px-4 py-2 rounded-[4px] cursor-pointer"
+                                        >
                                             <input {...getInputProps()} />
                                             Upload
                                         </div>
+                                        {user.avatar && (
+                                            <div className="mt-4">
+                                                <p>Selected file: {user.avatar.name}</p>
+                                            </div>
+                                        )}
                                     </div>
                                     <div className=" text-[15px]">
                                         Max file size is 1MB, Minimum dimension: 330x300 And Suitable files are .jpg & .png
@@ -313,8 +393,11 @@ export default function Settings() {
                                         type="text"
                                         className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
                                         placeholder="Enter your username"
-                                        value={formData.username}
-                                        onChange={(e) => handleChange("username", e.target.value)}
+                                        value={user.username}
+                                        onChange={(e) => setUser({
+                                            ...user,
+                                            username: e.target.value
+                                        })}
                                     />
                                 </div>
 
@@ -330,8 +413,13 @@ export default function Settings() {
                                         type="email"
                                         className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
                                         placeholder="Enter your email"
-                                        value={formData.email}
-                                        onChange={(e) => handleChange("email", e.target.value)}
+                                        value={user.email}
+                                        onChange={(e) => {
+                                            setUser({
+                                                ...user,
+                                                email: e.target.value
+                                            })
+                                        }}
                                     />
                                 </div>
 
@@ -347,8 +435,13 @@ export default function Settings() {
                                         type="text"
                                         className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
                                         placeholder="Enter your phone number"
-                                        value={formData.mobileNumber}
-                                        onChange={(e) => handleChange("mobileNumber", e.target.value)}
+                                        value={user.mobile_number}
+                                        onChange={(e) => {
+                                            setUser({
+                                                ...user,
+                                                mobile_number: e.target.value
+                                            })
+                                        }}
                                     />
                                 </div>
 
@@ -363,8 +456,13 @@ export default function Settings() {
                                         id="description"
                                         className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
                                         placeholder="Enter description"
-                                        value={formData.description}
-                                        onChange={(e) => handleChange("description", e.target.value)}
+                                        value={user.bio}
+                                        onChange={(e) => {
+                                            setUser({
+                                                ...user,
+                                                bio: e.target.value
+                                            })
+                                        }}
                                     />
                                 </div>
 
@@ -378,8 +476,14 @@ export default function Settings() {
                                     </label>
                                     <select
                                         id="languages"
+                                        value={user.language}
                                         className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
-                                        onChange={handleAddLanguage}
+                                        onChange={(e) => {
+                                            setUser({
+                                                ...user,
+                                                language: e.target.value
+                                            })
+                                        }}
                                     >
                                         <option value="">Select language</option>
                                         <option value="English">English</option>
@@ -416,8 +520,13 @@ export default function Settings() {
                                     <select
                                         id="gender"
                                         className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
-                                        value={formData.gender}
-                                        onChange={(e) => handleChange("gender", e.target.value)}
+                                        value={user.gender}
+                                        onChange={(e) => {
+                                            setUser({
+                                                ...user,
+                                                gender: e.target.value
+                                            })
+                                        }}
                                     >
                                         <option value="" disabled>
                                             Select Gender
@@ -429,7 +538,7 @@ export default function Settings() {
                                 </div>
 
 
-                                <div className="flex flex-col">
+                                {/* <div className="flex flex-col">
                                     <label
                                         htmlFor="country"
                                         className="text-[15px] lg:text-[15px] sm:text-[14px] font-medium text-[#344054] mb-[8px]"
@@ -444,9 +553,9 @@ export default function Settings() {
                                         value={formData.country}
                                         onChange={(e) => handleChange("country", e.target.value)}
                                     />
-                                </div>
+                                </div> */}
 
-
+                                {/* 
                                 <div className="flex flex-col">
                                     <label
                                         htmlFor="city"
@@ -462,10 +571,10 @@ export default function Settings() {
                                         value={formData.city}
                                         onChange={(e) => handleChange("city", e.target.value)}
                                     />
-                                </div>
+                                </div> */}
                             </div>
                             <div className="w-full justify-start mt-[30px]">
-                                <div className="lg:w-fit w-full bg-black justify-center text-[15px] flex gap-[6px] items-center rounded-[60px] cursor-pointer text-white font-medium lg:px-[60px] px-[20px] py-[10px]">
+                                <div onClick={saveUser} className="lg:w-fit w-full bg-black justify-center text-[15px] flex gap-[6px] items-center rounded-[60px] cursor-pointer text-white font-medium lg:px-[60px] px-[20px] py-[10px]">
                                     Save
                                     <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_236_4257)">

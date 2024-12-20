@@ -51,14 +51,14 @@ export default function Dashboard() {
             <ToastContainer containerId="containerE" limit={1} />
             <div className="w-full  flex  flex-col">
                 <div className="w-full  flex gap-[20px] flex-col">
-                    {loading ? <div className="w-full flex justify-center items-center">
+                    {loading ? <div className="w-full flex min-h-[700px] justify-center items-center">
 
                         <MoonLoader color="#6B33E3" size={100} />
                     </div> : <>
                         <NotificationCards loading={loading} state={state} />
                         <div className="grid grid-cols-1 lg:grid-cols-5">
                             <div className=" lg:col-span-3">
-                                <LineChartComponent />
+                                <LineChartComponent lineGraphData={state?.lineGraphData} state={state} />
                             </div>
                             <div className=" lg:col-span-2">
                                 <PieChartComponent state={state} />

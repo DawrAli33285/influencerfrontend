@@ -68,7 +68,7 @@
 
 
 
-const SellerPieChartComponent = () => {
+const SellerPieChartComponent = ({state}) => {
   return (
     <div className="bg-white flex items-center justify-center">
       {/* Main Card Container */}
@@ -89,19 +89,19 @@ const SellerPieChartComponent = () => {
             <div className="text-primary-dark">
               <span className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></span>
               <span className="flex-1 text-base">Total</span>
-              <div className="text-primary-gray-500 px-3">8</div>
+              <div className="text-primary-gray-500 px-3">{state?.bondList?.length}</div>
             </div>
             <div className="text-primary-dark">
               <div className="flex items-center">
                 <span className="w-2 h-2 bg-yellow-200 rounded-full inline-block mr-2"></span>
                 <span className="flex-1 text-base">Done Missions</span>
               </div>
-              <div className="text-primary-gray-500 px-3">7</div>
+              <div className="text-primary-gray-500 px-3">{state?.bondList?.filter(u=>u?.status=="COMPLETED")?.length}</div>
             </div>
             <div className="text-primary-dark">
               <span className="w-2 h-2 bg-red-200 rounded-full inline-block mr-2"></span>
               <span className="flex-1 text-base">Pending Missions</span>
-              <div className="text-primary-gray-500 px-3">1</div>
+              <div className="text-primary-gray-500 px-3">{state?.bondList?.filter(u=>u?.status=="IN PROGRESS")?.length}</div>
             </div>
           </div>
           {/* Chart Container */}

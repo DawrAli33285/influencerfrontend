@@ -57,15 +57,15 @@ export default function ViewBond() {
             <ToastContainer containerId={"viewBondIssuer"} />
 
 
-            <div className="w-full lg:px-[30px] py-[40px]">
+            <div className="w-full lg:px-[30px] px-[20px] mx-auto py-[40px]">
                 <div className="flex lg:flex-row flex-col gap-[30px] justify-between lg:mb-[60px] lg:items-center">
                     <div className='flex flex-col'>
                         <h1 className="lg:text-[2rem] text-[1.5rem] font-bold">Promise Bond Details</h1>
                         <p className='lg:text-[0.94rem] text-[0.75rem]'>This section provides key details about the bond.</p>
                     </div>
-                    {state?.offer || state?.currentIssuer?._id == state?.bond?.issuer_id ? '' : <button
+                    {state?.offer || state?.currentIssuer?._id == state?.bond?.issuer_id || state?.bond?.status!="APPROVED" || state?.bond?.verified!=true ? '' : <button
                         onClick={() => {
-                            navigate(`/buyersponsorbond?id=${id}&total_bonds=${state?.bond?.total_bonds}&key=${state?.bond?.bond_issuerance_amount}`);
+                            navigate(`/buyerpromisebond?id=${id}&total_bonds=${state?.bond?.total_bonds}&key=${state?.bond?.bond_price}`);
                         }}
                         className="px-[20px] py-[10px] bg-black text-white font-medium text-[.88rem] rounded-[60px]"
                     >
@@ -74,7 +74,7 @@ export default function ViewBond() {
 
 
                 </div>
-                {loading ? <div className="flex justify-center items-center">
+                {loading ? <div className="flex justify-center lg:h-[500px] h-[700px] items-center">
 
                     <MoonLoader color="#6B33E3" size={100} />
                 </div> : <>
@@ -85,7 +85,7 @@ export default function ViewBond() {
                                 {state.bond.photos.map((val, i) => (
                                     <div
                                         key={i}
-                                        className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                                        className=" relative group lg:w-[80%] w-full overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow"
                                     >
                                         <img
                                             src={val}
@@ -93,7 +93,7 @@ export default function ViewBond() {
                                             className="w-full h-[200px] md:h-[250px] lg:h-[300px] object-cover"
                                         />
                                         <div
-                                            className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold"
+                                            className="absolute inset-0 md:w-full w-[80%] bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold"
                                         >
                                             Photo {i + 1}
                                         </div>
@@ -110,10 +110,14 @@ export default function ViewBond() {
 
                         </div>
                         <div className='flex flex-col gap-[10px]'>
-                            <h1 className="lg:text-[28px] text-[20px] font-semibold">Mission</h1>
-                            <p className="lg:text-[0.94rem] text-[0.75rem] line-clamp-3">  {state?.mission?.description?.length > 0 ? state?.mission?.description : `No Mission Found`}
-                            </p>
-                        </div>
+    <h1 className="lg:text-[28px] text-[20px] font-semibold">Mission</h1>
+    <p className="lg:text-[0.94rem] felx flex-wrap text-[0.75rem] lg:w-[30rem] w-[20rem] max-w-full overflow-y-auto h-[10rem]">
+        {state?.mission?.description?.length > 0 ? state?.mission?.description : `No Mission Found`}
+    </p>
+</div>
+
+
+
 
                         <div className='flex flex-col gap-[10px]'>
                             <h1 className="lg:text-[28px] text-[20px] font-semibold">Validity</h1>
@@ -121,16 +125,16 @@ export default function ViewBond() {
                         </div>
 
 
-                        
-                            <div className='flex flex-col gap-[10px]'>
-                                <h1 className="lg:text-[28px] text-[20px] font-semibold">Price</h1>
-                                <p className='lg:text-[0.94rem] text-[0.75rem]'>${state?.bond?.bond_issuerance_amount}</p>
-                            </div>
-                            <div className='flex flex-col gap-[10px]'>
-                                <h1 className="lg:text-[28px] text-[20px] font-semibold">Total Bonds</h1>
-                                <p className='lg:text-[0.94rem] text-[0.75rem]'>${state?.bond?.total_bonds}</p>
-                            </div>
-                       
+
+                        <div className='flex flex-col gap-[10px]'>
+                            <h1 className="lg:text-[28px] text-[20px] font-semibold">Price</h1>
+                            <p className='lg:text-[0.94rem] text-[0.75rem]'>${state?.bond?.bond_issuerance_amount}</p>
+                        </div>
+                        <div className='flex flex-col gap-[10px]'>
+                            <h1 className="lg:text-[28px] text-[20px] font-semibold">Total Bonds</h1>
+                            <p className='lg:text-[0.94rem] text-[0.75rem]'>{state?.bond?.total_bonds}</p>
+                        </div>
+
                     </div>
                 </>}
             </div>

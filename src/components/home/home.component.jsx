@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { how_work, why_choose } from './json-data'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import axios from 'axios'
@@ -54,7 +54,7 @@ export const HomeComponent = () => {
     console.log(state
       , 'state')
   }, [state])
-
+const navigate=useNavigate()
 
 
     return (
@@ -207,18 +207,20 @@ export const HomeComponent = () => {
               {
                loading?<div className="flex justify-center items-center">
                <MoonLoader color="#6B33E3" size={100} />
-             </div>:!state?.bonds?.length ? <div className='text-center col-span-12 text-lg font-medium'>Data not found</div> :
-                  state?.bonds?.map((_, index) => (
-                    <div key={index} className="border rounded-xl shadow-md">
+             </div>:!state?.bonds?.length ? <div className='text-center cursor-pointer col-span-12 text-lg font-medium'>Data not found</div> :
+                  state?.bonds?.map((bond, index) => (
+                    <div onClick={()=>{
+                      navigate(`/promisebonddetail/${bond?._id}`)
+                    }} key={index} className="border cursor-pointer rounded-xl shadow-md">
                       <img
-                        src={`${base_path_image}/img2.png`}
+                        src={`${bond?.photos[0]}`}
                         alt="image6"
                         className="h-[247px] w-full object-cover rounded-t-xl"
                       />
                       <div className="flex flex-col px-5 py-4">
-                        <div className="text-sm text-[#6B7177]">Design & Creative</div>
+                        <div className="text-sm text-[#6B7177]">{bond?.missions[0]?.mission_title}</div>
                         <div className="font-medium text-lg py-2 leading-6">
-                          I'll create a personalized marketing strategy.
+                          I'll {bond?.missions[0]?.mission_title}
                         </div>
                         <div className="text-base font-medium flex items-center gap-x-2">
                           <span>*</span>
@@ -231,15 +233,15 @@ export const HomeComponent = () => {
                         <div className="flex items-center justify-between border-t pt-3 mt-3">
                           <div className="flex items-center gap-x-2">
                             <img
-                              src={`${base_path_image}/imag1.png`}
+                              src={bond?.issuer_id?.user_id?.avatar?bond?.issuer_id?.user_id?.avatar:`${base_path_image}/imag1.png`}
                               alt="image11"
                               className="rounded-full w-[30px] h-[30px]"
                             />
-                            <span className="text-sm text-primary-dark">Anne Smith</span>
+                            <span className="text-sm text-primary-dark">{bond?.issuer_id?.user_id?.username}</span>
                           </div>
                           <div className="flex items-center gap-x-2">
                             <span className="text-[#6B7177]">Starting at</span>
-                            <span className="font-semibold">$200</span>
+                            <span className="font-semibold">${bond?.bond_issuerance_amount}</span>
                           </div>
                         </div>
                       </div>

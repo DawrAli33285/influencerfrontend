@@ -242,33 +242,33 @@ export default function Billing() {
                             </tbody>
                         </table>
                         <div className='w-full xl:hidden block'>
-                            <div className="xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
+                            <div className="flex bg-[#f2f2f2] flex-col gap-[20px]">
                                 {bondData?.map((bond, index) => (
-                                    <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Bond</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.title}</p>
+                                    <div key={index} className="p-[20px] bg-white flex flex-col gap-[20px] border-b border-gray-300 py-4">
+                                        <div className='flex flex-col gap-[10px]'>
+                                            <div className="flex flex-col gap-[10px]">
+
+                                                <p className="text-[14px] font-semibold">{bond?.title}</p>
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+
+                                                <p className="text-[14px] font-semibold">{bond?.bond_price}</p>
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+
+                                                <p className="text-[14px] font-semibold">{bond?.validity_number + ' months'}</p>
+                                            </div>
+
                                         </div>
-
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Date</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.bond_price}</p>
+                                        <div className='flex justify-between items-center'>
+                                            <div className="flex flex-col gap-[10px]">
+                                                
+                                                <p className="text-[0.75rem] text-[#1DBF73] ">{bond?.total_bonds}/bond </p>
+                                            </div>
+                                            <button className="flex bg-[#FFEDE8] p-[20px] items-center gap-[6px] w-fit ">
+                                                View Invoice
+                                            </button>
                                         </div>
-
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Price</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.total_bonds} </p>
-                                        </div>
-
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Status</h1>
-                                            <p className="text-[16px] font-semibold">{bond?.validity_number + ' months'}</p>
-                                        </div>
-
-                                        <button className="p-[10px] w-fit text-[#1DBF73] underline  font-semibold rounded-[10px] lg:col-span-2">
-                                            View Invoice
-                                        </button>
-
                                     </div>
                                 ))}
                             </div>

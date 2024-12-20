@@ -85,13 +85,16 @@ const OfferListingTable = () => {
     return (
         <>
             <ToastContainer containerId="buyerOfferListing" limit={1} />
-            <div className="bg-white min-h-[400px]  p-[20px] max-h-[700px] overflow-y-auto rounded-[20px] shadow-md">
-                <div className="flex justify-between items-center mb-[20px]">
-                    <h1 className="text-[#1DBF73] text-[24px] font-semibold">Offers</h1>
+            <div className=" p-[20px] min-h-[700px] w-full   bg-[#f2f2f2] rounded-[20px] mt-[20px] px-[20px] lg:py-[40px]">
+                <div className="flex justify-between lg:flex-row flex-col gap-[20px] items-center mb-[20px]">
+                    <div className='flex flex-col'>
+                        <h1 className="lg:text-[2rem] text-[1.5rem] font-bold">Offers</h1>
+                        <p className='lg:text-[0.94rem] text-[0.75rem]'>Discover and invest in unique missions by talented individuals.</p>
+                    </div>
                     <select
                         value={selectedMonth}
                         onChange={fetchAccordingToMonth}
-                        className="p-[8px] bg-white font-semibold text-black rounded-[10px] border-[1px] border-black outline-none"
+                        className="p-[8px] lg:max-w-[140px] w-full bg-white font-medium text-[.88rem] text-black rounded-[2rem] shadow-md outline-none"
                     >
                         <option value="default">Select Month</option>
                         {months.map((month) => (
@@ -107,64 +110,62 @@ const OfferListingTable = () => {
                         <MoonLoader color="#6B33E3" size={100} />
                     </div>
                 ) : offersData.length > 0 ? (
-                    <div>
+                    <div className='lg:p-[30px] lg:bg-white'>
                         <table className="min-w-full table-auto xl:table hidden border-gray-300 border-collapse">
                             <thead>
                                 <tr className="bg-[#FDFBFD]">
-                                    <th className="p-[10px] text-left border-l border-t border-b border-gray-300">Bond Name</th>
-                                    <th className="p-[10px] text-left border-l border-t border-b border-gray-300">Validity Period</th>
-                                    <th className="p-[10px] text-left border-l border-t border-b border-gray-300">Unit Price</th>
-                                    <th className="p-[10px] text-left border-l border-t border-b border-gray-300">Quantity</th>
-                                    <th className="p-[10px] text-left border-l border-t border-b border-r border-gray-300">Options</th>
+                                    <th className="p-[10px] bg-[#1DBF7314]  text-[1.07rem] font-medium lg:px-[30px] lg:py-[30px] text-left border-b border-gray-300">Bond Name</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Validity Period</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Unit Price</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30">Quantity</th>
+                                    <th className="p-[10px] bg-[#1DBF7314] text-[1.07rem] font-medium text-left border-b lg:py-[30px] border-gray-30 ">Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {offersData?.map((offer, index) => (
 
                                     <tr key={index} className="border-b">
-                                        <td className="p-[10px] border-l border-gray-300">{offer?.bond_id?.title || offer.title}</td>
-                                        <td className="p-[10px] border-l border-gray-300">{(offer?.bond_id?.validity_number || offer.validity_number) + ' months'}</td>
-                                        <td className="p-[10px] border-l border-gray-300">{offer?.price}</td>
-                                        <td className="p-[10px] border-l border-r border-gray-300">{offer?.number_of_bonds}</td>
-                                        <td className="border-l border-r border-gray-300 p-[10px] grid gap-[10px] grid-cols-2">
-                                            <div onClick={() => acceptBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Accept</div>
+                                        <td className="p-[10px] text-[0.94rem] font-normal  border-b border-b-[#E9E9E9] pt-[30px]">{offer?.bond_id?.title || offer.title}</td>
+                                        <td className="p-[10px] text-[0.94rem] font-normal  border-b border-b-[#E9E9E9] pt-[30px]">{(offer?.bond_id?.validity_number || offer.validity_number) + ' months'}</td>
+                                        <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]  text-[#1DBF73]">{offer?.price}</td>
+                                        <td className="p-[10px] text-[0.94rem] font-normal  border-b border-b-[#E9E9E9] pt-[30px]">{offer?.number_of_bonds}</td>
+                                        <td className="p-[10px] text-[0.94rem] font-normal  border-b border-b-[#E9E9E9] pt-[30px] flex gap-[6px]">
+                                            <div onClick={() => acceptBuyerOffer(offer._id)} className=' bg-[#FFEDE8] flex  p-[20px] items-center gap-[6px] cursor-pointer'>Accept</div>
 
-                                            <div onClick={() => rejectBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Reject</div>
+                                            <div onClick={() => rejectBuyerOffer(offer._id)} className=' bg-[#FFEDE8] flex  p-[20px] items-center gap-[6px] cursor-pointer'>Reject</div>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                         <div className='w-full xl:hidden block'>
-                            <div className="xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
+                            <div className="flex bg-[#f2f2f2] flex-col gap-[20px]">
                                 {offersData?.map((offer, index) => (
-                                    <div key={index} className="grid xl:grid-cols-4 grid-cols-2 gap-[20px] border-b border-gray-300 py-4">
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Bond Name</h1>
-                                            <p className="text-[16px] font-semibold">{offer?.bond_id?.title || offer.title}</p>
+                                    <div key={index} className="p-[20px] bg-white flex flex-col gap-[20px] border-b border-gray-300 py-4">
+                                        <div className='flex flex-col gap-[10px]'>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <p className="text-[0.75rem] font-semibold">{offer?.bond_id?.title || offer.title}</p>
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <h1 className="text-[0.75rem]">Validity:</h1>
+                                                <p className="text-[0.75rem]">{(offer?.bond_id?.validity_number || offer.validity_number) + ' months'}</p>
+                                            </div>
+                                            <div className="flex flex-col gap-[10px]">
+                                                <p className="text-[0.75rem]">{offer?.number_of_bonds} </p>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Validity Period</h1>
-                                            <p className="text-[16px] font-semibold">{(offer?.bond_id?.validity_number || offer.validity_number) + ' months'}</p>
+                                        <div className='flex justify-between items-center'>
+                                            <div className="flex flex-col gap-[10px]">
+                                                
+                                                <p className="text-[0.75rem] text-[#1DBF73]">{offer?.price}/bond</p>
+                                            </div>
+                                            <div className="flex  gap-[10px]">
+                                                <div onClick={() => acceptBuyerOffer(offer._id)} className='flex bg-[#FFEDE8] p-[20px] items-center gap-[6px] text-[0.75rem]  font-semibold'>Accept</div>
+
+                                                <div onClick={() => rejectBuyerOffer(offer._id)} className='flex bg-[#FFEDE8] p-[20px] items-center gap-[6px] text-[0.75rem]  font-semibold'>Reject</div>
+                                            </div>
+
                                         </div>
-
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Unit Price</h1>
-                                            <p className="text-[16px] font-semibold">{offer?.price}</p>
-                                        </div>
-
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Quantity</h1>
-                                            <p className="text-[16px] font-semibold">{offer?.number_of_bonds} </p>
-                                        </div>
-
-                                        <div className="flex flex-col gap-[10px]">
-                                            <h1 className="text-[18px] font-semibold text-[#7E8183]">Options</h1>
-                                            <div onClick={() => acceptBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Accept</div>
-
-                                            <div onClick={() => rejectBuyerOffer(offer._id)} className='text-[16px] text-center cursor-pointer px-[20px] py-[10px] text-[#1DBF73] border rounded-[20px] border-[#D0D5DD]'>Reject</div>
-                                        </div>
-
                                     </div>
                                 ))}
                             </div>

@@ -22,17 +22,17 @@ export default function SellerNotificationCards({ state, loading }) {
                             <img src={`${base_path_icon}/icon14.svg`} alt="icon" width={58} />
 
                         </div>
-                        <div className='text-[14px] text-[#F21212BF]'>Dropped by: 0.2%</div>
+                        {/* <div className='text-[14px] text-[#F21212BF]'>Dropped by: 0.2%</div> */}
                     </div>
                 </div>
                 <div className="bg-white p-[20px] flex gap-[10px] rounded ">
                     <div className="flex flex-col justify-between w-full">
                         <h1 className="text-[16px] text-[#344054]">Status</h1>
                         <div className='flex justify-between items-end'>
-                            <h2 className="text-[18px] font-bold">{filterBondCount("IN PROGRESS")}% Sold</h2>
+                            <h2 className="text-[18px] font-bold">{state?.bondList?.filter(u=>u.status=="IN PROGRESS"||u?.status=="COMPLETED")?.length} Sold</h2>
                             <img src={`${base_path_icon}/icon14.svg`} alt="icon" width={58} />
                         </div>
-                        <div className='text-[14px] text-[#5BBB7BBF]'>Increased by: 1.2%</div>
+                        {/* <div className='text-[14px] text-[#5BBB7BBF]'>Increased by: 1.2%</div> */}
                     </div>
                 </div>
                 <div className="bg-white p-[20px] flex gap-[10px] rounded ">
@@ -43,18 +43,18 @@ export default function SellerNotificationCards({ state, loading }) {
                             <h2 className="text-[18px] font-bold">{filterBondCount("Bond for Sale")}</h2>
                             <img src={`${base_path_icon}/icon14.svg`} alt="icon" width={58} />
                         </div>
-                        <div className='text-[14px] text-[#5BBB7BBF]'>Increased by: 1.2%</div>
+                        {/* <div className='text-[14px] text-[#5BBB7BBF]'>Increased by: 1.2%</div> */}
                     </div>
                 </div>
                 <div className="bg-white p-[20px] flex gap-[10px] rounded ">
 
                     <div className="flex flex-col justify-between w-full">
-                        <h1 className="text-[16px] text-[#344054]">Total Value</h1>
+                        <h1 className="text-[16px] text-[#344054]">Total Bonds</h1>
                         <div className='flex justify-between items-end'>
-                            <h2 className="text-[18px] font-bold">{filterBondCount("Bond for Sale")}</h2>
+                            <h2 className="text-[18px] font-bold">{state?.bondList?.length}</h2>
                             <img src={`${base_path_icon}/icon14.svg`} alt="icon" width={58} />
                         </div>
-                        <div className='text-[14px] text-[#5BBB7BBF]'>Increased by: 1.2%</div>
+                        {/* <div className='text-[14px] text-[#5BBB7BBF]'>Increased by: 1.2%</div> */}
                     </div>
                 </div>
             </>}
