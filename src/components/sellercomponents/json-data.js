@@ -11,8 +11,12 @@ const getCurrentIssuerId=async()=>{
             }
         }
     let response=await axios.get(`${BASE_URL}/getHeaderCurrentIssuer`,headers)
+    if(response?.data?.issuer){
+        return response?.data?.issuer?._id
+    }else{
+        return ''
+    }
     
-    return response?.data?.issuer?._id
     }else{
         return ''
     }
