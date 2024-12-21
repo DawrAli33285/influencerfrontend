@@ -120,13 +120,14 @@ export default function VerifyBond() {
                             <div className="mt-[10px]">
                                 <label htmlFor="VerificationCode" className="block text-xl  font-semibold text-[#272226]">Verification Code</label>
                                 <input
-value={codeVerificationData.otp}
-onChange={(e)=>{
+ value={codeVerificationData.otp}
+  onChange={(e) => {
+    const inputValue = e.target.value.replace(/\s+/g, ''); 
     setCodeVerificationData({
-        ...codeVerificationData,
-        otp:e.target.value
-    })
-}}
+      ...codeVerificationData,
+      otp: inputValue,
+    });
+  }}
                                     type="text"
                                     name="VerificationCode"
                                     placeholder="Enter Verification Code"

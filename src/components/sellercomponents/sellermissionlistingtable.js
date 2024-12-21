@@ -287,7 +287,7 @@ const SellerMissionListingTable = () => {
             <div className="bg-[#f2f2f2] min-h-[600px]    p-[20px] rounded-[20px]  ">
                 <div className="flex justify-between lg:flex-row flex-col gap-[20px] items-center mb-[20px]">
                     <div className='flex flex-col'>
-                        <h1 className="lg:text-[2rem] text-black  text-[1.50rem] font-medium  lg:text-left text-center lg:font-bold">Market</h1>
+                        <h1 className="lg:text-[2rem] text-black  text-[1.50rem] font-medium  lg:text-left text-center lg:font-bold">Promise Bonds</h1>
                         <p className='lg:text-[0.94rem] text-black text-[0.75rem] lg:text-left text-center lg:mb-0 mb-[25px]'>Discover,Buy and Sell Promise Bonds</p>
                     </div>
                     <div className="flex w-full lg:w-fit  gap-[18px] lg:flex-row flex-col lg:mt-0 mt-[40px]">
@@ -431,7 +431,7 @@ const SellerMissionListingTable = () => {
                                                 }
 
 
-                                                {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer == false ? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Send Offer</a> : ''}
+                                                {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer == false ? <a onClick={() =>  handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds, bond?.bond_price)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Send Offer</a> : ''}
                                                 {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Bid offer</a> : ''}
                                                 {
   !(bond?.status === "AWAITING FOR PAYMENT" &&

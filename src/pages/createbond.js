@@ -4,6 +4,7 @@ import { BASE_URL } from '../baseURL';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 export default function CreateBond() {
     const [error, setError] = useState('');
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -43,6 +44,7 @@ export default function CreateBond() {
             return [...prevImages, ...acceptedFiles];
         });
     };
+    const navigate=useNavigate();
 
     const handleRemoveImage = (index) => {
         setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -166,7 +168,7 @@ export default function CreateBond() {
             //     return old
 
             // })
-
+navigate(-1)
         } catch (e) {
             setDisableCreateBond(false)
             if (e?.response?.data?.error) {
@@ -182,8 +184,8 @@ export default function CreateBond() {
      <>
    <ToastContainer containerId={"createBondPage"}/>
      <div className="h-[100vh]">
-            <div className="w-full  overflow-x-auto bg-[#f2f2f2] rounded-[20px] mt-[20px] px-[20px] lg:py-[40px]">
-                <div className=" w-full h-full flex justify-center items-center px-[20px] bg-[#f2f2f2]">
+            <div className="w-full  overflow-x-auto bg-[#f2f2f2] rounded-[20px] mt-[20px] lg:px-[20px] lg:py-[40px]">
+                <div className=" w-full h-full flex justify-center items-center lg:px-[20px] bg-[#f2f2f2]">
                     <div className=" flex   flex-col gap-[10px] p-[20px]  w-full">
                         <div className='flex flex-row justify-between'>
                             <div className='flex flex-col'>

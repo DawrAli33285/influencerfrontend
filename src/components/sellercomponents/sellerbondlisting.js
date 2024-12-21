@@ -163,6 +163,13 @@ const SellerBondListingTable = () => {
                 }
             }
             console.log(cancellationState)
+            if(cancellationState?.reason?.length==0){
+                toast.error("Please select reason for cancellation",{containerId:"buyerbondListing"})
+                return;
+            }else if(cancellationState.description.length==0){
+                toast.error("Please enter description for cancellation",{containerId:"buyerbondListing"})
+                return;
+            }
 
             let response = await axios.post(`${BASE_URL}/cancellBond`, cancellationState, headers)
             toast.success(response.data.message, { containerId: "buyerbondListing" })
@@ -304,14 +311,14 @@ const SellerBondListingTable = () => {
                 return old;
             });
 
-            toast.success("Mission request sent", { containerId: "containerB" })
+            toast.success("Mission request sent", { containerId: "buyerbondListing" })
         } catch (e) {
             if (e?.response?.data?.error) {
-                toast.error(e?.response?.data?.error, { containerId: "containerB" })
+                toast.error(e?.response?.data?.error, { containerId: "buyerbondListing" })
 
                 return;
             } else {
-                toast.error("Client error please try again", { containerId: "containerB" })
+                toast.error("Client error please try again", { containerId: "buyerbondListing" })
             }
         }
     }
@@ -341,7 +348,7 @@ const SellerBondListingTable = () => {
                 menuRef.current && !menuRef.current.contains(e.target) && 
                 buttonRef.current && !buttonRef.current.contains(e.target) 
             ) {
-                setMenuOpen(false);
+                setMenuOpen(null);
             }
         };
 
@@ -459,14 +466,21 @@ const SellerBondListingTable = () => {
                                             <div
                                             ref={buttonRef}
                                                 className="cursor-pointer text-[20px] text-gray-500"
-                                                onClick={(e) => {setMenuOpen(!menuOpen)
+                                                onClick={(e) => {setMenuOpen((prev)=>{
+                                                    let old=prev;
+                                                    if(old==bond?._id){
+                                                        return null
+                                                    }else{
+                                                       return bond?._id
+                                                    }
+                                                })
                                                     e.stopPropagation();
 
                                                 }}
                                             >
                                                 &#x22EE;
                                             </div>
-                                            {menuOpen && (
+                                            {menuOpen==bond?._id && (
                                                 <div ref={menuRef} className="absolute top-[70%] right-[70%] bg-white border rounded-lg shadow-md w-max z-10">
                                                     <p
                                                         onClick={() => {
@@ -476,21 +490,28 @@ const SellerBondListingTable = () => {
                                                     >
                                                         Register for Exchange
                                                     </p>
-                                                    <p
+                                                    
+                                                    {bond?.cancancell==false?<p
                                                         onClick={() => {
                                                             setCancelledPopup((prev) => !prev);
                                                             setCancellationState({
+                                                                ...cancellationState,
                                                                 bond_id: bond?._id,
                                                             });
+                                                            setMenuOpen(null)
                                                         }}
                                                         className="cursor-pointer p-[10px] text-[0.94rem] font-normal hover:bg-gray-100 border-t border-gray-300 w-full"
                                                     >
                                                         Cancel
-                                                    </p>
+                                                    </p>:''}
                                                     {bond?.canRequestMission && (
                                                         <p
                                                             onClick={() =>
+                                                               {
                                                                 requestMission(bond.issuer_id, bond.buyer_id, bond._id)
+                                                                setMenuOpen(null)
+                                                               }
+                                                            
                                                             }
                                                             className="cursor-pointer p-[10px] text-[0.94rem] font-normal hover:bg-gray-100 border-t border-gray-300 w-full"
                                                         >
@@ -562,14 +583,21 @@ const SellerBondListingTable = () => {
                                                     <div
                                                     ref={buttonRef}
                                                         className="cursor-pointer text-[20px] text-gray-500"
-                                                        onClick={(e) => {setMenuOpen(!menuOpen)
+                                                        onClick={(e) => {setMenuOpen((prev)=>{
+                                                            let old=prev
+                                                            if(old==bond?._id){
+                                                                return null
+                                                            }else{
+                                                                return bond?._id
+                                                            }
+                                                        })
                                                             e.stopPropagation();
 
                                                         }}
                                                     >
                                                         &#x22EE;
                                                     </div>
-                                                    {menuOpen && (
+                                                    {menuOpen==bond?._id && (
                                                         <div ref={menuRef} className="absolute bottom-[70%] right-[70%] bg-white border rounded-lg shadow-md w-max z-10">
                                                             <p
                                                                 onClick={() => {
@@ -579,21 +607,27 @@ const SellerBondListingTable = () => {
                                                             >
                                                                 Register for Exchange
                                                             </p>
-                                                            <p
+                                                            {bond?.cancancell==false? <p
                                                                 onClick={() => {
                                                                     setCancelledPopup((prev) => !prev);
                                                                     setCancellationState({
+                                                                        ...cancellationState,
                                                                         bond_id: bond?._id,
                                                                     });
+                                                                    setMenuOpen(null)
                                                                 }}
                                                                 className="cursor-pointer p-[10px] text-[0.94rem] font-normal hover:bg-gray-100 border-t border-gray-300 w-full"
                                                             >
                                                                 Cancel
-                                                            </p>
+                                                            </p>:''}
+                                                           
                                                             {bond?.canRequestMission && (
                                                                 <p
-                                                                    onClick={() =>
+                                                                    onClick={() =>{
+
                                                                         requestMission(bond.issuer_id, bond.buyer_id, bond._id)
+                                                                        setMenuOpen(null)
+                                                                    }
                                                                     }
                                                                     className="cursor-pointer p-[10px] text-[0.94rem] font-normal hover:bg-gray-100 border-t border-gray-300 w-full"
                                                                 >

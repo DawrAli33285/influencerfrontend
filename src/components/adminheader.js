@@ -143,6 +143,10 @@ export default function AdminHeader({ children }) {
     useEffect(() => {
         fetchBondList();
     }, [])
+    useEffect(() => {
+        setToggleSidebar(false);
+       
+    }, [location]);
 
     const fetchBondList = async () => {
         try {

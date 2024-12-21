@@ -139,6 +139,11 @@ export default function SellerAdminHeader({ children }) {
     useEffect(() => {
         fetchBondList();
     }, [])
+    useEffect(() => {
+        setToggleSidebar(false);
+       
+    }, [location]);
+    
 
     const fetchBondList = async () => {
         try {

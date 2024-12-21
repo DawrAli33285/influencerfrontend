@@ -192,12 +192,12 @@ toast.error("Client error please try again",{containerId:"transaction"})
                         <p className="text-[#828282] px-[25px]">Safe payment online. Credit card needs. PayPal account is not necessary.</p>
 
                     </div>
-                    <div onClick={() => { setPaymethod("card") }} className={`cursor-pointer flex flex-col gap-[20px] p-[20px] ${paymethod == 'credit' ? 'bg-white' : 'bg-[#F6F6F6]'} rounded-[20px] w-full`}>
+                    <div onClick={() => { setPaymethod("card") }} className={`cursor-pointer flex flex-col gap-[20px] p-[20px] ${paymethod == 'card' ? 'bg-white' : 'bg-[#F6F6F6]'} rounded-[20px] w-full`}>
                         <div className={`flex justify-between w-full items-center`}>
                             <div className="flex items-center gap-[6px]">
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.9697 21C16.4926 21 20.9697 16.5228 20.9697 11C20.9697 5.47715 16.4926 1 10.9697 1C5.44688 1 0.969727 5.47715 0.969727 11C0.969727 16.5228 5.44688 21 10.9697 21Z" stroke={`${paymethod == "credit" ? '#6B33E3' : '#292D32'}`} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M10.9995 15.23C13.3357 15.23 15.2295 13.3362 15.2295 11C15.2295 8.66386 13.3357 6.77002 10.9995 6.77002C8.66337 6.77002 6.76953 8.66386 6.76953 11C6.76953 13.3362 8.66337 15.23 10.9995 15.23Z" stroke={`${paymethod == "credit" ? '#6B33E3' : '#292D32'}`} stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M10.9697 21C16.4926 21 20.9697 16.5228 20.9697 11C20.9697 5.47715 16.4926 1 10.9697 1C5.44688 1 0.969727 5.47715 0.969727 11C0.969727 16.5228 5.44688 21 10.9697 21Z" stroke={`${paymethod == "card" ? '#6B33E3' : '#292D32'}`} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M10.9995 15.23C13.3357 15.23 15.2295 13.3362 15.2295 11C15.2295 8.66386 13.3357 6.77002 10.9995 6.77002C8.66337 6.77002 6.76953 8.66386 6.76953 11C6.76953 13.3362 8.66337 15.23 10.9995 15.23Z" stroke={`${paymethod == "card" ? '#6B33E3' : '#292D32'}`} stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <p className="text-[18px]">CreditCard</p>
                             </div>
