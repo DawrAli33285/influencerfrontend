@@ -92,7 +92,7 @@ export default function Buyersettings() {
             setUser({
                 username: response.data.issuer.user_id.username,
                 email: response.data.issuer.user_id.email,
-                mobile_number: response.data.issuer.user_id.country_code_id.country_code + response.data.issuer.user_id.mobile_number,
+                mobile_number: response?.data?.issuer?.user_id?.country_code_id?.country_code? + response?.data?.issuer?.user_id?.mobile_number:'',
                 bio: response.data.issuer.user_id.bio,
                 language: response.data.issuer.user_id.language,
                 oldEmail: response.data.issuer.user_id.email,
@@ -257,7 +257,7 @@ export default function Buyersettings() {
                 }
             }
 
-            let response = await axios.patch(`${BASE_URL}/updateNotificationsData`, { recieve_notifications: type, notification_type: notificationState.notification_type }, headers)
+            let response = await axios.patch(`${BASE_URL}/updateNotificationsData`, { recieve_notifications: type, notification_type: notificationState?.notification_type }, headers)
             toast.success(response.data.message, { containerId: "settingsPageToast" })
         } catch (e) {
             console.log("ERROR")
