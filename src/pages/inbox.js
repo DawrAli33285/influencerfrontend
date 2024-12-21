@@ -132,7 +132,7 @@ export default function Inbox() {
                                 />
                             </div>
                             <div className="flex flex-col gap-6">
-                                {[...Array(5)].map((_, index) => (
+                                {[...Array(1)].map((_, index) => (
                                     <div
                                         key={index}
                                         className="flex items-center justify-between bg-transparent"
@@ -148,15 +148,15 @@ export default function Inbox() {
                                             </div>
                                             <div>
                                                 <p className="lg:text-[0.94rem]  text-[0.75rem] font-medium text-[#222222]">
-                                                    John Doe
+                                                 Support
                                                 </p>
                                                 <p className="lg:text-[0.94rem]  text-[0.75rem] font-normal text-[#6B7177]">
-                                                    Head of Development
+                                                    Support Chat
                                                 </p>
                                             </div>
                                         </div>
 
-                                        <p className="text-[0.75rem] font-normal text-[#6B7177]">36 mins</p>
+                                        {/* <p className="text-[0.75rem] font-normal text-[#6B7177]">36 mins</p> */}
                                     </div>
                                 ))}
                             </div>
@@ -179,9 +179,9 @@ export default function Inbox() {
                                     return <div key={message?._id} className="my-[20px]">
                                         {message?.sendBy == "Buyer" ? <div className="flex justify-end flex-col gap-[10px] items-end">
                                             <div className="flex items-center gap-[6px]">
-                                                <p className="text-[0.75rem] font-normal text-[#6B7177]">36 mins</p>
+                                                {/* <p className="text-[0.75rem] font-normal text-[#6B7177]">36 mins</p> */}
                                                 <p className="lg:text-[0.94rem]  text-[0.75rem] font-medium text-[#222222]">
-                                                    John Doe
+                                                    Me
                                                 </p>
 
                                                 <div className="rounded-[100%] w-[40px] h-[40px]">
@@ -200,9 +200,9 @@ export default function Inbox() {
                                                     <img src={avatar} alt="Support Avatar" className="w-full h-full object-cover rounded-[100%]" />
                                                 </div>
                                                 <p className="lg:text-[0.94rem]  text-[0.75rem] font-medium text-[#222222]">
-                                                    John Doe
+                                                  Support
                                                 </p>
-                                                <p className="text-[0.75rem] font-normal text-[#6B7177]">36 mins</p>
+                                                {/* <p className="text-[0.75rem] font-normal text-[#6B7177]">36 mins</p> */}
 
                                             </div>
                                             <div className="bg-[#0000000D]  p-3 rounded-[10px] max-w-[75%] flex items-start">

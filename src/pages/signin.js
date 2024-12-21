@@ -170,14 +170,14 @@ export default function SignIn() {
         <>
             <HeaderComponent />
             <ToastContainer containerId="signIn" />
-            <div className="relative flex items-center justify-center w-full h-[300px]">
+            {/* <div className="relative flex items-center justify-center w-full h-[300px]">
   <img src={banner} className="lg:block hidden w-full h-full object-cover" alt="img" />
   <img src={mblbanner} className="block lg:hidden w-full h-full object-cover" alt="img" />
   <div className="absolute lg:px-0 px-[1rem] gap-[20px] left-0 lg:pl-[10rem] top-0 w-full h-full flex flex-col lg:items-start items-center justify-center">
                     <h1 className="lg:text-[2.38rem] md:text-start text-center text-[1.9rem] text-white font-bold">Log in to access your account securely and manage everything in one place.</h1>
                     <p className="lg:text-[0.94rem] text-[.75rem] text-white">Fostering growth, forging relationships, and unlocking potential.</p>
                 </div>
-</div>
+</div> */}
            
             <div className="w-full relative md:py-[5rem] py-[2rem] h-full">
                 <h1 className="text-center font-bold text-[1.5rem] lg:text-[2.4rem]">Log In</h1>
