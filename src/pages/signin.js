@@ -185,7 +185,7 @@ export default function SignIn() {
                 <div className="xl:w-[40%] mx-auto border-2 border-[#E9E9E9] rounded-[20px] w-[95%] my-[3rem] md:w-full px-[20px] py-[40px]">
                     
                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-4">
-                    <h2 className="font-medium text-[1.3rem]">We are glad to see you again!</h2>
+
                     <p className="lg:text-[.975rem]">Dont have an account? <Link to='/signup' className="text-[#1DBF73]">signup!</Link></p>
                         <div>
                             
