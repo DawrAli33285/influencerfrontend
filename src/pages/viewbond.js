@@ -84,6 +84,7 @@ export default function ViewBond() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {state.bond.photos.map((val, i) => (
                                     <div
+                                    style={{zIndex:'-1'}}
                                         key={i}
                                         className=" relative group lg:w-[80%] w-full overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow"
                                     >
@@ -93,7 +94,7 @@ export default function ViewBond() {
                                             className="w-full h-[200px] md:h-[250px] lg:h-[300px] object-cover"
                                         />
                                         <div
-                                            className="absolute inset-0 md:w-full w-[80%] bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold"
+                                            className="absolute  inset-0 md:w-full w-full bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold"
                                         >
                                             Photo {i + 1}
                                         </div>
