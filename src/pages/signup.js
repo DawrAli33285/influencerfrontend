@@ -21,6 +21,7 @@ export default function SignUp() {
     const [showusername, setShowUsername] = useState(false)
     const [formData, setFormData] = useState({
         country_code: '',
+        acceptTerms:false,
         username: '',
         password: '',
         mobile_number: '',
@@ -44,7 +45,7 @@ export default function SignUp() {
         const mobileNumberRegex = /^\d{10}$/;
         if (!formData.username) newErrors.userName = 'User Name is required';
         if (!formData.password) newErrors.password = 'Password is required';
-
+if(!formData.acceptTerms) newErrors.acceptTerms="Please accept termns and conditions"
         if (!formData.email) {
             newErrors.email = 'Email is required';
         } else if (!emailRegex.test(formData.email)) {
@@ -108,25 +109,7 @@ export default function SignUp() {
     useEffect(() => {
         const fetchCountryCodes = async () => {
             try {
-                fetch(`${BASE_URL}/getCountries`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success) {
-                            const countryCodeList = data.countries.map((country) => ({
-                                name: country.name,
-                                code: country.code,
-                                flag: country.flag,
-                            }));
-                            setCountryCodes(countryCodeList);
-                        } else {
-                            console.error("Error: Failed to fetch country codes");
-                            toast.error("Failed to load country codes. Please try again later.", { containerId: "containerF" });
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching country codes: ", error);
-                        toast.error("Error fetching country codes. Please try again later.", { containerId: "containerF" });
-                    });
+                
 
             } catch (error) {
                 console.error("Error fetching country codes: ", error);
@@ -172,6 +155,7 @@ export default function SignUp() {
                 email: profile.getEmail(),
                 agree: false,
             })
+            setSignupEmail("Google")
             setShowUsername(!showusername)
 
         } catch (error) {
@@ -212,12 +196,41 @@ export default function SignUp() {
 
                     </div>
                     <div className="flex flex-col lg:pr-20">
-                        {
-                            signupemail && <div className="flex gap-2 items-center font-bold text-[1rem] cursor-pointer" onClick={() => { setSignupEmail(!signupemail) }}>
-                                <svg class="cursor-pointer" width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#000000" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
+                        
+                           {(signupemail || signupemail === "Google") && (
+                            <div
+                                className="flex gap-2 items-center font-bold text-[1rem] cursor-pointer"
+                                onClick={() => {
+                                    setSignupEmail(false);
+                                    setShowUsername(false)
+                                }}
+                            >
+                                <svg
+                                    className="cursor-pointer"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 1024 1024"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="#000000"
+                                >
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            fill="#000000"
+                                            d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+                                        ></path>
+                                        <path
+                                            fill="#000000"
+                                            d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                                        ></path>
+                                    </g>
+                                </svg>
                                 Back
                             </div>
-                        }
+                        )}
+                        
+                        
                         <h1 className="font-semibold lg:text-left text-center lg:text-[2.4rem] text-[1.5rem]">Create a new account</h1>
                         <p className="lg:text-[.95rem] lg:text-left text-center text-[.75rem]">Create your account to join and start exploring new opportunities.</p>
                         <div className="flex flex-col">
@@ -241,6 +254,32 @@ export default function SignUp() {
                                                     />
                                                     {errors.userName && <p className="text-red-500 text-sm">{errors.userName}</p>}
                                                 </div>
+                                                <div className="mt-4 flex items-start">
+        <input
+            type="checkbox"
+            name="acceptTerms"
+            id="acceptTerms"
+            checked={formData.acceptTerms}
+            onChange={handleChange}
+            className="h-4 w-4 text-[#1DBF73] border-gray-300 rounded focus:ring-[#1DBF73]"
+        />
+        <label
+            htmlFor="acceptTerms"
+            className="ml-2 text-sm text-gray-700"
+        >
+            I accept the{' '}
+            <a
+                href="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1DBF73] underline hover:text-[#16a55d]"
+            >
+                Terms and Services
+            </a>
+        </label>
+    </div>
+    {errors.acceptTerms && <p className="text-red-500 text-sm mt-1">{errors.acceptTerms}</p>}
+
                                                 <button
 
                                                     type="submit"
@@ -319,6 +358,32 @@ Continue With Email
                                                 />
                                                 {errors.userName && <p className="text-red-500 text-sm">{errors.userName}</p>}
                                             </div>
+                                            <div className="mt-4 flex items-start">
+        <input
+            type="checkbox"
+            name="acceptTerms"
+            id="acceptTerms"
+            checked={formData.acceptTerms}
+            onChange={handleChange}
+            className="h-4 w-4 text-[#1DBF73] border-gray-300 rounded focus:ring-[#1DBF73]"
+        />
+        <label
+            htmlFor="acceptTerms"
+            className="ml-2 text-sm text-gray-700"
+        >
+            I accept the{' '}
+            <a
+                href="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1DBF73] underline hover:text-[#16a55d]"
+            >
+                Terms and Services
+            </a>
+        </label>
+    </div>
+    {errors.acceptTerms && <p className="text-red-500 text-sm mt-1">{errors.acceptTerms}</p>}
+
                                             <button
 
                                                 onClick={handleSubmit}
