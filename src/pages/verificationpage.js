@@ -172,7 +172,7 @@ if(!emailVerification){
             if (!response.data.questions) {
 
             } else {
-                navigate('/')
+               window.location.href="/"
             }
 
         } catch (e) {
@@ -204,7 +204,7 @@ if(!emailVerification){
             }
 
             let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
-            navigate('/')
+            window.location.href="/"
         } catch (e) {
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
@@ -227,7 +227,7 @@ if(!emailVerification){
             }
 
             let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
-            navigate('/')
+           window.location.href='/'
         } catch (e) {
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "verificationPage" })

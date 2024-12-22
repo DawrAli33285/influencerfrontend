@@ -76,7 +76,7 @@ export default function SignIn() {
                         navigate(prevPath)
                     } else {
 
-                        navigate('/')
+                        window.location.href="/"
                     }
                 }
             } catch (e) {
@@ -128,7 +128,7 @@ export default function SignIn() {
                     navigate(prevPath)
                 } else {
 
-                    navigate('/')
+                    window.location.href="/"
                 }
             }
         } catch (error) {
