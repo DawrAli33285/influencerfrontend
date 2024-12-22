@@ -457,7 +457,19 @@ navigate(-1)
                                     <div className="flex justify-center w-full">
                                         <svg width="80" height="66" viewBox="0 0 80 66" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
                                     </div>
-                                    <input {...getInputProps()} disabled={uploadedImages?.length >= 4} />
+                                    <input
+  {...getInputProps({
+    onChange: (e) => {
+      const file = e.target.files[0];
+      if (file && !file.type.startsWith('image/')) {
+        toast.error('Please upload only image files.',{containerId:"createBondPage"});
+        e.target.value = ''; 
+      }
+    },
+  })}
+  disabled={uploadedImages?.length >= 4}
+/>
+
                                     <p className="lg:text-[0.94rem] text-[0.75rem] text-[#667085] my-[10px]">Drag and Drop Here</p>
                                     <p className="lg:text-[0.94rem] text-[0.75rem] text-[#667085] my-[10px]">or</p>
                                     <div className="bg-black text-white lg:text-[0.94rem] text-[0.75rem] font-medium px-[20px] py-[10px] w-fit rounded-[20px] mx-auto">Browse Images</div>

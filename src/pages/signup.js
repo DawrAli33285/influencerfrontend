@@ -146,6 +146,7 @@ export default function SignUp() {
             console.log("Email: " + profile.getEmail());
             const id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
+let response=await axios.get(`${BASE_URL}/alreadyExistsUser/${profile.getEmail()}`)
 
             setFormData({
                 country_code: '',
@@ -160,14 +161,26 @@ export default function SignUp() {
 
         } catch (error) {
             if (error?.response?.data?.error) {
-                toast.error(error?.response?.data?.error, { containerId: "signIn" })
+                toast.error(error?.response?.data?.error, { containerId: "containerF" })
             } else {
-                toast.error("Client error please try again", { containerId: "signIn" })
+                toast.error("Client error please try again", { containerId: "containerF" })
             }
             console.error("Google Sign-In Error:", error);
         }
     }
 
+    const continueWithEmail=async()=>{
+        try{
+            let response=await axios.get(`${BASE_URL}/alreadyExistsUser/${formData.email}`)
+            setShowUsername(!showusername)
+        }catch(error){
+            if (error?.response?.data?.error) {
+                toast.error(error?.response?.data?.error, { containerId: "containerF" })
+            } else {
+                toast.error("Client error please try again", { containerId: "containerF" })
+            }
+        }
+    }
 
 
 
@@ -282,7 +295,7 @@ export default function SignUp() {
                                                     type="submit"
                                                     className="w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white"
                                                 >
-                                                    Create Account
+                                                    Sign Up
                                                 </button>
                                             </div>
                                             :
@@ -316,7 +329,7 @@ export default function SignUp() {
                                                 {errors.agree && <p className="text-red-500 text-sm">{errors.agree}</p>}
                                                 <button
 
-                                                    onClick={() => { setShowUsername(!showusername) }}
+                                                    onClick={ continueWithEmail }
                                                     className="w-full min-h-[45px]  bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white "
                                                 >
                                                     Continue
@@ -385,7 +398,7 @@ export default function SignUp() {
                                                 onClick={handleSubmit}
                                                 className="w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white"
                                             >
-                                                Create Account
+                                                Sign Up
                                             </button>
                                         </div> : <>
                                             <form onSubmit={handleSubmit} className="flex flex-col">
