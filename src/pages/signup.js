@@ -192,7 +192,7 @@ export default function SignUp() {
                
                 <div className="xl:w-[40%] mx-auto min-h-[520px] border-2 lg:min-h-[560px] border-[#E9E9E9] rounded-[20px] w-[95%] my-[3rem] md:w-full px-[20px] py-[40px]">
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col space-y-4 p-4">
 
                         {/* {(signupemail || signupemail === "Google") && (
                             <div
@@ -317,7 +317,7 @@ export default function SignUp() {
                                                 <button
 
                                                     onClick={() => { setShowUsername(!showusername) }}
-                                                    className="w-full justify-center gap-[10px] min-h-[45px] shadow-md items-center flex flex-row space-x-3  font-bold py-[10px] lg:py-[20px] px-4 rounded-[3.8rem] focus:outline-none focus:ring bg-black lg:text-[0.94rem] text-[0.75rem] text-white"
+                                                    className="w-full min-h-[45px]  bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white "
                                                 >
                                                     Continue
                                                 </button>
@@ -335,7 +335,7 @@ export default function SignUp() {
                                             {!showusername ? <button
 
                                                 onClick={() => { setSignupEmail(!signupemail) }}
-                                                className="w-full justify-center gap-[10px] shadow-md  items-center flex flex-row space-x-3 min-h-[45px]  font-bold py-[10px] lg:py-[20px] px-4 rounded-[3.8rem] focus:outline-none focus:ring bg-black lg:text-[0.94rem] text-[0.75rem] text-white "
+                                                className="w-full min-h-[45px]  bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white "
                                             >
                                                 Continue With Email
                                             </button> : ''}

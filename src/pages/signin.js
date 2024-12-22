@@ -230,7 +230,7 @@ export default function SignIn() {
                             type="submit"
                             className="w-full min-h-[45px]  bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white "
                         >
-                            Login
+                          Sign in
                         </button>
 
                         <div className="flex items-center my-4">
