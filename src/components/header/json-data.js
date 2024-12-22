@@ -12,6 +12,10 @@ export const links = [
         'url': "/market",
     },
     {
+        'label': "Dasboard",
+        'url': "/dashboard",
+    },
+    {
         'label': "About Us",
         'url': "/aboutus",
     },
@@ -37,7 +41,7 @@ export const sign_up = {
     'url': "/signup",
 }
 export const categories = {
-    'label': "Categories",
-    'url': "/qqqq",
+    'label': "",
+    'url': "/",
 }
 

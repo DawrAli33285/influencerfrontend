@@ -431,7 +431,7 @@ const SellerMissionStatsChart = ({ state }) => {
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        <div className="h-full flex justify-center items-center">
+        <div className="h-[300px] flex justify-center items-center">
           <p>No Record Found</p>
         </div>
       )}

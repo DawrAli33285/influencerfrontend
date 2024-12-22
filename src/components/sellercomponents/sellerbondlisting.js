@@ -174,6 +174,22 @@ const SellerBondListingTable = () => {
             let response = await axios.post(`${BASE_URL}/cancellBond`, cancellationState, headers)
             toast.success(response.data.message, { containerId: "buyerbondListing" })
             setCancelledPopup(!cancelledpopup)
+            setBondData((prev)=>{
+               
+                let old;
+                if(prev.length>0){
+                    old=[...prev]
+                }else{
+                    old=[prev]
+                }
+                let findBondIndex=old.findIndex(u=>u?._id==cancellationState.bond_id)
+                let newbond={
+                    ...old[findBondIndex],
+                    cancancell:true
+                }
+                old[findBondIndex]=newbond
+                return old
+            })
             setCancellationState({
                 bond_id: '',
                 description: '',

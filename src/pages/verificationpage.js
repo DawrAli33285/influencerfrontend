@@ -166,7 +166,7 @@ export default function Verification() {
             if (!response.data.questions) {
 
             } else {
-                navigate('/buyerdashboard')
+                navigate('/')
             }
 
         } catch (e) {
@@ -198,7 +198,7 @@ export default function Verification() {
             }
 
             let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
-            navigate('/buyerdashboard')
+            navigate('/')
         } catch (e) {
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
@@ -221,7 +221,7 @@ export default function Verification() {
             }
 
             let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
-            navigate('/buyerdashboard')
+            navigate('/')
         } catch (e) {
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "verificationPage" })

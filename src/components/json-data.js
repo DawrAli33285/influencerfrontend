@@ -53,6 +53,11 @@ export const menu_itmes = [
         "icon": base_path_icon + "/icon6.svg"
     },
     {
+        "label": "Home",
+        "link": "/",
+        "icon": base_path_icon + "/icon6.svg"
+    },
+    {
         "label": "About Us",
         "link": "/aboutus",
         "icon": base_path_icon + "/icon7.svg"
