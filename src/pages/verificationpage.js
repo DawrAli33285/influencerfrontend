@@ -13,6 +13,7 @@ import { FooterComponent } from "../components/footer/footer.component";
 
 export default function Verification() {
     const { state } = useLocation();
+    let location=useLocation();
     const navigate = useNavigate();
     const [phoneVerification, setPhoneVerification] = useState(false);
     const [selectedPlatform, setSelectedPlatform] = useState(null);
@@ -141,9 +142,15 @@ export default function Verification() {
     }, [emailVerification, phoneVerification]);
 
     useEffect(()=>{
-if(!emailVerification){
+        let params=new URLSearchParams(location.search)
+let verified=params.get('verified')
+if(verified==true){
+    setEmailVerification(true);
+}
+if(!emailVerification && !verified){
     handleSendEmailVerification();
 }
+
     },[])
 
     const getVerificationData = async (skip) => {
@@ -332,7 +339,7 @@ if(!emailVerification){
                                     :
                                     <div>
                                         <h2 className="text-center lg:text-[2.4rem] text-[1.5rem] font-semibold ">Verify Your Email Address</h2>
-                                        <p className="lg:text-[.975rem] text-[.75rem] mb-[4rem] text-center mt-[20px]">We’ve send the verification OTP to provided email.</p>
+                                        <p className="lg:text-[.975rem] text-[.75rem] mb-[4rem] text-center mt-[20px]">We’ve send the verification link to provided email.</p>
 
 
                                         <div className="mb-6 flex flex-col gap-[20px] items-center">
@@ -366,7 +373,7 @@ if(!emailVerification){
                                                     {emailSent && (
                                                         <>
                                                             <div className="flex justify-center gap-2 mt-4">
-                                                                {Array.from({ length: 6 }).map((_, index) => (
+                                                                {/* {Array.from({ length: 6 }).map((_, index) => (
                                                                     <input
                                                                         key={index}
                                                                         type="text"
@@ -375,20 +382,17 @@ if(!emailVerification){
                                                                         value={verificationData.emailCode[index] || ""}
                                                                         onChange={(e) => handleChange(e, index)}
                                                                     />
-                                                                ))}
+                                                                ))} */}
                                                             </div>
 
 
                                                             <p >
-                                                                Didn’t get the code? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
+                                                                Didn’t get the link? <a onClick={handleSendEmailVerification} to="#" className="text-[#1DBF73] cursor-pointer underline">
 
                                                                     Resend
                                                                 </a>
                                                             </p>
-                                                            <button onClick={handleEmailVerify}
-                                                                className="w-full md:h-[60px] bg-black rounded-[20px] lg:text-[.975rem] text-[.75rem] text-white font-bold py-[10px] px-4  mt-2">
-                                                                Verify Email
-                                                            </button>
+                                                           
 
                                                         </>
                                                     )}

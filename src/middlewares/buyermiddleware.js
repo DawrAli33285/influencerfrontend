@@ -43,7 +43,7 @@ const BuyerMiddleware = () => {
       let response=await axios.get(`${BASE_URL}/allowIssuerAccess`, headersissuer);
       if(response.data.issuer.user_id.status=="ONE WEEK SUSPENSION" || response.data.issuer.user_id.status=="PERMANENT"){
         toast.error("User banned",{containerId:"issuerAuthentication"})
-        navigate('/')
+      window.location.href='/'
          }
 
 

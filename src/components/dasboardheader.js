@@ -348,7 +348,7 @@ export default function DashboardHeader({ children }) {
                             onClick={(e) => {
                                 localStorage.removeItem('token')
                                 localStorage.removeItem("buyerToken")
-                                navigate('/')
+                               window.location.href='/'
                             }}
                             className={`flex gap-[10px] rounded-[10px] items-center py-[10px] px-[20px] text-[18px] ${location.pathname === '/logout' ? 'bg-white text-[#1DBF73]' : 'text-[#74767E]'}`}
                         >
@@ -703,9 +703,10 @@ export default function DashboardHeader({ children }) {
                                 </Link>
                                 <div
                                     onClick={() => {
-                                        navigate('/')
+                                    
                                         localStorage.removeItem("token")
                                         localStorage.removeItem("buyerToken")
+                                        window.location.href='/'
                                     }}
                                     className={`flex gap-[10px] rounded-[20px] items-center py-[10px] px-[20px] text-[18px] ${location.pathname === '/logout' ? 'bg-white text-[#1DBF73]' : 'text-white'}`}
                                 >

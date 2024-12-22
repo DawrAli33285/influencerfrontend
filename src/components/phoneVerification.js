@@ -169,36 +169,43 @@ export default function PhoneVerification() {
                 <div className="mt-4">
                   <div className="flex justify-center items-center space-x-4">
                     {Array.from({ length: 6 }, (_, index) => (
-                      <input
-                        key={index}
-                        type="text"
-                        maxLength={1}
-                        value={verificationData.mobileCode[index] || ""}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          const updatedCode = verificationData.mobileCode.split("");
-                          updatedCode[index] = value;
-                        
-                          setVerificationData({
-                            ...verificationData,
-                            mobileCode: updatedCode.join(""),
-                          });
-
-                          if (value && e.target.nextElementSibling) {
-                            e.target.nextElementSibling.focus();
-                          }
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Backspace" && !e.target.value && e.target.previousElementSibling) {
-                            e.target.previousElementSibling.focus();
-                          }
-                        }}
-                        placeholder="_"
-                        className={`w-[50px] h-[50px] text-center text-[28px] rounded-[4px] border outline-none ${verificationData.mobileCode[index]
-                          ? "border-[#1DBF73] text-[#1DBF73]"
-                          : "border-[#E9E9E9] text-gray-400"
-                          }`}
-                      />
+                    <input
+                    key={index}
+                    type="text"
+                    maxLength={1}
+                    value={verificationData.mobileCode[index] || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      
+                      
+                      if (/[^0-9]/.test(value)) {
+                        return; 
+                      }
+                      
+                      const updatedCode = verificationData.mobileCode.split("");
+                      updatedCode[index] = value;
+                      
+                      setVerificationData({
+                        ...verificationData,
+                        mobileCode: updatedCode.join(""),
+                      });
+                  
+                      if (value && e.target.nextElementSibling) {
+                        e.target.nextElementSibling.focus();
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Backspace" && !e.target.value && e.target.previousElementSibling) {
+                        e.target.previousElementSibling.focus();
+                      }
+                    }}
+                    placeholder="_"
+                    className={`w-[50px] h-[50px] text-center text-[28px] rounded-[4px] border outline-none ${verificationData.mobileCode[index]
+                      ? "border-[#1DBF73] text-[#1DBF73]"
+                      : "border-[#E9E9E9] text-gray-400"
+                      }`}
+                  />
+                  
                     ))}
                   </div>
 

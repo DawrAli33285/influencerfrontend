@@ -66,7 +66,7 @@ export { links };
 export const become_a_seller = {};
 
 export const login = {
-    'label': "Log In",
+    'label': "Sign In",
     'url': "/signin",
 };
 

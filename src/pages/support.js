@@ -40,7 +40,7 @@ export default function Support() {
         },
         {
             question: "How do I create a Promise Bond?",
-            answer: "Log into your account, navigate to 'Create Bond', and fill in the required details about your mission."
+            answer: "Sign into your account, navigate to 'Create Bond', and fill in the required details about your mission."
         },
         {
             question: "Can I sell a Promise Bond I purchased?",

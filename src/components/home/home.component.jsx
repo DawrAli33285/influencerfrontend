@@ -319,11 +319,11 @@ const navigate=useNavigate()
                       state?.market?.map((val, index) => {
                         return (
                           <SwiperSlide>
-                            <div className='w-full overflow-hidden rounded-xl' key={val.issuer_id.user_id.username}>
+                            <div className='w-full overflow-hidden rounded-xl' key={val?.issuer_id?.user_id?.username}>
                               <div className='bg-primary-pink-400 shadow-custom rounded-xl'>
                                 <img src={val.photos[0]} alt="user" className='max-h-[247px] min-h-[247px] object-cover w-full' />
                                 <div className='flex flex-col px-7 py-5'>
-                                  <div className=' font-semibold text-lg'>{val.issuer_id.user_id.username}</div>
+                                  <div className=' font-semibold text-lg'>{val?.issuer_id?.user_id?.username}</div>
                                   <p className='py-1'>{val.missions[0].description.slice(0, 30)}...</p>
                                   <div className='text-lg font-medium pt-2'>
                                     ${val.total_bonds}

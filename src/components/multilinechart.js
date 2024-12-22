@@ -400,7 +400,7 @@ const SellerMissionStatsChart = ({ state }) => {
   }));
 
   return (
-    <div className="bg-white p-6 w-full max-w-5xl mx-auto">
+    <div className={`${data?.length>0?'bg-white':''} p-6 w-full max-w-5xl mx-auto`}>
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4 lg:gap-0">
         <h2 className="text-primary-dark text-[17px] font-medium mb-1 lg:mb-0">Mission Stats</h2>
 

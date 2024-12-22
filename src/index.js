@@ -59,6 +59,7 @@ import PhoneVerification from './components/phoneVerification';
 import CreateBond from './pages/createbond';
 import Buyersettings from './pages/buyersettings';
 import Logout from './components/logout';
+import Verify from './pages/Verify';
 
 
 const stripePromise = loadStripe('pk_test_51QGEijKlyiNy12v1UO9k3XBkKygr92N4wtlUfBGwnLxQ5yeGZVujSaI0q99D3TkxM7OUi1l7iEVj9P3ZRaBNvyBv00QNaWLH2L');
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />,
+  },
+  {
+path:'/verify',
+element:<Verify/>
   },
   {
     path: "/profile",
