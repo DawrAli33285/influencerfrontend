@@ -179,7 +179,7 @@ export default function SignIn() {
                 </div>
 </div> */}
            
-            <div className="w-full relative md:py-[5rem] py-[2rem] h-full">
+            <div className="w-full relative md:py-[5rem] py-[2rem] h-[900px]">
                 <h1 className="text-center font-bold text-[1.5rem] lg:text-[2.4rem]">Sign In</h1>
                
                 <div className="xl:w-[40%] mx-auto border-2 border-[#E9E9E9] rounded-[20px] w-[95%] my-[3rem] md:w-full px-[20px] py-[40px]">
@@ -228,7 +228,7 @@ export default function SignIn() {
 
                         <button
                             type="submit"
-                            className="w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white "
+                            className="w-full min-h-[45px]  bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white "
                         >
                             Login
                         </button>
@@ -242,7 +242,7 @@ export default function SignIn() {
                         <div className="flex flex-row space-x-5">
                             <button
                                 onClick={googleLogin}
-                                className="w-full justify-center gap-[10px] shadow-md items-center flex flex-row space-x-3 border border-[#D93025] bg-white text-[#D93025] font-bold py-[10px] lg:py-[20px] px-4 rounded-[20px] focus:outline-none focus:ring"
+                                className="w-full justify-center gap-[10px] shadow-md items-center flex flex-row space-x-3 border border-[#D93025] bg-white text-[#D93025] font-bold py-[10px] lg:py-[20px] px-4 rounded-[3.8rem] focus:outline-none focus:ring"
                             >
                                 <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.3438 7.91406C13.3438 7.47656 13.2891 7.14844 13.2344 6.79297H6.78125V9.11719H10.6094C10.4727 10.1289 9.46094 12.043 6.78125 12.043C4.45703 12.043 2.57031 10.1289 2.57031 7.75C2.57031 3.94922 7.05469 2.19922 9.46094 4.52344L11.3203 2.74609C10.1445 1.65234 8.58594 0.96875 6.78125 0.96875C3.00781 0.96875 0 4.00391 0 7.75C0 11.5234 3.00781 14.5312 6.78125 14.5312C10.6914 14.5312 13.3438 11.7969 13.3438 7.91406Z" fill="#D93025" />
