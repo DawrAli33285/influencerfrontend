@@ -1231,13 +1231,26 @@ const BondListingTable = () => {
                         </h2>
 
                         <input
+  onChange={(e) => {
+    const file = e.target.files[0];
 
-                            onChange={(e) => {
-                                setMissionVideo(e.target.files[0])
-                            }}
-                            type="file"
-                            className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4"
-                        />
+    if (file) {
+     
+      const allowedTypes = ['video/mp4', 'video/ogg', 'video/webm'];
+
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Please upload a valid video file (mp4, ogg, or webm).",{containerId:"containerB"})
+        e.target.value = ''; 
+        return;
+      }
+
+      setMissionVideo(file); 
+    }
+  }}
+  type="file"
+  className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4"
+/>
+
 
                         <div className="flex justify-between mt-6">
                             <button

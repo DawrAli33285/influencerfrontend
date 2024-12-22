@@ -181,12 +181,12 @@ export default function SignIn() {
            
             <div className="w-full relative md:py-[5rem] py-[2rem] h-full">
                 <h1 className="text-center font-bold text-[1.5rem] lg:text-[2.4rem]">Sign In</h1>
-                <p className="lg:text-[.975rem] text text-[.75rem]  mt-[10px] lg:mb-[40px] text-center ">Sign In to access your account and manage your projects with ease.</p>
+               
                 <div className="xl:w-[40%] mx-auto border-2 border-[#E9E9E9] rounded-[20px] w-[95%] my-[3rem] md:w-full px-[20px] py-[40px]">
                     
                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-4">
 
-                    <p className="lg:text-[.975rem]">Dont have an account? <Link to='/signup' className="text-[#1DBF73]">signup!</Link></p>
+                    <p className="lg:text-[.975rem]">Don't have an account? <Link to='/signup' className="text-[#1DBF73]">signup</Link></p>
                         <div>
                             
                             <label htmlFor="email" className="block text-[.975rem]  font-medium">Email</label>

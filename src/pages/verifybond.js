@@ -34,6 +34,9 @@ export default function VerifyBond() {
                 }
             }
             let response = await axios.get(`${BASE_URL}/getSingleBond/${id}`,headers)
+            if(response?.data?.bond?.verify===true){
+navigate(-1)
+            }
             setState({
                 bond: response.data.bond,
                 mission: response.data.mission
