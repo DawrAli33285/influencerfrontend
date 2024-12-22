@@ -140,6 +140,12 @@ export default function Verification() {
         getVerificationData();
     }, [emailVerification, phoneVerification]);
 
+    useEffect(()=>{
+if(!emailVerification){
+    handleSendEmailVerification();
+}
+    },[])
+
     const getVerificationData = async (skip) => {
 
         try {

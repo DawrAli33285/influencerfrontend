@@ -444,14 +444,14 @@ const router = createBrowserRouter([
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+ 
     <PayPalScriptProvider options={{ clientId: "Aeiv6CI9M6IO70akUujuPV6ru2XJ337_GON5oIAAInPBcavq0up_hZl0NFJwcxmf6mk2tgkJX9sPH4zr" }}>
 
       <Elements stripe={stripePromise}>
         <RouterProvider router={router} />
       </Elements>
     </PayPalScriptProvider>
-  </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
