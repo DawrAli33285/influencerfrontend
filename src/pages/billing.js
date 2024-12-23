@@ -42,7 +42,7 @@ export default function Billing() {
                     authorization: `Bearer ${token}`
                 }
             }
-            let response = await axios.get(`${BASE_URL}/get-bonds`, headers)
+            let response = await axios.get(`${BASE_URL}/billing`, headers)
             setBondData(response.data.bonds)
             console.log("GET BONDS")
             console.log(response.data)
@@ -216,7 +216,7 @@ export default function Billing() {
 
                                         <td className="p-[10px] text-[0.94rem] font-normal border-b border-b-[#E9E9E9]  pt-[30px]">{bond?.status}</td>
                                         <td className={`flex  p-[20px] items-center gap-[6px] border-b border-b-[#E9E9E9]  pt-[30px]`}>
-                                            <Link to={`/invoice/${bond?.title}`} className="flex bg-[#FFEDE8] p-[20px] items-center gap-[6px]">
+                                            <Link to={`/invoice/${bond?._id}`} className="flex bg-[#FFEDE8] p-[20px] items-center gap-[6px]">
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g clip-path="url(#clip0_220_908)">
                                                         <path d="M3.0503 15.3332H4.8658C5.15097 15.3332 5.3823 15.1183 5.3823 14.8332C5.3823 14.548 5.15114 14.3332 4.8658 14.3332H3.0503C2.28597 14.3332 1.66797 13.6548 1.66797 12.8613V5.49984H14.168V7.38017C14.168 7.66534 14.4661 7.89667 14.7513 7.89667C15.0365 7.89667 15.3346 7.6655 15.3346 7.38017V3.14884C15.3346 1.80334 14.0701 0.666504 12.739 0.666504H3.0503C1.71647 0.666504 0.667969 1.78 0.667969 3.14884V12.8613C0.667969 14.2243 1.71647 15.3332 3.0503 15.3332ZM1.66797 3.14884C1.66797 2.36317 2.29897 1.6665 3.0503 1.6665H12.739C13.5101 1.6665 14.168 2.36317 14.168 3.14884V4.49984H1.66797V3.14884Z" fill="#1F4B3F" />

@@ -18,7 +18,7 @@ const IssuerMiddleware = () => {
           toast.error("Please login to access the website", {
             containerId: "issuerAuthentication",
           });
-          localStorage.setItem('pathName',location.pathname)
+          localStorage.setItem('pathName',window.location.href)
           navigate("/signin", { replace: true }); 
           return;
         }
@@ -37,8 +37,13 @@ console.log("RESPONSE ISSUER MIDDLEWARE")
         }
         if(response.data.issuer.user_id.status=="ONE WEEK SUSPENSION" || response.data.issuer.user_id.status=="PERMANENT"){
        toast.error("User banned",{containerId:"issuerAuthentication"})
-       navigate('/')
+       window.location.href='/'
         }
+        if (response?.data?.issuer?.user_id?.bio === undefined && response?.data?.issuer?.user_id?.country === undefined) {
+         
+          navigate('/verification');
+        } 
+
       } catch (e) {
         
         if (e?.response?.data?.error) {
@@ -51,7 +56,7 @@ console.log("RESPONSE ISSUER MIDDLEWARE")
           });
         }
         if (isMounted) {navigate("/signin", { replace: true })
-          localStorage.setItem('pathName',location.pathname)
+          localStorage.setItem('pathName',window.location.href)
         };
       }
     };

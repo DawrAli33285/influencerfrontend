@@ -22,7 +22,7 @@ const BuyerMiddleware = () => {
           toast.error("Please login to access the website", {
             containerId: "buyerAuthentication",
           });
-          localStorage.setItem('pathName',location.pathname)
+          localStorage.setItem('pathName',window.location.href)
           navigate("/signin", { replace: true }); 
           return;
         }
@@ -41,11 +41,17 @@ const BuyerMiddleware = () => {
         },
       };
       let response=await axios.get(`${BASE_URL}/allowIssuerAccess`, headersissuer);
+      console.log("RESPONSE")
+      console.log(response)
       if(response.data.issuer.user_id.status=="ONE WEEK SUSPENSION" || response.data.issuer.user_id.status=="PERMANENT"){
         toast.error("User banned",{containerId:"issuerAuthentication"})
       window.location.href='/'
          }
-
+       
+         if (response?.data?.issuer?.user_id?.bio === undefined && response?.data?.issuer?.user_id?.country === undefined) {
+         
+           navigate('/verification');
+         } 
 
 
       } catch (e) {
@@ -60,7 +66,7 @@ const BuyerMiddleware = () => {
           });
         }
         if (isMounted) {navigate("/signin", { replace: true })
-          localStorage.setItem('pathName',location.pathname)
+          localStorage.setItem('pathName',window.location.href)
         };
       }
     };

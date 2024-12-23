@@ -63,7 +63,7 @@ export default function SignUp() {
             try {
                 console.log(formData)
                 console.log("Formdata")
-
+   let userNameResponse=await axios.get(`${BASE_URL}/checkusername/${formData.username}`)
                 let response = await axios.post(`${BASE_URL}/register`, formData)
                 toast.dismiss()
                 toast.success(response.data.message, { containerId: "containerF" })
@@ -241,7 +241,7 @@ let response=await axios.get(`${BASE_URL}/alreadyExistsUser/${profile.getEmail()
                         )} */}
 
 
-                        <p className="lg:text-[.975rem]">Already have an account? <Link to='/signin' className="text-[#1DBF73]">Sign in</Link></p>
+                        <p className="lg:text-[.975rem]">If you already have an account, please  <Link to='/signin' className="text-[#1DBF73]">Sign in</Link></p>
 
                         <div className="flex flex-col">
                             {

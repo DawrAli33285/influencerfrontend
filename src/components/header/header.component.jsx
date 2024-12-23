@@ -31,7 +31,7 @@ export const HeaderComponent = () => {
                 localStorage.removeItem('phoneNumber')
                 window.location.reload(true)
           }} className='hidden cursor-pointer xl-d-block text-base font-medium text-center border-transparent hover:text-primary-green'>
-              Logout
+           Sign Off
             </div>:<NavLink to={login.url} className='hidden xl-d-block text-base font-medium text-center border-transparent hover:text-primary-green'>
               {login.label}
             </NavLink>}
@@ -77,7 +77,7 @@ export const HeaderComponent = () => {
                   localStorage.removeItem('phoneNumber')
                   window.location.reload(true)
                 }} className='bg-primary-dark cursor-pointer text-white rounded text-base font-medium text-center py-2 w-[114px] lg:block hidden'>
-                   Logout
+                 Sign Off
                   </div>:  <NavLink to={sign_up.url} className='bg-primary-dark text-white rounded text-base font-medium text-center py-2 w-[114px] lg:block hidden'>
                     {sign_up.label}
                   </NavLink>}

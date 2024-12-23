@@ -6,6 +6,8 @@ let navigate=useNavigate();
     useEffect(()=>{
 localStorage.removeItem('token')
 localStorage.removeItem('buyerToken')
+localStorage.removeItem('email')
+localStorage.removeItem('phoneNumber')
 window.location.href='/'
     },[])
     return(

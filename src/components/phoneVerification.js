@@ -4,6 +4,7 @@ import { BASE_URL } from "../baseURL";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Select from "react-select";
 import banner from "../faqbanner.png"
 import mblbanner from "../faqbannermbl.png"
 import HomeHeader from "./homeheader";
@@ -14,11 +15,17 @@ export default function PhoneVerification() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [mobileSent, setMobileSent] = useState(false);
+  const [countries,setCountries]=useState([{
+    code:'',
+    flag:'',
+    country:''
+  }])
   const [rememberPhoneNumber, setRememberPhoneNumber] = useState("")
   const [verificationData, setVerificationData] = useState({
     email: state?.email || "",
     mobile: "",
     mobileCode: "",
+    countryCode:''
   });
 
   const handleChange = (e) => {
@@ -30,14 +37,19 @@ export default function PhoneVerification() {
   };
 
   const handleSendMobileVerification = async () => {
-    
+    let mobilenumber=verificationData.countryCode+verificationData.mobile
+   
+
     if (verificationData.mobile.length === 0) {
       toast.error("Please enter mobile number", { containerId: "verificationPageMobile" })
+      return;
+    }else if(verificationData.countryCode.length==0){
+      toast.error("Please select country code", { containerId: "verificationPageMobile" })
       return;
     }
     const mobileRegex = /^\+[1-9]\d{1,14}$/;
 
-    if (!mobileRegex.test(verificationData.mobile)) {
+    if (!mobileRegex.test(mobilenumber)) {
       toast.error("Please enter a valid mobile number with '+' and country code", { containerId: "verificationPageMobile" });
       return;
     }
@@ -50,7 +62,7 @@ export default function PhoneVerification() {
           authorization: `Bearer ${token}`
         }
       }
-      let response = await axios.post(`${BASE_URL}/mobile-otp`, { phoneNumber }, headers);
+      let response = await axios.post(`${BASE_URL}/mobile-otp`, { phoneNumber:mobilenumber }, headers);
       toast.success(response.data.message, { containerId: "verificationPageMobile" });
       setMobileSent(true);
     } catch (e) {
@@ -116,6 +128,29 @@ export default function PhoneVerification() {
     }
   }
 
+const getCountries=async()=>{
+  try{
+let response=await axios.get(`${BASE_URL}/getCountries`)
+const transformedData = response?.data?.countries?.map((item) => ({
+  code: item.code,
+  flag: item.flag,
+  country: item.name,
+}));
+console.log('get countries')
+setCountries(transformedData)
+
+
+  }catch(e){
+
+  }
+}
+
+
+  useEffect(()=>{
+    getCountries();
+
+  },[])
+
   return (
     <>
       <ToastContainer limit={1} containerId="verificationPageMobile" />
@@ -138,26 +173,71 @@ export default function PhoneVerification() {
 
             <div className="w-full flex flex-col items-center">
               {!mobileSent ? (
-                <div>
-                  <div className="relative mt-2">
-                    <input
-                      type="tel"
-                      id="mobile"
-                      name="mobile"
-                      value={verificationData.mobile}
-                      onChange={(e) => {
-                        handleChange(e);
-                        setRememberPhoneNumber(e.target.value)
-                      }
+                <div className="w-full">
+                 <div className="relative w-full mt-2 flex items-center gap-2">
+ 
+                 <Select
+  id="countryCode"
+  name="countryCode"
+  className="block w-1/3 py-2 pl-2 pr-4 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+  onChange={(selectedOption) => {
+    setVerificationData((prevData) => ({
+      ...prevData,
+      countryCode: `+${selectedOption.value}`,
+    }));
+  }}
+  onInputChange={(inputValue) => {
+    // Only allow numeric input
+    if (/[^0-9]/.test(inputValue)) {
+      return ''; // Clear the input if it's not a number
+    }
+  }}
+  options={countries?.map((country) => ({
+    value: country.code,
+    label: (
+      <div className="flex items-center">
+        <img
+          src={country.flag}
+          alt={`Flag of ${country.country}`}
+          className="w-5 h-5 mr-2"
+        />
+        <span>{`+${country.code}`}</span>
+      </div>
+    ),
+  }))}
+/>
 
-                      }
-                      placeholder="+ Enter your mobile number"
-                      className="block w-full pl-4 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 placeholder-gray-400"
-                      pattern="\+[0-9]{1,15}"
-                      title="Please enter a valid mobile number with a '+' at the start"
-                      required
-                    />
-                  </div>
+
+<input
+  type="tel"
+  id="mobile"
+  name="mobile"
+  value={verificationData.mobile}
+  onChange={(e) => {
+    
+    const cleanedValue = e.target.value;
+    
+   
+    setVerificationData({
+      ...verificationData,
+      mobile: cleanedValue
+    });
+
+    setRememberPhoneNumber(
+      verificationData.countryCode ? verificationData.countryCode + cleanedValue : cleanedValue
+    );
+    
+  }}
+  placeholder="Enter your mobile number"
+  className="block w-2/3 pl-4 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 placeholder-gray-400"
+  pattern="[0-9]{1,15}" 
+  maxLength={15} 
+  title="Please enter a valid mobile number without the '+' symbol"
+  required
+/>
+
+</div>
+
                   <button
                     onClick={handleSendMobileVerification}
                     className="w-full text-[15px] bg-black text-white py-2 px-4 mt-4 rounded-full font-medium"
@@ -166,7 +246,7 @@ export default function PhoneVerification() {
                   </button>
                 </div>
               ) : (
-                <div className="mt-4">
+                <div className="mt-4 w-full">
                   <div className="flex justify-center items-center space-x-4">
                     {Array.from({ length: 6 }, (_, index) => (
                     <input
@@ -211,7 +291,7 @@ export default function PhoneVerification() {
 
                   <button
                     onClick={handleMobileVerify}
-                    className="w-full mt-[20px] bg-black mx-auto text-white py-2 px-4 max-w-[400px] rounded-full font-medium"
+                    className="w-full mt-[20px] bg-black mx-auto text-white py-2 px-4  rounded-full font-medium"
                   >
                     Verify Mobile
                   </button>
@@ -219,7 +299,7 @@ export default function PhoneVerification() {
               )}
               <button
                 onClick={sendCodeAgain}
-                className="w-full mt-[20px] bg-black mx-auto text-white py-2 px-4 max-w-[243px] rounded-full font-medium"
+                className="w-full mt-[20px] bg-black mx-auto text-white py-2 px-4  rounded-full font-medium"
               >
                 Send Code Again
               </button>

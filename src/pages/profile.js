@@ -103,6 +103,42 @@ export default function Profile() {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    const getSocialMediaLogo = (link) => {
+   
+        const normalizedLink = link?.toLowerCase()?.trim();
+    
+        if (normalizedLink.includes('youtube')) {
+            console.log("YouTube link detected");
+            return (
+                <svg width={35} height={35} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M18.168 19.0028C20.4724 19.0867 22.41 17.29 22.5 14.9858V9.01982C22.41 6.71569 20.4724 4.91893 18.168 5.00282H6.832C4.52763 4.91893 2.58998 6.71569 2.5 9.01982V14.9858C2.58998 17.29 4.52763 19.0867 6.832 19.0028H18.168Z" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12.008 9.17784L15.169 11.3258C15.3738 11.4454 15.4997 11.6647 15.4997 11.9018C15.4997 12.139 15.3738 12.3583 15.169 12.4778L12.008 14.8278C11.408 15.2348 10.5 14.8878 10.5 14.2518V9.75184C10.5 9.11884 11.409 8.77084 12.008 9.17784Z" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                </svg>
+            );
+        } else if (normalizedLink?.includes('tiktok')) {
+            return (
+                <svg width={35} height={35} viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none">
+               
+                </svg>
+            );
+        } else if (normalizedLink?.includes('instagram')) {
+            return (
+                <svg width={35} height={35} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  
+                </svg>
+            );
+        } else if (normalizedLink?.includes('snapchat')) {
+            return (
+                <svg width={35} height={35} viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none">
+                  
+                </svg>
+            );
+        }
+    
+        return null; 
+    };
+    
     return (
         <>
             <ToastContainer containerId={"profileToast"} />
@@ -119,30 +155,34 @@ export default function Profile() {
                                 <img src={state?.issuer?.user_id?.avatar?.length > 0 ? state?.issuer?.user_id?.avatar : avatar} alt="img" className="w-full h-full object-cover rounded-[100%]" />
                             </div>
                             <h2 className="lg:text-[2rem] text-[1.5rem] font-bold">{state?.issuer?.user_id?.username} </h2>
-                            <p className="lg:text-[0.94rem] text-[0.75rem]">Turning dreams into reality with your support.</p>
-                            <div className="flex gap-[10px]  ">
+                            {/* <p className="lg:text-[0.94rem] text-[0.75rem]">Turning dreams into reality with your support.</p> */}
+                           
+                            {state?.issuer?.user_id?.socialLink?  <div className="flex gap-[10px]  ">
                                 <div className="flex items-center gap-[6px] lg:text-[0.94rem] text-[0.75rem]">
-                                    <img src={tiktok} alt="img" className="w-[24px]" />
-                                    @AnnaSings
 
+                                    {getSocialMediaLogo(state?.issuer?.user_id?.socialLink)}
+<p className="w-full">{state?.issuer?.user_id?.socialLink}</p>
                                 </div>
-                                <div className="flex items-center gap-[6px] lg:text-[0.94rem] text-[0.75rem]">
+                                {/* <div className="flex items-center gap-[6px] lg:text-[0.94rem] text-[0.75rem]">
                                     <img src={insta} alt="img" className="w-[24px]" />
                                     @AnnaMusicSongs
 
-                                </div>
-                            </div>
+                                </div> */}
+                            </div>:null}
+                          
+                            
 
                         </div>
                         <div className="flex flex-col lg:w-[60%] max-w-[600px] lg:gap-[45px] gap-[20px]">
-                            <div className="flex flex-col gap-[10px] lg:px-[3rem] px-[2rem]">
+                            {state?.issuer?.user_id?.bio?<div className="flex flex-col gap-[10px] lg:px-[3rem] px-[2rem]">
                                 <h2 className="text-black lg:text-[1.75rem] text-[1rem] font-semibold mb-1">Bio</h2>
-                                <p className="text-[#1C1C1CA3] lg:text-[.88rem] text-[.75rem]">{state?.issuer?.user_id?.bio?state?.issuer?.user_id?.bio:'Hi, I’m Anna Johnson, a passionate singer with dreams of becoming a renowned artist. Thanks to promise bonds, I’m working towards [goal, e.g., participating in a national singing contest]. Every bond issued brings me closer to this dream.'}</p>
-                            </div>
+                                <p className="text-[#1C1C1CA3] lg:text-[.88rem] text-[.75rem]">{state?.issuer?.user_id?.bio}</p>
+                            </div>:null}
+                          
                             <div className="flex flex-col gap-[10px] lg:px-[3rem] px-[2rem]">
-                                <h2 className="text-black lg:text-[1.75rem] text-[1rem] font-semibold mb-1">Achievements</h2>
-                                <p className="text-[#1C1C1CA3] lg:text-[.88rem] text-[.75rem]">2023: Reached 50,000 followers on TikTok.</p>
-                                <p className="text-[#1C1C1CA3] lg:text-[.88rem] text-[.75rem]">2024: Runner-up at Local Talent Hunt.</p>
+                                <h2 className="text-black lg:text-[1.75rem] text-[1rem] font-semibold mb-1">Country</h2>
+                                <p className="text-[#1C1C1CA3] lg:text-[.88rem] text-[.75rem]">{state?.issuer?.user_id?.location}</p>
+                                {/* <p className="text-[#1C1C1CA3] lg:text-[.88rem] text-[.75rem]">2024: Runner-up at Local Talent Hunt.</p> */}
                             </div>
                         </div>
                     </div>
@@ -156,7 +196,7 @@ export default function Profile() {
                                     <h2 className="text-[28px] font-semibold">{state?.bonds?.length}</h2>
 
                                 </div>
-                                <p className="text-red-500 text-[14px]">Dropped by: 0.2%</p>
+                                
                             </div>
                             <div className="flex items-center">
                                 <svg width="58" height="52" viewBox="0 0 58 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,12 +208,12 @@ export default function Profile() {
                         </div>
                         <div className=" p-[20px] bg-white flex gap-[5px] justify-between ">
                             <div className="flex flex-col justify-between w-full gap-[5px]">
-                                <h1 className="text-[15px] text-[#344054]">Total Funds Raised</h1>
+                                <h1 className="text-[15px] text-[#344054]">Total Bonds Completed</h1>
                                 <div className='flex justify-between items-end'>
-                                    <h2 className="text-[28px] font-semibold">$24000</h2>
+                                    <h2 className="text-[28px] font-semibold">{state?.bonds?.filter(u=>u?.status=="COMPLETED")?.length}</h2>
 
                                 </div>
-                                <p className="text-[#5BBB7BBF] text-[14px]">Increased by: 1.2%</p>
+
                             </div>
                             <div className="flex items-center">
                                 <svg width="58" height="52" viewBox="0 0 58 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +233,7 @@ export default function Profile() {
                                     <h2 className="text-[28px] font-semibold">{state?.successRate}</h2>
 
                                 </div>
-                                <p className="text-[#5BBB7BBF] text-[14px]">Increased by: 1.2%</p>
+
 
 
                             </div>
@@ -214,12 +254,12 @@ export default function Profile() {
                         <div className=" p-[20px] bg-white flex gap-[5px] justify-between ">
 
                             <div className="flex flex-col justify-between w-full gap-[5px]">
-                                <h1 className="text-[15px] text-[#344054]">Total Value</h1>
+                                <h1 className="text-[15px] text-[#344054]">Total Cancelled Bonds</h1>
                                 <div className='flex justify-between items-end'>
-                                    <h2 className="text-[28px] font-semibold">{state?.successRate}</h2>
+                                    <h2 className="text-[28px] font-semibold">{state?.bonds?.filter(u=>u?.status=="CANCELLED")?.length}</h2>
 
                                 </div>
-                                <p className="text-[#5BBB7BBF] text-[14px]">Increased by: 1.2%</p>
+    
 
 
                             </div>

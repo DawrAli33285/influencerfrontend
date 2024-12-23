@@ -24,6 +24,12 @@ export default function Verification() {
     const [emailVerification, setEmailVerification] = useState(false);
     const [followersCount, setFollowersCount] = useState(0)
     const [token, setToken] = useState("")
+    const [showForm,setShowForm]=useState(false)
+    const [formState,setFormState]=useState({
+        country:'',
+        avatar:'',
+        bio:''
+    })
 
     const handleUserSelection = (type) => {
         setUserType(type);
@@ -97,7 +103,7 @@ export default function Verification() {
             let response = await axios.post(`${BASE_URL}/emailOTP`, { email });
             toast.success("OTP sent successfully", { containerId: "verificationPage" });
         } catch (e) {
-            toast.error(e?.response?.data?.error || "Client error, please try again", { containerId: "verificationPage" });
+            // toast.error(e?.response?.data?.error || "Client error, please try again", { containerId: "verificationPage" });
         }
     };
 
@@ -142,8 +148,13 @@ export default function Verification() {
     }, [emailVerification, phoneVerification]);
 
     useEffect(()=>{
+        let emailStorage=localStorage.getItem('email')
+        if(!emailStorage){
+            navigate(-1)
+        }
         let params=new URLSearchParams(location.search)
 let verified=params.get('verified')
+
 if(verified==true){
     setEmailVerification(true);
 }
@@ -152,6 +163,39 @@ if(!emailVerification && !verified){
 }
 
     },[])
+
+    const [avatar, setAvatar] = useState(null);
+    const [avatarFile,setAvatarFile]=useState("")
+  const [socialLinks, setSocialLinks] = useState([""]);
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file.',{containerId:"verificationPage"});
+        return;
+      }
+    setAvatarFile(file)
+    if (file) {
+        
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAddSocialLink = () => {
+    setSocialLinks([...socialLinks, ""]);
+  };
+
+  const handleSocialLinkChange = (index, value) => {
+    const newLinks = [...socialLinks];
+    newLinks[index] = value;
+    setSocialLinks(newLinks);
+  };
+
+
 
     const getVerificationData = async (skip) => {
 
@@ -176,10 +220,14 @@ if(!emailVerification && !verified){
 
                 setShowUserType(!showtype);
             }
-            if (!response.data.questions) {
+            if (!response?.data?.questions && emailVerification) {
+                setShowUserType(true)
+            } else if(response?.data?.questions && emailVerification) {
+           setShowForm(true)
+            }
 
-            } else {
-               window.location.href="/"
+            if(response?.data?.user?.avatar){
+                window.location.href='/'
             }
 
         } catch (e) {
@@ -211,7 +259,8 @@ if(!emailVerification && !verified){
             }
 
             let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
-            window.location.href="/"
+          setShowForm(true)
+            // window.location.href="/"
         } catch (e) {
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
@@ -234,8 +283,45 @@ if(!emailVerification && !verified){
             }
 
             let response = await axios.post(`${BASE_URL}/answerQuestions`, data, headers)
-           window.location.href='/'
+  
+            setShowForm(true)
+           
         } catch (e) {
+            if (e?.response?.data?.error) {
+                toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
+            } else {
+                toast.error("Something went wrong", { containerId: "verificationPage" })
+            }
+        }
+    }
+    const createProfile=async(e)=>{
+        e.preventDefault();
+        try{
+            if(!avatarFile){
+                toast.error("Please select avatar", { containerId: "verificationPage" })
+                return
+            }else if(formState.bio.length==0 && userType=="Issuer"){
+                toast.error("Please enter bio", { containerId: "verificationPage" })
+return
+            }else if(formState.country.length==0){
+                toast.error("Please enter country name", { containerId: "verificationPage" })
+                return
+            }else if(socialLinks[0].length==0 && userType=="Issuer"){
+                toast.error("Please enter social media link", { containerId: "verificationPage" })
+return
+            }
+            let email = localStorage.getItem('email');
+            let formData = new FormData();
+            formData.append("avatar", avatarFile);
+            formData.append("bio", formState.bio);
+            formData.append("location", formState.country);
+            formData.append("socialLink", socialLinks[0]);
+            formData.append("email", email);
+let response=await axios.post(`${BASE_URL}/updateProfile`,formData)
+console.log(response)
+window.location.href='/'
+        }catch(e){
+            console.log(e)
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "verificationPage" })
             } else {
@@ -258,20 +344,128 @@ if(!emailVerification && !verified){
                 </div>
             </div>
 
-            <div className="relative w-full h-full">
+            <div className="relative w-full min-h-full max-h-[900px]">
                 <div className="w-full max-w-[700px] mx-auto mt-20 p-6 border border-[#E9E9E9] rounded-lg shadow-lg">
                     {
-                        followers ? <div className="flex flex-col gap-[20px]">
+                        showForm?<>
+                        
+                        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+      <h2 className="text-2xl font-semibold text-center mb-6">Edit Profile</h2>
+      <form onSubmit={createProfile} className="space-y-6">
+      
+        <div className="flex flex-col items-center space-y-4">
+          <div className="relative">
+            <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-300">
+              {avatar ? (
+                <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                <div className="flex items-center justify-center w-full h-full text-gray-400">
+                  <span>No Image</span>
+                </div>
+              )}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+            />
+          </div>
+          <p className="text-sm text-gray-500">Click to change avatar</p>
+        </div>
+
+     
+  {userType=="Issuer"&&(
+    <>
+    
+    <div>
+          <label htmlFor="bio" className="block text-gray-700 font-medium mb-2">
+            Bio
+          </label>
+          <textarea
+          value={formState.bio}
+          onChange={(e)=>{
+            setFormState({
+                ...formState,
+                bio:e.target.value
+            })
+          }}
+            id="bio"
+            rows="4"
+            maxLength={100}
+            className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Write something about yourself..."
+          ></textarea>
+        </div>
+    </>
+  )}
+
+       
+        <div>
+          <label htmlFor="country" className="block text-gray-700 font-medium mb-2">
+            Country
+          </label>
+          <input
+            type="text"
+            id="country"
+            value={formState.country}
+            onChange={(e)=>{
+                setFormState({
+                    ...formState,
+                    country:e.target.value
+                })
+            }}
+            maxLength={35}
+            className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter your country name"
+          />
+        </div>
+
+       {userType=="Issuer"? <div>
+          <label className="block text-gray-700 font-medium mb-2">Social Media Link</label>
+          {socialLinks.map((link, index) => (
+            <input
+              key={index}
+              type="text"
+              value={link}
+              onChange={(e) => handleSocialLinkChange(index, e.target.value)}
+              className="w-full px-4 py-2 mb-3 border rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500"
+              placeholder={`Social Media Link ${index + 1}`}
+            />
+          ))}
+          {/* <button
+            type="button"
+            onClick={handleAddSocialLink}
+            className="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600"
+          >
+            + Add More Links
+          </button> */}
+        </div>:''}
+
+       
+        <div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+                        </>:followers ? <div className="flex flex-col gap-[20px]">
                             <h2 className="text-center text-2xl font-semibold mb-4">How Many Followers/Subscribers You have</h2>
                             <input
-                                value={followersCount}
-                                onChange={(e) => {
-                                    setFollowersCount(e.target.value)
-                                }}
-                                type="number"
-                                className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-                                placeholder="Followers/Subscribers"
-                            />
+  value={followersCount}
+  onChange={(e) => {
+    const value = Math.max(0, e.target.value); 
+    setFollowersCount(value);
+  }}
+  type="number"
+  className="block w-full px-3 py-4 border rounded-[20px] border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+  placeholder="Followers/Subscribers"
+/>
+
                             <button
                                 onClick={answerQuestions}
                                 disabled={!selectedPlatform}

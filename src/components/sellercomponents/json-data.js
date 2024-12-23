@@ -98,7 +98,7 @@ export const menu_itmes = [
         "icon": base_path_icon + "/icon12.svg"
     },
     {
-        "label": "Logout",
+        "label": "Sign Off",
         "link": "/logout",
         "icon": base_path_icon + "/icon13.svg"
     },

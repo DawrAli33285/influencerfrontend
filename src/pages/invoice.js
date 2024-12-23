@@ -1,9 +1,30 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useLocation,useNavigate } from "react-router-dom";
+import { useState,useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../baseURL";
 
 export default function Invoice() {
+    const [state,setState]=useState("")
     const navigate=useNavigate();
+    const location=useLocation();
+    let {id}=useParams();
+    useEffect(()=>{
+        getTransaction();
+    },[])
+    const getTransaction=async()=>{
+        try{
+           
+let response=await axios.get(`${BASE_URL}/getInvoice/${id}`)
+console.log("RESPONSE")
+console.log(response.data.data)
+setState(response.data.data)
+        }catch(e){
+
+        }
+    }
     return (
-        <div className="w-full flex-col">
+        <div className="w-full flex-col justify-center items-center">
             <svg onClick={(e)=>{
                 navigate(-1)
             }} className="cursor-pointer" width={35} height={35} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#000000" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
@@ -27,16 +48,16 @@ export default function Invoice() {
             </div>
             <div className="grid lg:grid-cols-3 grid-cols-1 lg:gap-[3rem] gap-[20px]">
                 <div className="flex flex-col items-center">
-                    <h1 className="lg:text-[3rem] text-[1.5rem]">$16,678.00</h1>
+                    <h1 className="lg:text-[3rem] text-[1.5rem]">${state?.amount}</h1>
                     <h1 className="text-[#1C1C1CA3]">Account Balance</h1>
                     <button class="bg-black mt-[20px] px-[50px] py-[10px] xl:text-[1rem] text-[.8rem] text-white font-bold rounded-[1.4rem]">
                         Request Pay Out
                     </button>
                 </div>
-                <div className="flex flex-col">
-                    <div className="justify-between flex items-center w-full">
+                <div className="flex flex-col lg:justify-start justify-center items-center lg:text-start text-center">
+                    <div className="lg:justify-between justify-center lg:text-start text-center flex items-center w-full">
                         <h1 className="font-bold">Payment Methods</h1>
-                        <Link to="/" className="text-[#1DBF73] underline">Edit Card</Link>
+                        {/* <Link to="/" className="text-[#1DBF73] underline">Edit Card</Link> */}
 
                     </div>
                     <div className="mt-[4rem]">
@@ -61,9 +82,9 @@ export default function Invoice() {
                             </defs>
                         </svg>
                     </div>
-                    <h2 className="font-bold mt-[10px]">6594-5245-2541-235</h2>
-                    <div className="justify-between flex items-center w-full">
-                        <h1 className="text-[#717171]">01/12</h1>
+                    <h2 className="font-bold mt-[10px]">{state?.cardNumber}</h2>
+                    <div className="lg:justify-between justify-center lg:text-start text-center flex items-center w-full">
+                        {/* <h1 className="text-[#717171]">01/12</h1> */}
                         <span className=" cursor-pointer">
                             <svg width="18" height="6" viewBox="0 0 18 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.83691 0.258789H2.77344L2.6709 2.6582H1.93945L1.83691 0.258789ZM1.83691 5.05078L1.93945 2.6582H2.6709L2.77344 5.05078H1.83691ZM-0.00195312 1.81738L0.462891 1.09277L2.48633 2.37109L2.11719 2.93848L-0.00195312 1.81738ZM4.60547 1.81738L2.48633 2.93848L2.11719 2.37109L4.14062 1.09277L4.60547 1.81738ZM4.60547 3.49219L4.14062 4.2168L2.11719 2.93848L2.48633 2.37109L4.60547 3.49219ZM-0.00195312 3.49219L2.11719 2.37109L2.48633 2.93848L0.462891 4.2168L-0.00195312 3.49219ZM8.44043 0.258789H9.37695L9.27441 2.6582H8.54297L8.44043 0.258789ZM8.44043 5.05078L8.54297 2.6582H9.27441L9.37695 5.05078H8.44043ZM6.60156 1.81738L7.06641 1.09277L9.08984 2.37109L8.7207 2.93848L6.60156 1.81738ZM11.209 1.81738L9.08984 2.93848L8.7207 2.37109L10.7441 1.09277L11.209 1.81738ZM11.209 3.49219L10.7441 4.2168L8.7207 2.93848L9.08984 2.37109L11.209 3.49219ZM6.60156 3.49219L8.7207 2.37109L9.08984 2.93848L7.06641 4.2168L6.60156 3.49219ZM15.0439 0.258789H15.9805L15.8779 2.6582H15.1465L15.0439 0.258789ZM15.0439 5.05078L15.1465 2.6582H15.8779L15.9805 5.05078H15.0439ZM13.2051 1.81738L13.6699 1.09277L15.6934 2.37109L15.3242 2.93848L13.2051 1.81738ZM17.8125 1.81738L15.6934 2.93848L15.3242 2.37109L17.3477 1.09277L17.8125 1.81738ZM17.8125 3.49219L17.3477 4.2168L15.3242 2.93848L15.6934 2.37109L17.8125 3.49219ZM13.2051 3.49219L15.3242 2.37109L15.6934 2.93848L13.6699 4.2168L13.2051 3.49219Z" fill="#717171" />
@@ -73,21 +94,9 @@ export default function Invoice() {
 
                     </div>
                 </div>
-                <div className="flex flex-col">
-                    <div className="justify-between flex items-center w-full">
-                        <h1 className="font-bold">Billing Address</h1>
-                        <Link to="/" className="text-[#1DBF73] underline">Edit</Link>
-
-                    </div>
-
-
-                    <div className="flex flex-col gap-[6px] mt-[8rem]">
-                        <h1 className="font-bold">Current Account</h1>
-                        <h1 className="text-[#717171]">300 Post St, Refero Design, San Francisco, 94108-4902, CA</h1>
-                    </div>
-                </div>
+              
             </div>
-            <div className="flex flex-col gap-[40px] mt-[5rem]">
+            {/* <div className="flex flex-col gap-[40px] mt-[5rem]">
                 <div className="flex lg:justify-between w-full lg:flex-row flex-col">
                     <div className="flex flex-col gap-[10px]">
                         <h1 className="font-bold">Monitor Your Payment Requests</h1>
@@ -106,7 +115,7 @@ export default function Invoice() {
                         Free Overview
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

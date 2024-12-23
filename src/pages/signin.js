@@ -73,7 +73,7 @@ export default function SignIn() {
                     let prevPath = localStorage.getItem("pathName")
                     localStorage.removeItem('pathName')
                     if (prevPath) {
-                        navigate(prevPath)
+                   window.location.href=prevPath
                     } else {
 
                         window.location.href="/"

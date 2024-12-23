@@ -16,7 +16,7 @@ if (localStorage.getItem('token')) {
         },
         {
             'label': "Dashboard",
-            'url': "/dashboard",
+            'url': "/buyerdashboard",
         },
         {
             'label': "About Us",
@@ -24,7 +24,7 @@ if (localStorage.getItem('token')) {
         },
         {
             'label': "Promise Bond",
-            'url': "/promisebond",
+            'url': "/buyerpromisebond",
         },
         {
             'label': "Terms",

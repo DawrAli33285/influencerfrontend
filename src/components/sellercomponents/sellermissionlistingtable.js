@@ -354,7 +354,7 @@ const SellerMissionListingTable = () => {
                                             <button className="p-[10px] py-[30px]  flex items-center gap-[10px] lg:col-span-2 text-[0.94rem] font-normal border-b border-b-[#E9E9E9] ">
                                                 {/* {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)} */}
                                                 {bond?.status === "AWAITING FOR PAYMENT" &&
-                                                    bond?.issuer_id !== currentIssuerId &&
+                                                    bond?.issuer_id._id !== currentIssuerId &&
                                                     (
                                                         bond?.offers?.some(u => u?.buyer_id === currentBuyerId) ||
                                                         bond?.buyerOffers?.some(u => u?.newbuyer_id === currentBuyerId)
@@ -365,16 +365,16 @@ const SellerMissionListingTable = () => {
 
 
                                                 {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer == false ? <a onClick={() => handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds, bond?.bond_price)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Send Offer</a> : ''}
-                                                {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Bid offer</a> : ''}
+                                                {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id?._id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Bid offer</a> : ''}
                                                 {
   !(bond?.status === "AWAITING FOR PAYMENT" &&
-    bond?.issuer_id !== currentIssuerId &&
+    bond?.issuer_id?._id !== currentIssuerId &&
     (
       bond?.offers?.some(u => u?.buyer_id === currentBuyerId) ||
       bond?.buyerOffers?.some(u => u?.newbuyer_id === currentBuyerId)
     )) &&
   !(bond?.status === "APPROVED" && bond?.issuer_id._id !== currentIssuerId && !bond?.disableOffer) &&
-  !(bond?.status === "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id === bond._id && u.bidder === currentBuyerId && u?.status === "PENDING") && bond?.issuer_id !== currentIssuerId && bond?.buyer_id !== currentBuyerId)
+  !(bond?.status === "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id === bond._id && u.bidder === currentBuyerId && u?.status === "PENDING") && bond?.issuer_id?._id !== currentIssuerId && bond?.buyer_id !== currentBuyerId)
     ? <p className='bg-[#FFEDE8] p-[10px] ' onClick={()=>{
         navigate(`/promisebonddetail/${bond?._id}`)
     }}>View</p>
@@ -421,7 +421,7 @@ const SellerMissionListingTable = () => {
                                             <button className="p-[10px] py-[30px]  flex items-center gap-[10px] lg:col-span-2 text-[0.94rem] font-normal border-b border-b-[#E9E9E9]">
                                                 {/* {bond?.status?.toLocaleLowerCase()?.charAt(0)?.toUpperCase() + bond?.status?.toLocaleLowerCase()?.slice(1)} */}
                                                 {bond?.status === "AWAITING FOR PAYMENT" &&
-                                                    bond?.issuer_id !== currentIssuerId &&
+                                                    bond?.issuer_id?._id !== currentIssuerId &&
                                                     (
                                                         bond?.offers?.some(u => u?.buyer_id === currentBuyerId) ||
                                                         bond?.buyerOffers?.some(u => u?.newbuyer_id === currentBuyerId)
@@ -432,16 +432,16 @@ const SellerMissionListingTable = () => {
 
 
                                                 {bond?.status == "APPROVED" && bond?.issuer_id._id !== currentIssuerId && bond?.disableOffer == false ? <a onClick={() =>  handleOfferClick(bond?._id, bond?.buyer_id, bond?.total_bonds, bond?.bond_price)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Send Offer</a> : ''}
-                                                {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Bid offer</a> : ''}
+                                                {bond?.status == "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id == bond._id && u.bidder == currentBuyerId && u?.status === "PENDING") && bond?.issuer_id?._id != currentIssuerId && bond?.buyer_id != currentBuyerId ? <a onClick={() => navigate(`/bid?id=${bond?._id}`)} className='bg-[#FFEDE8] p-[10px] cursor-pointer'>Bid offer</a> : ''}
                                                 {
   !(bond?.status === "AWAITING FOR PAYMENT" &&
-    bond?.issuer_id !== currentIssuerId &&
+    bond?.issuer_id?._id !== currentIssuerId &&
     (
       bond?.offers?.some(u => u?.buyer_id === currentBuyerId) ||
       bond?.buyerOffers?.some(u => u?.newbuyer_id === currentBuyerId)
     )) &&
   !(bond?.status === "APPROVED" && bond?.issuer_id._id !== currentIssuerId && !bond?.disableOffer) &&
-  !(bond?.status === "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id === bond._id && u.bidder === currentBuyerId && u?.status === "PENDING") && bond?.issuer_id !== currentIssuerId && bond?.buyer_id !== currentBuyerId)
+  !(bond?.status === "WAITING FOR EXCHANGE" && !bids.find(u => u.bond_id === bond._id && u.bidder === currentBuyerId && u?.status === "PENDING") && bond?.issuer_id?._id !== currentIssuerId && bond?.buyer_id !== currentBuyerId)
     ? <p className='bg-[#FFEDE8] p-[10px] ' onClick={()=>{
         navigate(`/promisebonddetail/${bond?._id}`)
     }}>View</p>
