@@ -36,6 +36,7 @@ export default function Profile() {
             setLoading(false)
             console.log(response)
         } catch (e) {
+            console.log(e)
             if (e?.response?.data?.error) {
                 toast.error(e?.response?.data?.error, { containerId: "profileToast" })
             } else {

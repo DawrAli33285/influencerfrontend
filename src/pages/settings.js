@@ -89,10 +89,11 @@ export default function Settings() {
             }
             let response = await axios.get(`${BASE_URL}/get-currentIssuer`, headers)
             console.log(response.data)
+            
             setUser({
                 username: response.data.issuer.user_id.username,
                 email: response.data.issuer.user_id.email,
-                mobile_number: response.data.issuer.user_id.country_code_id.country_code + response.data.issuer.user_id.mobile_number,
+                mobile_number:response?.data?.issuer?.user_id?.mobile_number?response?.data?.issuer?.user_id?.mobile_number:'',
                 bio: response.data.issuer.user_id.bio,
                 language: response.data.issuer.user_id.language,
                 oldEmail: response.data.issuer.user_id.email,
@@ -280,14 +281,15 @@ setLocationState(formattedLocation);
             const formData = new FormData();
             formData.append('username', user.username);
             formData.append('email', user.email);
+
             const [countryCode, ...numberParts] = user.mobile_number.startsWith('+')
                 ? user.mobile_number.split(' ')
                 : ['', user.mobile_number];
 
              
             const mobileNumberWithoutCode = numberParts.join(' ');
-            formData.append('country_code', countryCode);
-            formData.append('mobile_number', mobileNumberWithoutCode);
+            // formData.append('country_code', countryCode);
+            formData.append('mobile_number', user.mobile_number);
             formData.append('avatarLink', user.avatarLink);
             formData.append('bio', user.bio);
             formData.append('oldEmail', user.oldEmail);
@@ -437,18 +439,20 @@ setLocationState(formattedLocation);
                                         Phone Number
                                     </label>
                                     <input
-                                        id="phoneNumber"
-                                        type="text"
-                                        className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
-                                        placeholder="Enter your phone number"
-                                        value={user.mobile_number}
-                                        onChange={(e) => {
-                                            setUser({
-                                                ...user,
-                                                mobile_number: e.target.value
-                                            })
-                                        }}
-                                    />
+    id="phoneNumber"
+    type="text"
+    className="border-[#E9E9E9] border rounded-[4px] px-[15px] py-[14px] focus:outline-none focus:ring-2 focus:ring-[#1DBF73]"
+    placeholder="Enter your phone number"
+    value={user.mobile_number}
+    onChange={(e) => {
+        const numericValue = e.target.value.replace(/[^0-9]/g, ''); 
+        setUser({
+            ...user,
+            mobile_number: numericValue,
+        });
+    }}
+/>
+
                                 </div>
 
                                 <div className="flex flex-col">
