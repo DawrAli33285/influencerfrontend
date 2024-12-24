@@ -74,7 +74,9 @@ export default function SignIn() {
                     let prevPath = localStorage.getItem("pathName")
                     localStorage.removeItem('pathName')
                     if (prevPath) {
-                        window.location.replace(prevPath);
+
+
+window.location.replace(prevPath);
 
                     } else {
 
@@ -127,7 +129,9 @@ export default function SignIn() {
                 localStorage.removeItem('pathName')
                 if (prevPath) {
 
-                    navigate(prevPath)
+                  
+                    
+                    window.location.replace(prevPath);
                 } else {
 
                     window.location.href="/"
