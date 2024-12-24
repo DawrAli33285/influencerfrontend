@@ -469,7 +469,7 @@ window.location.href='/'
                             <button
                                 onClick={answerQuestions}
                                 disabled={!selectedPlatform}
-                                className={`w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white ${selectedPlatform ? 'hover:bg-[#7d7a7a]' : 'opacity-50 cursor-not-allowed'
+                                className={`w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white ${selectedPlatform ? '' : 'opacity-50 cursor-not-allowed'
                                     }`}
                             >
                                 Continue
@@ -499,7 +499,7 @@ window.location.href='/'
                                                     <button
                                                         onClick={() => { setFollowers(!followers) }}
                                                         disabled={!selectedPlatform}
-                                                        className={`w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white ${selectedPlatform ? 'hover:bg-[#787777]' : 'opacity-50 cursor-not-allowed'
+                                                        className={`w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white ${selectedPlatform ? '' : 'opacity-50 cursor-not-allowed'
                                                             }`}
                                                     >
                                                         Continue
