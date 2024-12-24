@@ -213,6 +213,7 @@ navigate(-1)
                                             type="text"
                                             name="title"
                                             placeholder="Enter Title"
+                                            maxLength={15}
                                             className="mt-4 px-[15px] py-[13px] w-full bg-white text-[15px] text-black border border-[#E9E9E9] outline-none"
                                             value={bondstate.mission_title}
                                             onChange={(e) => {
@@ -320,6 +321,7 @@ navigate(-1)
                                         <input
                                             value={bondstate.title}
                                             type="text"
+                                            maxLength={15}
                                             name="title"
                                             placeholder="Enter Title"
                                             className="mt-4 px-[15px] py-[13px] w-full bg-white text-[15px] text-black border border-[#E9E9E9] outline-none"
