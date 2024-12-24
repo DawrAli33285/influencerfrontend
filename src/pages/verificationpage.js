@@ -446,7 +446,7 @@ window.location.href='/'
         <div>
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600"
+            className="w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white"
           >
             Save Changes
           </button>
@@ -469,7 +469,7 @@ window.location.href='/'
                             <button
                                 onClick={answerQuestions}
                                 disabled={!selectedPlatform}
-                                className={`mt-4 w-full bg-[#1DBF73] text-white font-bold py-2 px-4 rounded-md ${selectedPlatform ? 'hover:bg-[#17a866]' : 'opacity-50 cursor-not-allowed'
+                                className={`w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white ${selectedPlatform ? 'hover:bg-[#7d7a7a]' : 'opacity-50 cursor-not-allowed'
                                     }`}
                             >
                                 Continue
@@ -499,7 +499,7 @@ window.location.href='/'
                                                     <button
                                                         onClick={() => { setFollowers(!followers) }}
                                                         disabled={!selectedPlatform}
-                                                        className={`mt-4 w-full bg-[#1DBF73] text-white font-bold py-2 px-4 rounded-md ${selectedPlatform ? 'hover:bg-[#17a866]' : 'opacity-50 cursor-not-allowed'
+                                                        className={`w-full bg-black rounded-[3.8rem] xl:px-[20px] p-[10px] xl:py-[20px] lg:text-[0.94rem] text-[0.75rem] text-white ${selectedPlatform ? 'hover:bg-[#787777]' : 'opacity-50 cursor-not-allowed'
                                                             }`}
                                                     >
                                                         Continue

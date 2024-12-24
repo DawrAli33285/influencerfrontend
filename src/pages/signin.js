@@ -58,11 +58,12 @@ export default function SignIn() {
             try {
 
                 let response = await axios.post(`${BASE_URL}/login`, formData)
+                localStorage.setItem("email", response.data.user.email)
+
                 console.log(response.data)
                 toast.success(response.data.message, { containerId: "signIn" })
                 if (response.data.user.is_email_verified == false) {
-                    localStorage.setItem("email", response.data.user.email)
-
+                   
 
                     localStorage.removeItem("token")
                     localStorage.removeItem("buyerToken")
@@ -73,7 +74,8 @@ export default function SignIn() {
                     let prevPath = localStorage.getItem("pathName")
                     localStorage.removeItem('pathName')
                     if (prevPath) {
-                   window.location.href=prevPath
+                        window.location.replace(prevPath);
+
                     } else {
 
                         window.location.href="/"
@@ -106,10 +108,10 @@ export default function SignIn() {
             const id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
             let response = await axios.post(`${BASE_URL}/socialLogin`, { email: profile.getEmail() })
-
+            localStorage.setItem("email", profile.getEmail())
             toast.success(response.data.message, { containerId: "signIn" })
             if (response.data.user.is_email_verified === false) {
-                localStorage.setItem("email", response.data.user.email)
+                
 
                 localStorage.removeItem("token")
                 localStorage.removeItem("buyerToken")

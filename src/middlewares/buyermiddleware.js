@@ -48,7 +48,7 @@ const BuyerMiddleware = () => {
       window.location.href='/'
          }
        
-         if (response?.data?.issuer?.user_id?.bio === undefined && response?.data?.issuer?.user_id?.country === undefined) {
+         if (response?.data?.issuer?.user_id?.bio === undefined && response?.data?.issuer?.user_id?.location === undefined) {
          
            navigate('/verification');
          } 
