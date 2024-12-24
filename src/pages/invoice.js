@@ -75,7 +75,7 @@ export default function Invoice() {
               </p>
               <p>
                 <strong>Payment Method:</strong>{" "}
-                {transaction?.payment_method_id?.method_name?'CARD':transaction?.payment_method_id?.method_name || "N/A"}
+                {transaction?.payment_method_id?.method_name=="STRIPE"?'CARD':transaction?.payment_method_id?.method_name || "N/A"}
               </p>
               <p>
                 <strong>Status:</strong>{" "}
@@ -94,9 +94,9 @@ export default function Invoice() {
               <p>
                 <strong>Amount:</strong> ${transaction?.amount || 0}
               </p>
-              <p>
+             {transaction?.no_of_bonds? <p>
                 <strong>Number of Bonds:</strong> {transaction?.no_of_bonds || 0}
-              </p>
+              </p>:''}
               <p>
   <strong>Transaction Date:</strong> {transaction?.createdAt ? 
     (() => {
